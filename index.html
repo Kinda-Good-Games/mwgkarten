@@ -2181,67 +2181,88 @@
   }
 
   /* ── Order form → direct email submission ─────────── */
-  async function submitOrder() {
-    const form = document.getElementById("order-form");
+  async function submitOrder(e) {
+    e.preventDefault();
+    const name    = document.getElementById('orderName').value.trim();
+    const cls     = document.getElementById('orderClass').value.trim();
+    const email   = document.getElementById('orderEmail').value.trim();
+    const note    = document.getElementById('orderNote').value.trim();
+    const items   = getSelectedOrderItems();
+    const total   = items.reduce((sum, item) => sum + item.quantity, 0);
+    const totalCost = items.reduce((sum, item) => sum + getProductCost(item.product.id), 0);
+    const status  = document.getElementById('formStatus');
+    const btn     = document.getElementById('submitBtn');
 
-    const name = form.name.value.trim();
-    const email = form.email.value.trim();
-    const message = form.message.value.trim();
-
-    if (!name || !email) {
-      alert("Bitte Name und E-Mail ausfüllen.");
+    if (!name || !cls || !email) {
+      status.className = 'form-status error';
+      status.textContent = 'Bitte fülle alle Pflichtfelder aus.';
       return;
     }
 
-    const payload = new FormData();
+    if (items.length === 0) {
+      status.className = 'form-status error';
+      status.textContent = 'Bitte wähle mindestens ein Produkt mit Menge größer 0 aus.';
+      return;
+    }
 
-    // Required fields
-    payload.append("Name", name);
-    payload.append("Email", email);
-    payload.append("Nachricht", message);
-
-    // FormSubmit settings
-    payload.append("_subject", `Neue Bestellung von ${name}`);
-    payload.append("_template", "table");
-    payload.append("_captcha", "false");
-
-    // 👉 IMPORTANT: send confirmation to customer
-    payload.append(
-      "_autoresponse",
-      `Hallo ${name},
-
-  vielen Dank für deine Bestellung!
-
-  Wir haben deine Anfrage erhalten und melden uns so schnell wie möglich bei dir.
-
-  Zusammenfassung:
-  Name: ${name}
-  E-Mail: ${email}
-  Nachricht: ${message}
-
-  Viele Grüße`
-    );
-
-    // 👉 Makes "Reply" go to the customer
-    payload.append("_replyto", email);
+    btn.disabled = true;
+    btn.textContent = '⏳ Sende Reservierung …';
+    status.className = 'form-status';
+    status.style.display = 'block';
+    status.style.background = 'rgba(201,147,58,.15)';
+    status.style.border = '1px solid rgba(201,147,58,.3)';
+    status.style.color = 'var(--gold-pale)';
+    status.textContent = 'Deine Reservierung wird direkt verschickt …';
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/YOUR_EMAIL_HERE", {
-        method: "POST",
-        body: payload,
+      const payload = new FormData();
+      payload.append('Name', name);
+      payload.append('Klasse', cls);
+      payload.append('E-Mail', email);
+      payload.append('Gesamtmenge', String(total));
+      payload.append('Gesamtkosten', formatMoney(totalCost));
+      payload.append('Artikelanzahl', String(items.length));
+      payload.append('Anmerkung', note || '-');
+      items.forEach((item, index) => {
+        payload.append(`Produkt ${index + 1}`, item.product.name);
+        payload.append(`Produkt ${index + 1} - ID`, item.product.id);
+        payload.append(`Produkt ${index + 1} - Menge`, `${item.quantity} ${item.product.unitLabel}`);
+        payload.append(`Produkt ${index + 1} - Einzelpreis`, formatMoney(Number(item.product.price) || 0));
+        payload.append(`Produkt ${index + 1} - Gesamtpreis`, formatMoney(getProductCost(item.product.id)));
+      });
+      payload.append('Warenkorb', items.map(item => `${item.quantity}x ${item.product.name}`).join(', '));
+      payload.append('_subject', `[MWG Karten] Bestellung von ${name}`);
+      payload.append('_template', 'table');
+      payload.append('_captcha', 'false'); 
+
+      const response = await fetch(getOrderEmailEndpoint(), {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: payload
       });
 
-      const result = await response.json();
+      const result = await response.json().catch(() => ({}));
 
-      if (result.success === "true") {
-        alert("Danke! Deine Bestellung wurde gesendet. Du erhältst eine Bestätigung per E-Mail.");
-        form.reset();
-      } else {
-        alert("Fehler beim Senden. Bitte später erneut versuchen.");
+      if (!response.ok) {
+        throw new Error(result?.message || 'Die Bestellung konnte nicht gesendet werden.');
       }
+
+      status.className = 'form-status success';
+      status.innerHTML = `
+        <strong>Gesendet!</strong> Deine Auswahl wurde direkt verschickt. <br>Vielen Dank für deine Bestellung! </br>
+        Deine Artikel kannst du dann einfach in der Schule beim nächsten Verkauf abholen.
+      `;
+
+      e.target.reset();
+      orderQuantities = createEmptyQuantities(siteData.products);
+      renderOrderShelf();
+      updateOrderSummary();
     } catch (error) {
-      console.error(error);
-      alert("Netzwerkfehler. Bitte später erneut versuchen.");
+      status.className = 'form-status error';
+      status.textContent = error.message || 'Beim Senden ist ein Fehler aufgetreten.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '🎴 Auswahl absenden';
     }
   }
 
