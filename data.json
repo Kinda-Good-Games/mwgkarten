@@ -1,0 +1,163 @@
+{
+  "contactEmail": "kev_gong@hotmail.com",
+  "rarities": {
+    "Common": {
+      "borderColor": "#64748b",
+      "glowColor": "rgba(100, 116, 139, 0.22)"
+    },
+    "Uncommon": {
+      "borderColor": "#22c55e",
+      "glowColor": "rgba(34, 197, 94, 0.22)"
+    },
+    "Rare": {
+      "borderColor": "#3b82f6",
+      "glowColor": "rgba(59, 130, 246, 0.24)"
+    },
+    "Epic": {
+      "borderColor": "#a855f7",
+      "glowColor": "rgba(168, 85, 247, 0.26)"
+    },
+    "Legendary": {
+      "borderColor": "#f59e0b",
+      "glowColor": "rgba(245, 158, 11, 0.28)"
+    }
+  },
+  "sets": [
+    {
+      "name": "Set 1: The beginnings",
+      "description": "Der erste Karten-Drop mit den klassischen Motiven.",
+      "cards": [
+        {
+          "path": "cards/Beispiel.jpeg",
+          "name": "Beispielkarte_Common",
+          "rarity": "Common"
+        }, 
+        {
+          "path": "cards/Beispiel.jpeg",
+          "name": "Beispielkarte_Uncommon",
+          "rarity": "Uncommon"
+        },
+        {
+          "path": "cards/Beispiel.jpeg",
+          "name": "Beispielkarte_Rare",
+          "rarity": "Rare"
+        },
+        {
+          "path": "cards/Beispiel.jpeg",
+          "name": "Beispielkarte_Epic",
+          "rarity": "Epic"
+        },
+        {
+          "path": "cards/Beispiel.jpeg",
+          "name": "Beispielkarte_Legendary",
+          "rarity": "Legendary"
+        }
+      ]
+    },
+    {
+      "name": "Set 2: Electric Boogaloo",
+      "description": "Mehr Energie, mehr Chaos, mehr Karten.",
+      "cards": [
+        {
+          "path": "cards/Beispiel.jpeg",
+          "name": "Electric Test",
+          "rarity": "Rare"
+        }
+      ]
+    }
+  ],
+  "tournament": {
+    "upcoming": true,
+    "title": "Turnier-Brackets",
+    "description": "Hier siehst du die aktuellen Brackets, Stufen und Paarungen des Schulturniers.",
+    "stages": [
+      {
+        "name": "Vorrunde",
+        "status": "Stage 1",
+        "description": "Die ersten Begegnungen bestimmen, wer ins Halbfinale einzieht.",
+        "participants": [
+          "Team Alpha",
+          "Team Beta",
+          "Team Gamma",
+          "Team Delta"
+        ],
+        "matches": [
+          {
+            "label": "Spiel 1",
+            "left": "Team Alpha",
+            "right": "Team Beta"
+          },
+          {
+            "label": "Spiel 2",
+            "left": "Team Gamma",
+            "right": "Team Delta"
+          }
+        ]
+      },
+      {
+        "name": "Halbfinale",
+        "status": "Stage 2",
+        "description": "Hier stehen die Sieger der Vorrunde.",
+        "participants": [
+          "Sieger Spiel 1",
+          "Sieger Spiel 2"
+        ],
+        "matches": [
+          {
+            "label": "Match A",
+            "left": "Sieger Spiel 1",
+            "right": "Sieger Spiel 2"
+          }
+        ]
+      },
+      {
+        "name": "Finale",
+        "status": "Stage 3",
+        "description": "Das letzte Duell um den Turniersieg.",
+        "participants": [
+          "Finalist A",
+          "Finalist B"
+        ],
+        "matches": [
+          {
+            "label": "Finale",
+            "left": "Finalist A",
+            "right": "Finalist B"
+          }
+        ]
+      }
+    ]
+  },
+  "products": [
+    {
+      "id": "booster-packs",
+      "name": "Booster-Packs",
+      "description": "Zufällige Kartenpakete mit einer gemischten Auswahl aus dem Set.",
+      "unitLabel": "Booster-Pack(s)",
+      "price": 4.50,
+      "minQuantity": 1,
+      "maxQuantity": 50,
+      "defaultQuantity": 1
+    },
+    {
+      "id": "kartensammelhefte",
+      "name": "Kartensammelhefte",
+      "description": "Sammelhefte zum Einordnen und Aufbewahren deiner Karten.",
+      "unitLabel": "Heft(e)",
+      "price": 7.00,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "defaultQuantity": 1
+    },
+    {
+      "id": "bundles",
+      "name": "Bundles",
+      "description": "Zusammenstellungen aus mehreren Produkten oder Sonderpaketen.",
+      "unitLabel": "Bundle(s)",
+      "price": 12.00,
+      "minQuantity": 1,
+      "maxQuantity": 10,
+      "defaultQuantity": 1
+    }
+  ]
+}
