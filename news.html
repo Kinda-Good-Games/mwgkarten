@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News | Das MWG Sammelkarten-Spiel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body data-page="news">
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')">MWG <span>Karten</span></a>
+  <div class="nav-links">
+    <a onclick="showPage('home')" id="nav-home">Startseite</a>
+    <a onclick="showPage('news')" id="nav-news" class="active">News</a>
+    <a onclick="showPage('cards')" id="nav-cards">Alle Karten</a>
+    <a onclick="showPage('tournament')" id="nav-tournament">Turnier</a>
+    <a onclick="showPage('order')" id="nav-order">Produkte bestellen</a>
+  </div>
+</nav>
+
+<div class="page visible" id="page-news">
+  <div class="news-page">
+    <p class="section-label">News</p>
+    <h2 class="section-title news-page-title" id="newsPageTitle">Neuigkeiten</h2>
+    <div class="section-rule"></div>
+    <p class="news-page-intro">
+      Hier erscheinen alle News-Beiträge im Blog-Stil. Die Seite lädt ausgewählte Markdown-Dateien aus dem Ordner <code>blogs/</code> und zeigt sie nacheinander an.
+    </p>
+    <div class="news-grid" id="newsGrid"></div>
+    <div class="news-empty" id="newsEmpty" style="display:none;">
+      <div class="big-icon">📰</div>
+      <p>Noch keine News vorhanden</p>
+      <small>Lege Markdown-Dateien in <code>blogs/</code> an und trage sie in <code>blogs/index.json</code> ein.</small>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2027 <span>MWG Abiturjahrgang 2027</span> · Kein kommerzielles Angebot · Ausgabe nur an der Schule</p>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

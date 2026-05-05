@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Turnier | Das MWG Sammelkarten-Spiel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body data-page="tournament">
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')">MWG <span>Karten</span></a>
+  <div class="nav-links">
+    <a onclick="showPage('home')" id="nav-home">Startseite</a>
+    <a onclick="showPage('news')" id="nav-news">News</a>
+    <a onclick="showPage('cards')" id="nav-cards">Alle Karten</a>
+    <a onclick="showPage('tournament')" id="nav-tournament" class="active">Turnier</a>
+    <a onclick="showPage('order')" id="nav-order">Produkte bestellen</a>
+  </div>
+</nav>
+
+<div class="page visible" id="page-tournament">
+  <div class="tournament-page">
+    <p class="section-label">Schulturnier</p>
+    <h2 class="section-title" id="tournamentTitle">Turnier-Brackets</h2>
+    <div class="section-rule"></div>
+    <div class="tournament-coming-soon" id="tournamentUpcomingBanner" style="display:none;">Coming soon</div>
+    <p class="tournament-description" id="tournamentDescription">Hier siehst du die aktuellen Brackets, Stufen und Paarungen des Schulturniers.</p>
+    <div class="tournament-board" id="tournamentBoard"></div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2027 <span>MWG Abiturjahrgang 2027</span> · Kein kommerzielles Angebot · Ausgabe nur an der Schule</p>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

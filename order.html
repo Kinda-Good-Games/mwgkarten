@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produkte bestellen | Das MWG Sammelkarten-Spiel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body data-page="order">
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')">MWG <span>Karten</span></a>
+  <div class="nav-links">
+    <a onclick="showPage('home')" id="nav-home">Startseite</a>
+    <a onclick="showPage('news')" id="nav-news">News</a>
+    <a onclick="showPage('cards')" id="nav-cards">Alle Karten</a>
+    <a onclick="showPage('tournament')" id="nav-tournament">Turnier</a>
+    <a onclick="showPage('order')" id="nav-order" class="active">Produkte bestellen</a>
+  </div>
+</nav>
+
+<div class="page visible" id="page-order">
+  <div class="order-page">
+    <p class="section-label" style="text-align:center;">Bestellung</p>
+    <h2 class="section-title" style="text-align:center;margin-bottom:.5rem;">Produkte reservieren</h2>
+    <div class="section-rule"></div>
+
+    <div class="order-layout">
+      <section class="order-card">
+        <div class="order-card-title">Wichtige Infos</div>
+        <div class="order-notice">
+          <div class="order-notice-icon">🏫</div>
+          <div class="order-box-stack">
+            <p>
+              <strong>Kein Versand – Ausgabe an der Schule!</strong><br>
+              Wähle unten mehrere Produkte gleichzeitig und setze für jedes die gewünschte Menge.
+              Es findet keine Online-Zahlung statt.
+            </p>
+            <p class="order-card-subtitle">
+              Alle bestellten Produkte werden <strong>persönlich an der Schule ausgegeben</strong> — es findet kein Versand und keine Online-Transaktion statt.
+              Über das Bestellformular reservierst du deine gewünschte Auswahl, und wir melden uns bei dir.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="order-card">
+        <div class="order-card-title">Bestellung</div>
+        <div class="product-shelf-shell">
+          <div class="product-shelf-head">
+            <div>
+              <h3>Produkt-Schiene</h3>
+              <p>Scroll nach rechts, um alle Produkte zu sehen. Für jedes Produkt kannst du direkt die Menge festlegen.</p>
+            </div>
+            <div class="order-note-inline" id="orderShelfHint">Noch keine Produkte ausgewählt.</div>
+          </div>
+          <div class="product-shelf" id="productShelf"></div>
+          <div class="selected-summary">
+            <div class="selected-summary-head">
+              <h3>Deine Auswahl</h3>
+              <p id="selectedSummaryCount">0 Produkte ausgewählt</p>
+            </div>
+            <div class="selected-items empty" id="selectedItems">Wähle oben mindestens ein Produkt aus, dann erscheint hier deine Bestellung.</div>
+            <div class="selected-total">
+              <span>Gesamtmenge</span>
+              <strong id="selectedTotalQuantity">0</strong>
+            </div>
+            <div class="selected-total">
+              <span>Gesamtkosten</span>
+              <strong class="selected-total-amount" id="selectedTotalCost">0,00&nbsp;€</strong>
+            </div>
+          </div>
+        </div>
+
+        <form class="order-form" onsubmit="submitOrder(event)" style="margin-top:1.4rem;">
+          <div class="form-group">
+            <label class="form-label" for="orderName">Dein Name *</label>
+            <input class="form-input" type="text" id="orderName" placeholder="Vorname Nachname" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="orderClass">Klasse / Kurs *</label>
+            <input class="form-input" type="text" id="orderClass" placeholder="z.B. Q2, 11a …" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="orderEmail">Deine E-Mail-Adresse *</label>
+            <input class="form-input" type="email" id="orderEmail" placeholder="deine@email.de" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" id="quantityLabel">Anzahl *</label>
+            <div class="order-note-inline">Die Menge wird direkt in der Produkt-Schiene oben eingestellt.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="orderNote">Anmerkung (optional)</label>
+            <textarea class="form-textarea" id="orderNote" placeholder="Irgendwas, das wir wissen sollten?"></textarea>
+          </div>
+
+          <div id="formStatus" class="form-status"></div>
+
+          <button type="submit" class="btn btn-primary" id="submitBtn" style="align-self:flex-start;">
+            🎴 Auswahl absenden
+          </button>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2027 <span>MWG Abiturjahrgang 2027</span> · Kein kommerzielles Angebot · Ausgabe nur an der Schule</p>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

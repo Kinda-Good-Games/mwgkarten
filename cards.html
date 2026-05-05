@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alle Karten | Das MWG Sammelkarten-Spiel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body data-page="cards">
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')">MWG <span>Karten</span></a>
+  <div class="nav-links">
+    <a onclick="showPage('home')" id="nav-home">Startseite</a>
+    <a onclick="showPage('news')" id="nav-news">News</a>
+    <a onclick="showPage('cards')" id="nav-cards" class="active">Alle Karten</a>
+    <a onclick="showPage('tournament')" id="nav-tournament">Turnier</a>
+    <a onclick="showPage('order')" id="nav-order">Produkte bestellen</a>
+  </div>
+</nav>
+
+<div class="page visible" id="page-cards">
+  <div class="cards-header">
+    <p class="section-label">Kartenalbum</p>
+    <h2 class="section-title">Alle Karten</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="cards-search-row">
+    <select class="cards-filter-select" id="cardCollectionFilter" onchange="filterCards()">
+      <option value="all">Alle Sets</option>
+    </select>
+    <input class="cards-search-input" type="text" id="cardSearch" placeholder="Karte suchen …" oninput="filterCards()" />
+  </div>
+
+  <div class="cards-gallery" id="cardsGrid">
+    <!-- Cards injected by JS -->
+  </div>
+
+  <div class="cards-placeholder" id="cardsPlaceholder" style="display:none;">
+    <div class="big-icon">🔍</div>
+    <p>Keine Karten gefunden</p>
+    <small>Versuch einen anderen Suchbegriff.</small>
+  </div>
+</div>
+
+<footer>
+  <p>© 2027 <span>MWG Abiturjahrgang 2027</span> · Kein kommerzielles Angebot · Ausgabe nur an der Schule</p>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>
