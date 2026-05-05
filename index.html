@@ -20,6 +20,7 @@
       --slate:       #2c2a26;
       --shadow:      rgba(13,11,8,.55);
       --radius:      6px;
+      --tournament-box-width: clamp(230px, 26vw, 340px);
     }
 
     /* ── Reset ─────────────────────────────────────────── */
@@ -264,6 +265,158 @@
       color: var(--gold-light); font-weight: 500;
     }
 
+    /* News teaser */
+    .news-teaser {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 2rem 1.75rem;
+    }
+    .news-teaser-card {
+      border: 1px solid rgba(201,147,58,.18);
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow: 0 18px 44px rgba(0,0,0,.22);
+      padding: 1.4rem 1.35rem;
+      display: grid;
+      gap: .85rem;
+    }
+    .news-teaser-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+    .news-teaser-kicker,
+    .news-post-kicker {
+      font-family: 'Cinzel', serif;
+      font-size: .68rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .news-teaser-title,
+    .news-page-title {
+      font-family: 'Cinzel Decorative', serif;
+      color: var(--gold-light);
+      font-size: clamp(1.2rem, 2vw, 1.9rem);
+    }
+    .news-teaser-summary,
+    .news-post-excerpt {
+      color: rgba(245,230,196,.72);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    /* News page */
+    .news-page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    #page-home .section:first-of-type {
+      padding-top: 3rem;
+    }
+    .news-page-intro {
+      max-width: 760px;
+      margin: 0 auto 1.5rem;
+      text-align: center;
+      color: rgba(245,230,196,.74);
+      font-size: 1.08rem;
+      line-height: 1.75;
+    }
+    .news-grid {
+      display: grid;
+      gap: 1.25rem;
+    }
+    .news-article {
+      background: linear-gradient(155deg, rgba(13,11,8,.98), rgba(26,21,16,.94));
+      border: 1px solid rgba(201,147,58,.18);
+      border-radius: 18px;
+      padding: 1.35rem;
+      box-shadow: 0 18px 50px rgba(0,0,0,.28);
+      display: grid;
+      gap: .9rem;
+    }
+    .news-article-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: baseline;
+    }
+    .news-article-title {
+      font-family: 'Cinzel Decorative', serif;
+      color: var(--gold-light);
+      font-size: clamp(1.3rem, 2.2vw, 2rem);
+    }
+    .news-article-meta {
+      font-family: 'Cinzel', serif;
+      font-size: .68rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(245,230,196,.5);
+    }
+    .news-article-body {
+      color: rgba(245,230,196,.86);
+      line-height: 1.8;
+      font-size: 1.04rem;
+    }
+    .news-article-body h1,
+    .news-article-body h2,
+    .news-article-body h3,
+    .news-article-body h4 {
+      font-family: 'Cinzel', serif;
+      color: var(--gold-light);
+      margin: 1rem 0 .45rem;
+      line-height: 1.25;
+    }
+    .news-article-body h1 { font-size: 1.8rem; }
+    .news-article-body h2 { font-size: 1.45rem; }
+    .news-article-body h3 { font-size: 1.2rem; }
+    .news-article-body p { margin: .75rem 0; }
+    .news-article-body ul,
+    .news-article-body ol {
+      margin: .75rem 0 .75rem 1.4rem;
+      padding-left: .3rem;
+    }
+    .news-article-body li { margin: .35rem 0; }
+    .news-article-body a { color: var(--gold-light); }
+    .news-article-body blockquote {
+      margin: 1rem 0;
+      padding: .85rem 1rem;
+      border-left: 3px solid var(--gold);
+      background: rgba(255,255,255,.04);
+      color: rgba(245,230,196,.82);
+    }
+    .news-article-body pre {
+      margin: 1rem 0;
+      padding: 1rem;
+      overflow-x: auto;
+      border-radius: 12px;
+      background: rgba(0,0,0,.34);
+      border: 1px solid rgba(201,147,58,.16);
+    }
+    .news-article-body code {
+      font-family: 'Courier New', monospace;
+      font-size: .95em;
+      color: #ffd98f;
+    }
+    .news-article-body pre code { color: inherit; }
+    .news-empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: rgba(245,230,196,.45);
+    }
+    .news-empty .big-icon { font-size: 3.5rem; margin-bottom: .85rem; }
+    .news-empty p {
+      font-family: 'Cinzel', serif;
+      font-size: .85rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
     /* Booster preview */
     .booster-preview {
       display: flex; align-items: center; justify-content: center; gap: 3rem;
@@ -398,6 +551,8 @@
     .tournament-prize-ladder {
       margin: 0 auto 1.8rem;
       padding: 1rem;
+      width: 100%;
+      box-sizing: border-box;
       border-radius: 18px;
       border: 1px solid rgba(201,147,58,.18);
       background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
@@ -416,12 +571,16 @@
 
     .tournament-prize-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(var(--tournament-box-width), 1fr));
       gap: .75rem;
+      justify-items: center;
     }
 
     .tournament-prize-card {
       position: relative;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: var(--tournament-box-width);
       padding: .8rem .9rem;
       border-radius: 14px;
       border: 1px solid rgba(201,147,58,.18);
@@ -470,6 +629,23 @@
       overflow: auto;
       box-shadow: 0 18px 44px rgba(0,0,0,.22);
     }
+
+    /* Bracket layout */
+    .bracket-wrapper { padding: .6rem 0; }
+    .bracket-columns { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(var(--tournament-box-width), 1fr); gap: 1rem; align-items: start; }
+    .bracket-column { display: flex; flex-direction: column; gap: 1rem; }
+    .bracket-column .tournament-graphic-stage-label { margin-bottom: .4rem; display:block; }
+    .bracket-match { position: relative; background: linear-gradient(155deg, rgba(13,11,8,.96), rgba(26,21,16,.96)); border: 1px solid rgba(201,147,58,.12); border-radius: 10px; padding: .45rem; box-sizing: border-box; width: 100%; max-width: var(--tournament-box-width); }
+    .bracket-match-label { font-size: .68rem; color: rgba(245,230,196,.45); margin-bottom: .35rem; }
+    .bracket-team { display:flex; justify-content:space-between; gap: .6rem; padding: .28rem .4rem; border-top: 1px dashed rgba(255,255,255,.03); }
+    .bracket-team:first-of-type { border-top: none; }
+    .bracket-team span:first-child { color: var(--gold-pale); }
+    .bracket-team span:last-child { color: rgba(245,230,196,.45); font-size:.78rem; }
+    /* simple connector line to next column */
+    .bracket-column:not(:last-child) .bracket-match::after { content: ''; position: absolute; right: -24px; top: 50%; transform: translateY(-50%); width: 20px; height: 2px; background: rgba(255,201,94,.45); }
+
+    /* enforce uniform width for matches in stage lists as well */
+    .tournament-match, .bracket-match { box-sizing: border-box; width: 100%; max-width: var(--tournament-box-width); }
 
     .tournament-graphic svg {
       display: block;
@@ -630,6 +806,7 @@
     .tournament-matches {
       display: grid;
       gap: .75rem;
+      justify-items: center;
     }
 
     .tournament-match {
@@ -1297,11 +1474,67 @@
 
     /* Responsive */
     @media (max-width: 680px) {
-      nav { padding: .9rem 1.2rem; }
-      .nav-links { gap: 1.2rem; }
-      .nav-links a { font-size: .7rem; letter-spacing: .12em; }
-      .cards-gallery { padding: 0 1rem 4rem; gap: 2rem; }
-      .card-collection-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
+      :root {
+        --tournament-box-width: min(100%, 100%);
+      }
+
+      nav {
+        padding: .75rem 1rem;
+        flex-direction: column;
+        gap: .75rem;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        width: 100%;
+        gap: .65rem;
+        flex-wrap: wrap;
+      }
+
+      .nav-links a {
+        font-size: .68rem;
+        letter-spacing: .1em;
+      }
+
+      .page { padding-top: 122px; }
+      .hero { min-height: auto; padding: 2.8rem 1rem 4rem; }
+      .hero-content { max-width: 100%; }
+      .hero-title { font-size: clamp(2rem, 11vw, 3.1rem); }
+      .hero-sub { font-size: 1rem; line-height: 1.6; }
+      .hero-cta-row { gap: .75rem; }
+      .btn { width: 100%; justify-content: center; }
+
+      .section { padding: 4rem 1rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-card { padding: 1.4rem 1.15rem; }
+
+      .cards-header { padding: 3rem 1rem 1rem; }
+      .cards-search-row { margin: 1rem auto 1.75rem; padding: 0 .8rem; }
+      .cards-gallery { padding: 0 1rem 4rem; gap: 1.5rem; }
+      .card-collection-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: .85rem; }
+      .card-item-label { transform: translateY(0); padding-top: .9rem; }
+
+      .tournament-page, .order-page { padding: 3rem 1rem 4rem; }
+      .tournament-prize-ladder { padding: .85rem; }
+      .tournament-prize-grid { grid-template-columns: 1fr; }
+      .tournament-prize-card { max-width: none; }
+      .tournament-graphic { padding: .8rem; }
+      .bracket-columns { grid-auto-flow: row; grid-auto-columns: 1fr; }
+      .bracket-match, .tournament-match { max-width: none; }
+      .bracket-column:not(:last-child) .bracket-match::after { display: none; }
+      .tournament-stage, .order-card, .product-shelf-shell { padding: 1rem; }
+      .tournament-stage-header, .selected-summary-head, .product-shelf-head { align-items: flex-start; }
+      .tournament-stage-grid { grid-template-columns: 1fr; }
+      .tournament-participants { gap: .35rem; }
+      .tournament-participant { padding: .25rem .6rem; font-size: .88rem; }
+      .product-shelf { grid-auto-flow: row; grid-auto-columns: 1fr; }
+      .product-card { width: 100%; }
+      .product-card-top, .product-card-footer { flex-direction: column; align-items: stretch; }
+      .quantity-pill { width: 100%; justify-content: space-between; }
+      .quantity-pill button { width: 30px; height: 30px; }
+
+      .lightbox-close { top: 1rem; right: 1rem; }
+      .lightbox-img { max-width: 94vw; }
     }
   </style>
 </head>
@@ -1312,6 +1545,7 @@
   <a class="nav-logo" href="#" onclick="showPage('home')">MWG <span>Karten</span></a>
   <div class="nav-links">
     <a onclick="showPage('home')" id="nav-home" class="active">Startseite</a>
+    <a onclick="showPage('news')" id="nav-news">News</a>
     <a onclick="showPage('cards')" id="nav-cards">Alle Karten</a>
     <a onclick="showPage('tournament')" id="nav-tournament">Turnier</a>
     <a onclick="showPage('order')" id="nav-order">Produkte bestellen</a>
@@ -1335,7 +1569,19 @@
       <div class="hero-cta-row">
         <button class="btn btn-primary" onclick="showPage('order')">🎴 Produkte bestellen</button>
         <button class="btn btn-outline" onclick="showPage('cards')">Alle Karten ansehen →</button>
+        <button class="btn btn-outline" onclick="showPage('news')">Neuigkeiten lesen →</button>
       </div>
+    </div>
+  </section>
+
+  <section class="news-teaser">
+    <div class="news-teaser-card" id="homeNewsTeaser">
+      <div class="news-teaser-kicker">Neuigkeiten</div>
+      <div class="news-teaser-head">
+        <h2 class="news-teaser-title">Aktuelle Meldungen aus dem Projekt</h2>
+        <button class="btn btn-outline" onclick="showPage('news')">Zur News-Seite →</button>
+      </div>
+      <div class="news-teaser-summary" id="homeNewsTeaserSummary">Lade die neuesten News ...</div>
     </div>
   </section>
 
@@ -1421,6 +1667,25 @@
   </div>
 
 </div><!-- /home -->
+
+
+<!-- ══ NEWS PAGE ══════════════════════════════════════ -->
+<div class="page" id="page-news">
+  <div class="news-page">
+    <p class="section-label">News</p>
+    <h2 class="section-title news-page-title" id="newsPageTitle">Neuigkeiten</h2>
+    <div class="section-rule"></div>
+    <p class="news-page-intro">
+      Hier erscheinen alle News-Beiträge im Blog-Stil. Die Seite lädt ausgewählte Markdown-Dateien aus dem Ordner <code>blogs/</code> und zeigt sie nacheinander an.
+    </p>
+    <div class="news-grid" id="newsGrid"></div>
+    <div class="news-empty" id="newsEmpty" style="display:none;">
+      <div class="big-icon">📰</div>
+      <p>Noch keine News vorhanden</p>
+      <small>Lege Markdown-Dateien in <code>blogs/</code> an und trage sie in <code>blogs/index.json</code> ein.</small>
+    </div>
+  </div>
+</div><!-- /news -->
 
 
 <!-- ══ CARDS PAGE ══════════════════════════════════════ -->
@@ -1577,6 +1842,7 @@
     document.getElementById('nav-' + name).classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (name === 'cards') loadCards();
+    if (name === 'news') loadNews();
     if (name === 'tournament') renderTournament();
     if (name === 'order') renderOrderShelf();
   }
@@ -1616,6 +1882,14 @@
       upcoming: true,
       title: 'Turnier-Brackets',
       description: 'Hier siehst du die aktuellen Brackets, Stufen und Paarungen des Schulturniers.',
+      prizes: [
+        { places: '16-9', reward: '1 freies Booster-Pack', image: '' },
+        { places: '8-5', reward: '2x Sammelheft', image: '' },
+        { places: '4', reward: 'Kostenloses Bundle', image: '' },
+        { places: '3', reward: '5 Booster + 1 Bundle', image: '' },
+        { places: '2', reward: 'Kopfhörer', image: '' },
+        { places: '1', reward: 'iPad', image: '' }
+      ],
       stages: [
         {
           name: 'Vorrunde',
@@ -1665,6 +1939,12 @@
   let siteDataLoaded = false;
   let orderQuantities = createEmptyQuantities(DEFAULT_SITE_DATA.products);
   const siteDataReady = loadSiteData();
+  const blogState = {
+    loaded: false,
+    posts: []
+  };
+
+  const BLOG_INDEX_PATH = 'blogs/index.json';
 
   function normalizeRarities(rarities) {
     const defaults = DEFAULT_SITE_DATA.rarities;
@@ -1699,6 +1979,13 @@
       upcoming: Boolean(source.upcoming ?? defaultTournament.upcoming),
       title: String(source.title || defaultTournament.title),
       description: String(source.description || defaultTournament.description),
+      prizes: Array.isArray(source.prizes) && source.prizes.length > 0
+        ? source.prizes.filter(p => p && typeof p === 'object').map(p => ({
+            places: String(p.places || p.place || ''),
+            reward: String(p.reward || p.label || ''),
+            image: String(p.image || p.img || '')
+          }))
+        : (Array.isArray(defaultTournament.prizes) ? defaultTournament.prizes : []),
       stages: stageSource
         .filter(stage => stage && typeof stage === 'object')
         .map((stage, stageIndex) => {
@@ -1767,6 +2054,227 @@
     }
     renderOrderShelf();
     updateOrderSummary();
+  }
+
+  function escapeHtml(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function formatBlogDate(value) {
+    if (!value) return '';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return String(value);
+    return date.toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function markdownToHtml(markdown) {
+    const lines = String(markdown || '').replace(/\r\n/g, '\n').split('\n');
+    const blocks = [];
+    let paragraph = [];
+    let listItems = [];
+    let listType = null;
+    let codeLines = [];
+    let inCode = false;
+
+    function flushParagraph() {
+      if (!paragraph.length) return;
+      blocks.push(`<p>${paragraph.join(' ')}</p>`);
+      paragraph = [];
+    }
+
+    function flushList() {
+      if (!listItems.length) return;
+      const tag = listType === 'ol' ? 'ol' : 'ul';
+      blocks.push(`<${tag}>${listItems.map(item => `<li>${item}</li>`).join('')}</${tag}>`);
+      listItems = [];
+      listType = null;
+    }
+
+    function flushCode() {
+      if (!codeLines.length) return;
+      blocks.push(`<pre><code>${escapeHtml(codeLines.join('\n'))}</code></pre>`);
+      codeLines = [];
+    }
+
+    function inline(text) {
+      return escapeHtml(text)
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+        .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>');
+    }
+
+    for (const rawLine of lines) {
+      const line = rawLine.trimEnd();
+
+      if (line.startsWith('```')) {
+        if (inCode) {
+          inCode = false;
+          flushCode();
+        } else {
+          flushParagraph();
+          flushList();
+          inCode = true;
+        }
+        continue;
+      }
+
+      if (inCode) {
+        codeLines.push(rawLine);
+        continue;
+      }
+
+      if (!line.trim()) {
+        flushParagraph();
+        flushList();
+        continue;
+      }
+
+      const heading = line.match(/^(#{1,3})\s+(.+)$/);
+      if (heading) {
+        flushParagraph();
+        flushList();
+        const level = heading[1].length;
+        blocks.push(`<h${level}>${inline(heading[2])}</h${level}>`);
+        continue;
+      }
+
+      const unordered = line.match(/^[-*]\s+(.+)$/);
+      const ordered = line.match(/^\d+\.\s+(.+)$/);
+      if (unordered || ordered) {
+        flushParagraph();
+        const nextType = unordered ? 'ul' : 'ol';
+        if (listType && listType !== nextType) flushList();
+        listType = nextType;
+        listItems.push(inline((unordered || ordered)[1]));
+        continue;
+      }
+
+      if (line.startsWith('> ')) {
+        flushParagraph();
+        flushList();
+        blocks.push(`<blockquote>${inline(line.slice(2))}</blockquote>`);
+        continue;
+      }
+
+      paragraph.push(inline(line));
+    }
+
+    flushParagraph();
+    flushList();
+    if (inCode) flushCode();
+
+    return blocks.join('');
+  }
+
+  async function loadBlogIndex() {
+    const response = await fetch(BLOG_INDEX_PATH, { cache: 'no-store' });
+    if (!response.ok) throw new Error('blogs/index.json not available');
+    const data = await response.json();
+    const entries = Array.isArray(data) ? data : Array.isArray(data.posts) ? data.posts : [];
+    return entries
+      .filter(item => item && typeof item === 'object')
+      .map((item, index) => ({
+        id: String(item.id || item.slug || `post-${index + 1}`),
+        file: String(item.file || item.path || ''),
+        title: String(item.title || item.name || `News ${index + 1}`),
+        date: String(item.date || ''),
+        excerpt: String(item.excerpt || ''),
+        order: Number.isFinite(Number(item.order)) ? Number(item.order) : index
+      }))
+      .filter(item => item.file);
+  }
+
+  async function loadNews() {
+    const grid = document.getElementById('newsGrid');
+    const empty = document.getElementById('newsEmpty');
+    const teaser = document.getElementById('homeNewsTeaserSummary');
+
+    if (!grid) return;
+
+    if (!blogState.loaded) {
+      grid.innerHTML = `
+        <div class="news-article">
+          <div class="news-article-header">
+            <div class="news-post-kicker">Lädt …</div>
+            <div class="news-article-meta">Bitte warten</div>
+          </div>
+          <div class="news-post-excerpt">Die News werden gerade aus dem Ordner <code>blogs/</code> geladen.</div>
+        </div>`;
+    }
+
+    try {
+      if (!blogState.loaded) {
+        const index = await loadBlogIndex();
+        const posts = await Promise.all(index.map(async post => {
+          const response = await fetch(`blogs/${post.file}`, { cache: 'no-store' });
+          if (!response.ok) throw new Error(`Unable to load ${post.file}`);
+          const markdown = await response.text();
+          const firstHeading = (markdown.match(/^#\s+(.+)$/m) || [])[1];
+          const title = post.title || firstHeading || post.file.replace(/\.[^.]+$/, '');
+          return {
+            ...post,
+            title,
+            html: markdownToHtml(markdown),
+            dateLabel: formatBlogDate(post.date)
+          };
+        }));
+
+        blogState.posts = posts.sort((left, right) => left.order - right.order);
+        blogState.loaded = true;
+      }
+
+      const posts = blogState.posts;
+
+      if (teaser) {
+        if (posts.length > 0) {
+          const latest = posts[0];
+          teaser.innerHTML = `<strong>${escapeHtml(latest.title)}</strong>${latest.dateLabel ? ` · ${escapeHtml(latest.dateLabel)}` : ''}<br>${escapeHtml(latest.excerpt || 'Neue Meldung im Blog-Stil.')} `;
+        } else {
+          teaser.textContent = 'Noch keine News-Beiträge vorhanden.';
+        }
+      }
+
+      if (posts.length === 0) {
+        grid.innerHTML = '';
+        if (empty) empty.style.display = 'block';
+        return;
+      }
+
+      if (empty) empty.style.display = 'none';
+      grid.innerHTML = posts.map(post => `
+        <article class="news-article">
+          <div class="news-article-header">
+            <div>
+              <div class="news-post-kicker">${escapeHtml(post.file.replace(/\.[^.]+$/, ''))}</div>
+              <h3 class="news-article-title">${escapeHtml(post.title)}</h3>
+            </div>
+            <div class="news-article-meta">${escapeHtml(post.dateLabel || '')}</div>
+          </div>
+          ${post.excerpt ? `<div class="news-post-excerpt">${escapeHtml(post.excerpt)}</div>` : ''}
+          <div class="news-article-body">${post.html}</div>
+        </article>
+      `).join('');
+    } catch (error) {
+      blogState.loaded = true;
+      blogState.posts = [];
+      grid.innerHTML = '';
+      if (empty) {
+        empty.style.display = 'block';
+        empty.innerHTML = `
+          <div class="big-icon">📰</div>
+          <p>News konnten nicht geladen werden</p>
+          <small>Prüfe <code>blogs/index.json</code> und die dort gelisteten Markdown-Dateien.</small>`;
+      }
+      if (teaser) {
+        teaser.textContent = 'News konnten nicht geladen werden.';
+      }
+    }
   }
 
   function normalizeProducts(products) {
@@ -2119,17 +2627,51 @@
 
     if (!board) return;
 
+    // Render prize ladder (if present)
+    const prizeHtml = (Array.isArray(tournament.prizes) && tournament.prizes.length > 0)
+      ? `
+        <div class="tournament-prize-ladder">
+          <div class="tournament-prize-title">Preise</div>
+          <div class="tournament-prize-grid">
+            ${tournament.prizes.map(prize => `
+              <div class="tournament-prize-card">
+                <div class="tournament-prize-place">${prize.places}</div>
+                <div class="tournament-prize-reward">${prize.reward}</div>
+                ${prize.image ? `<div style="margin-top:.6rem;text-align:center;z-index:1;"><img src="${prize.image}" alt="${prize.reward}" style="max-width:100%;height:72px;object-fit:contain;" onerror="this.style.display='none'"/></div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `
+      : '';
+
     if (!tournament.stages.length) {
       board.innerHTML = `
         <div class="tournament-empty">
           <div class="big-icon">🏆</div>
           <p>Noch keine Turnierdaten</p>
           <small>Lege Stufen und Paarungen in <code>data.json</code> unter <code>tournament</code> an.</small>
-        </div>`;
+        </div>${prizeHtml}`;
       return;
     }
 
-    board.innerHTML = tournament.stages.map(stage => `
+    // Build a simple visual bracket: columns per stage, matches stacked vertically
+    const bracketHtml = `<div class="tournament-graphic"><div class="bracket-wrapper"><div class="bracket-columns">
+      ${tournament.stages.map(stage => `
+        <div class="bracket-column">
+          <div class="tournament-graphic-stage-label">${stage.status || stage.name}</div>
+          ${stage.matches.map(match => `
+            <div class="bracket-match">
+              <div class="bracket-match-label">${match.label}</div>
+              <div class="bracket-team"><span>${match.left || 'TBD'}</span><span>vs</span></div>
+              <div class="bracket-team"><span>${match.right || 'TBD'}</span><span></span></div>
+            </div>
+          `).join('')}
+        </div>
+      `).join('')}
+    </div></div></div>`;
+
+    board.innerHTML = prizeHtml + bracketHtml + tournament.stages.map(stage => `
       <article class="tournament-stage">
         <div class="tournament-stage-header">
           <div>
@@ -2267,6 +2809,7 @@
   }
 
   siteDataReady.then(() => {
+    loadNews();
     if (document.getElementById('page-cards').classList.contains('visible')) {
       renderCards(siteData.sets);
     }

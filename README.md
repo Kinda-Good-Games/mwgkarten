@@ -74,7 +74,6 @@ Fertig! Der Kartenname und die Rarität werden direkt in der Karte angezeigt. We
 Im Kartenalbum werden die Karten nach Set gruppiert und oben kannst du zwischen den Sets filtern.
 
 Die Kartenränder werden je Rarität aus `rarities` eingefärbt. Dort kannst du `borderColor` und optional `glowColor` anpassen.
-Plea
 ---
 
 ## Turnierseite
@@ -106,6 +105,48 @@ In `data.json` steuerst du das über `tournament`:
 ```
 
 Wenn `upcoming` auf `true` steht, erscheint oben auf der Turnierseite zusätzlich ein `Coming soon`-Hinweis.
+
+### Optik der Brackets anpassen
+
+Die visuelle Darstellung der Turnierseite wird direkt in `index.html` über CSS gesteuert. Wenn du die Boxen größer oder kleiner machen willst, ändere zuerst die CSS-Variable `--tournament-box-width` im `:root`-Block.
+
+Für das Aussehen der einzelnen Bereiche sind diese Klassen wichtig:
+
+- `.tournament-prize-ladder` für den Preis-Block oben
+- `.tournament-prize-card` für die einzelnen Preis-Karten
+- `.bracket-columns` für die Spalten der Bracket-Ansicht
+- `.bracket-match` für die Match-Kästchen in der Bracket-Ansicht
+- `.tournament-stage` für die großen Stage-Boxen mit Details
+
+Wenn du Farben, Abstände, Rahmen oder Schatten ändern willst, bearbeite diese CSS-Regeln direkt in `index.html`. Damit alle Boxen weiterhin gleich breit bleiben, sollten die jeweiligen `width`- und `max-width`-Werte zusammen mit `--tournament-box-width` angepasst werden.
+
+---
+
+## Newsseite
+
+Die Website hat jetzt zusätzlich eine News-Seite im Blog-Stil. Dort werden einzelne Markdown-Dateien aus dem Ordner `blogs/` geladen und nacheinander angezeigt. Auf der Startseite erscheint außerdem ein kurzer Hinweis auf die neuesten News.
+
+Damit neue Beiträge angezeigt werden, brauchst du zwei Dinge:
+
+1. Lege eine Markdown-Datei in `blogs/` an, zum Beispiel `blogs/mein-beitrag.md`.
+2. Trage die Datei in `blogs/index.json` ein.
+
+Beispiel:
+
+```json
+{
+  "posts": [
+    {
+      "file": "mein-beitrag.md",
+      "title": "Mein neuer News-Beitrag",
+      "date": "2026-05-05",
+      "excerpt": "Eine kurze Zusammenfassung des Beitrags."
+    }
+  ]
+}
+```
+
+Im Markdown kannst du normale Überschriften, Listen, Zitate, Links und Codeblöcke verwenden. Die Seite rendert die Beiträge automatisch im Blog-Stil.
 
 ---
 

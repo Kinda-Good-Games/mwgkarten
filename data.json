@@ -70,6 +70,14 @@
     "upcoming": true,
     "title": "Turnier-Brackets",
     "description": "Hier siehst du die aktuellen Brackets, Stufen und Paarungen des Schulturniers.",
+    "prizes": [
+      { "places": "16-9", "reward": "1 freies Booster-Pack", "image": "assets/prizes/booster.svg" },
+      { "places": "8-5",  "reward": "2x Sammelheft",       "image": "assets/prizes/sammelheft.svg" },
+      { "places": "4",    "reward": "Kostenloses Bundle",   "image": "assets/prizes/bundle.svg" },
+      { "places": "3",    "reward": "5 Booster + 1 Bundle", "image": "assets/prizes/third.svg" },
+      { "places": "2",    "reward": "Kopfhörer",            "image": "assets/prizes/headphones.svg" },
+      { "places": "1",    "reward": "iPad",                 "image": "assets/prizes/ipad.svg" }
+    ],
     "stages": [
       {
         "name": "Vorrunde",
