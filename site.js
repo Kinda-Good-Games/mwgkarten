@@ -138,6 +138,19 @@
     const defaultTournament = DEFAULT_SITE_DATA.tournament;
     const stageSource = Array.isArray(source.stages) && source.stages.length > 0 ? source.stages : defaultTournament.stages;
 
+    function normalizeMatch(match, matchIndex) {
+      const statusValue = String(match.status || match.state || '').trim().toLowerCase();
+      const winnerValue = String(match.winner || match.winningTeam || '').trim();
+      return {
+        label: String(match.label || match.title || `Match ${matchIndex + 1}`),
+        left: String(match.left || match.teamA || match.a || '').trim(),
+        right: String(match.right || match.teamB || match.b || '').trim(),
+        note: String(match.note || '').trim(),
+        status: statusValue || (winnerValue ? 'done' : ''),
+        winner: winnerValue
+      };
+    }
+
     return {
       upcoming: Boolean(source.upcoming ?? defaultTournament.upcoming),
       title: String(source.title || defaultTournament.title),
@@ -163,17 +176,20 @@
               .filter(Boolean),
             matches: matches
               .filter(match => match && typeof match === 'object')
-              .map((match, matchIndex) => ({
-                label: String(match.label || match.title || `Match ${matchIndex + 1}`),
-                left: String(match.left || match.teamA || match.a || '').trim(),
-                right: String(match.right || match.teamB || match.b || '').trim(),
-                note: String(match.note || '').trim()
-              }))
-              .filter(match => match.left || match.right)
+              .map((match, matchIndex) => normalizeMatch(match, matchIndex))
+              .filter(match => match.left || match.right || match.winner)
           };
         })
         .filter(stage => stage.matches.length > 0 || stage.participants.length > 0)
     };
+  }
+
+  function formatTournamentStatusLabel(status) {
+    const normalized = String(status || '').trim().toLowerCase();
+    if (normalized === 'next') return 'Next match';
+    if (normalized === 'upcoming') return 'Coming later';
+    if (normalized === 'done') return 'Done';
+    return normalized;
   }
 
   async function loadSiteData() {
@@ -424,6 +440,7 @@
             <div class="news-article-body">${post.html}</div>
           </article>
         `).join('');
+        renderNewsMath(grid);
       }
     } catch (error) {
       blogState.loaded = true;
@@ -440,6 +457,148 @@
         teaser.textContent = 'News konnten nicht geladen werden.';
       }
     }
+  }
+
+  function renderNewsMath(container) {
+    if (!container || typeof window.renderMathInElement !== 'function') return;
+
+    try {
+      window.renderMathInElement(container, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '\\[', right: '\\]', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false }
+        ],
+        throwOnError: false,
+        errorColor: '#e8bf72'
+      });
+    } catch (_) {
+      // If KaTeX fails to parse a formula, keep the raw text visible.
+    }
+  }
+
+  function buildTournamentGraph(tournament) {
+    const stages = Array.isArray(tournament?.stages) ? tournament.stages : [];
+    if (!stages.length) return '';
+
+    const nodeWidth = 200;
+    const nodeHeight = 102;
+    const columnGap = 220;
+    const leafGap = 104;
+    const paddingX = 40;
+    const paddingY = 44;
+    const labelY = 18;
+    const roundPositions = [];
+
+    stages.forEach((stage, stageIndex) => {
+      const matchCount = Array.isArray(stage.matches) ? stage.matches.length : 0;
+      if (stageIndex === 0) {
+        roundPositions[stageIndex] = Array.from({ length: matchCount }, (_, matchIndex) => (
+          paddingY + matchIndex * leafGap
+        ));
+        return;
+      }
+
+      const previousRound = roundPositions[stageIndex - 1] || [];
+      roundPositions[stageIndex] = Array.from({ length: matchCount }, (_, matchIndex) => {
+        const left = previousRound[matchIndex * 2];
+        const right = previousRound[matchIndex * 2 + 1];
+        if (Number.isFinite(left) && Number.isFinite(right)) {
+          return (left + right) / 2;
+        }
+        if (Number.isFinite(left)) {
+          return left;
+        }
+        if (Number.isFinite(right)) {
+          return right;
+        }
+        return paddingY + matchIndex * leafGap * Math.pow(0.5, stageIndex);
+      });
+    });
+
+    const lastStage = stages.length - 1;
+    const svgWidth = paddingX * 2 + lastStage * columnGap + nodeWidth;
+    const leafCount = roundPositions[0].length || 1;
+    const svgHeight = paddingY * 2 + (leafCount - 1) * leafGap + nodeHeight;
+
+    const connectorPaths = [];
+    stages.forEach((stage, stageIndex) => {
+      if (stageIndex >= lastStage) return;
+
+      const currentRound = roundPositions[stageIndex] || [];
+      const nextRound = roundPositions[stageIndex + 1] || [];
+      const sourceX = paddingX + stageIndex * columnGap + nodeWidth;
+      const targetX = paddingX + (stageIndex + 1) * columnGap;
+
+      currentRound.forEach((sourceY, sourceIndex) => {
+        const targetIndex = Math.floor(sourceIndex / 2);
+        const targetY = nextRound[targetIndex];
+        if (!Number.isFinite(sourceY) || !Number.isFinite(targetY)) return;
+
+        const sourceCenterY = sourceY + nodeHeight / 2;
+        const targetCenterY = targetY + nodeHeight / 2;
+        const midX = sourceX + (targetX - sourceX) / 2;
+        const path = `M ${sourceX} ${sourceCenterY} H ${midX} V ${targetCenterY} H ${targetX}`;
+        connectorPaths.push(`<path class="tournament-graph-link tournament-graph-link--glow" d="${path}"/>`);
+        connectorPaths.push(`<path class="tournament-graph-link" d="${path}"/>`);
+      });
+    });
+
+    const nodes = stages.map((stage, stageIndex) => {
+      const stageX = paddingX + stageIndex * columnGap;
+      const stageNodes = Array.isArray(stage.matches) ? stage.matches : [];
+      const stageLabel = escapeHtml(stage.status || stage.name || `Stage ${stageIndex + 1}`);
+
+      return `
+        <g class="tournament-graph-stage">
+          <text class="tournament-graph-stage-label" x="${stageX}" y="${labelY}">${stageLabel}</text>
+          ${stageNodes.map((match, matchIndex) => {
+            const y = roundPositions[stageIndex]?.[matchIndex];
+            if (!Number.isFinite(y)) return '';
+            const isFinal = stageIndex === lastStage;
+            const title = escapeHtml(match.label || `Match ${matchIndex + 1}`);
+            const left = escapeHtml(match.left || 'TBD');
+            const right = escapeHtml(match.right || 'TBD');
+            const status = String(match.status || '').toLowerCase();
+            const winner = String(match.winner || '').trim();
+            const footerText = winner
+              ? `Gewinner: ${escapeHtml(winner)}`
+              : status
+                ? formatTournamentStatusLabel(status)
+                : '';
+            const nodeClass = [
+              'tournament-graph-node',
+              isFinal ? 'tournament-graph-node--final' : '',
+              status ? `tournament-graph-node--${status}` : ''
+            ].filter(Boolean).join(' ');
+            return `
+              <g class="${nodeClass}" transform="translate(${stageX}, ${y})">
+                <rect rx="12" ry="12" width="${nodeWidth}" height="${nodeHeight}"/>
+                ${status ? `<text class="tournament-graph-node-status" x="${nodeWidth - 14}" y="20" text-anchor="end">${escapeHtml(formatTournamentStatusLabel(status))}</text>` : ''}
+                <text class="tournament-graph-node-title" x="14" y="24">${title}</text>
+                <text class="tournament-graph-node-subtitle" x="14" y="48">${left}</text>
+                <text class="tournament-graph-node-subtitle" x="14" y="66">${right}</text>
+                ${footerText ? `<text class="tournament-graph-node-footer" x="14" y="90">${footerText}</text>` : ''}
+              </g>
+            `;
+          }).join('')}
+        </g>
+      `;
+    }).join('');
+
+    return `
+      <div class="tournament-graphic">
+        <div class="tournament-graph-viewport">
+          <svg class="tournament-graph" viewBox="0 0 ${svgWidth} ${svgHeight}" role="img" aria-label="Turnier-Bracket mit Siegerpfaden">
+            <g class="tournament-graph-tracks">
+              ${connectorPaths.join('')}
+            </g>
+            ${nodes}
+          </svg>
+        </div>
+      </div>
+    `;
   }
 
   function normalizeProducts(products) {
@@ -820,21 +979,7 @@
       return;
     }
 
-    // Build a simple visual bracket: columns per stage, matches stacked vertically
-    const bracketHtml = `<div class="tournament-graphic"><div class="bracket-wrapper"><div class="bracket-columns">
-      ${tournament.stages.map(stage => `
-        <div class="bracket-column">
-          <div class="tournament-graphic-stage-label">${stage.status || stage.name}</div>
-          ${stage.matches.map(match => `
-            <div class="bracket-match">
-              <div class="bracket-match-label">${match.label}</div>
-              <div class="bracket-team"><span>${match.left || 'TBD'}</span><span>vs</span></div>
-              <div class="bracket-team"><span>${match.right || 'TBD'}</span><span></span></div>
-            </div>
-          `).join('')}
-        </div>
-      `).join('')}
-    </div></div></div>`;
+    const bracketHtml = buildTournamentGraph(tournament);
 
     board.innerHTML = prizeHtml + bracketHtml + tournament.stages.map(stage => `
       <article class="tournament-stage">
@@ -852,12 +997,16 @@
         ` : ''}
         <div class="tournament-matches">
           ${stage.matches.map(match => `
-            <div class="tournament-match">
-              <div class="tournament-match-label">${match.label}</div>
+            <div class="tournament-match${match.status ? ` tournament-match--${match.status}` : ''}">
+              <div class="tournament-match-head">
+                <div class="tournament-match-label">${match.label}</div>
+                ${match.status ? `<div class="tournament-match-status">${escapeHtml(formatTournamentStatusLabel(match.status))}</div>` : ''}
+              </div>
               <div class="tournament-match-teams">
                 <div class="tournament-match-team"><span>${match.left}</span><span>oben</span></div>
                 <div class="tournament-match-team"><span>${match.right}</span><span>unten</span></div>
               </div>
+              ${match.winner ? `<div class="tournament-match-winner">Gewinner: <strong>${match.winner}</strong></div>` : ''}
               ${match.note ? `<div class="tournament-stage-description" style="margin-top:.55rem; position:relative; z-index:1;">${match.note}</div>` : ''}
             </div>
           `).join('')}

@@ -55,7 +55,7 @@
       ]
     },
     {
-      "name": "Set 2: Electric Boogaloo",
+      "name": "Set 2: Chaos",
       "description": "Mehr Energie, mehr Chaos, mehr Karten.",
       "cards": [
         {
@@ -67,9 +67,9 @@
     }
   ],
   "tournament": {
-    "upcoming": true,
+    "upcoming": false,
     "title": "Turnier-Brackets",
-    "description": "Hier siehst du die aktuellen Brackets, Stufen und Paarungen des Schulturniers.",
+    "description": "Beispielansicht eines 16-Spieler-Turniers mit Vorrunde, Viertelfinale, Halbfinale und Finale.",
     "prizes": [
       { "places": "16-9", "reward": "1 freies Booster-Pack", "image": "assets/prizes/booster.svg" },
       { "places": "8-5",  "reward": "2x Sammelheft",       "image": "assets/prizes/sammelheft.svg" },
@@ -82,56 +82,82 @@
       {
         "name": "Vorrunde",
         "status": "Stage 1",
-        "description": "Die ersten Begegnungen bestimmen, wer ins Halbfinale einzieht.",
+        "description": "Die ersten Begegnungen bestimmen, wer ins Viertelfinale einzieht.",
         "participants": [
           "Team Alpha",
           "Team Beta",
           "Team Gamma",
-          "Team Delta"
+          "Team Delta",
+          "Team Epsilon",
+          "Team Zeta",
+          "Team Eta",
+          "Team Theta",
+          "Team Iota",
+          "Team Kappa",
+          "Team Lambda",
+          "Team Mu",
+          "Team Nu",
+          "Team Xi",
+          "Team Omikron",
+          "Team Pi"
         ],
         "matches": [
-          {
-            "label": "Spiel 1",
-            "left": "Team Alpha",
-            "right": "Team Beta"
-          },
-          {
-            "label": "Spiel 2",
-            "left": "Team Gamma",
-            "right": "Team Delta"
-          }
+          { "label": "Spiel 1", "left": "Team Alpha", "right": "Team Beta", "status": "done", "winner": "Team Alpha" },
+          { "label": "Spiel 2", "left": "Team Gamma", "right": "Team Delta", "status": "done", "winner": "Team Delta" },
+          { "label": "Spiel 3", "left": "Team Epsilon", "right": "Team Zeta", "status": "done", "winner": "Team Epsilon" },
+          { "label": "Spiel 4", "left": "Team Eta", "right": "Team Theta", "status": "done", "winner": "Team Theta" },
+          { "label": "Spiel 5", "left": "Team Iota", "right": "Team Kappa", "status": "upcoming" },
+          { "label": "Spiel 6", "left": "Team Lambda", "right": "Team Mu", "status": "upcoming" },
+          { "label": "Spiel 7", "left": "Team Nu", "right": "Team Xi", "status": "next" },
+          { "label": "Spiel 8", "left": "Team Omikron", "right": "Team Pi", "status": "upcoming" }
+        ]
+      },
+      {
+        "name": "Viertelfinale",
+        "status": "Stage 2",
+        "description": "Die acht Sieger der Vorrunde treffen hier aufeinander.",
+        "participants": [
+          "Sieger Spiel 1",
+          "Sieger Spiel 2",
+          "Sieger Spiel 3",
+          "Sieger Spiel 4",
+          "Sieger Spiel 5",
+          "Sieger Spiel 6",
+          "Sieger Spiel 7",
+          "Sieger Spiel 8"
+        ],
+        "matches": [
+          { "label": "Match A", "left": "Sieger Spiel 1", "right": "Sieger Spiel 2", "status": "upcoming" },
+          { "label": "Match B", "left": "Sieger Spiel 3", "right": "Sieger Spiel 4", "status": "upcoming" },
+          { "label": "Match C", "left": "Sieger Spiel 5", "right": "Sieger Spiel 6", "status": "next" },
+          { "label": "Match D", "left": "Sieger Spiel 7", "right": "Sieger Spiel 8", "status": "upcoming" }
         ]
       },
       {
         "name": "Halbfinale",
-        "status": "Stage 2",
-        "description": "Hier stehen die Sieger der Vorrunde.",
+        "status": "Stage 3",
+        "description": "Die vier besten Teams kämpfen um den Einzug ins Finale.",
         "participants": [
-          "Sieger Spiel 1",
-          "Sieger Spiel 2"
+          "Sieger Match A",
+          "Sieger Match B",
+          "Sieger Match C",
+          "Sieger Match D"
         ],
         "matches": [
-          {
-            "label": "Match A",
-            "left": "Sieger Spiel 1",
-            "right": "Sieger Spiel 2"
-          }
+          { "label": "Halbfinale 1", "left": "Sieger Match A", "right": "Sieger Match B", "status": "upcoming" },
+          { "label": "Halbfinale 2", "left": "Sieger Match C", "right": "Sieger Match D", "status": "upcoming" }
         ]
       },
       {
         "name": "Finale",
-        "status": "Stage 3",
+        "status": "Stage 4",
         "description": "Das letzte Duell um den Turniersieg.",
         "participants": [
-          "Finalist A",
-          "Finalist B"
+          "Sieger Halbfinale 1",
+          "Sieger Halbfinale 2"
         ],
         "matches": [
-          {
-            "label": "Finale",
-            "left": "Finalist A",
-            "right": "Finalist B"
-          }
+          { "label": "Finale", "left": "Sieger Halbfinale 1", "right": "Sieger Halbfinale 2", "status": "upcoming" }
         ]
       }
     ]

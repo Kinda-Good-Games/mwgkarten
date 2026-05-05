@@ -1,18 +1,11 @@
 {
   "posts": [
     {
-      "id": "launch",
-      "file": "launch.md",
-      "title": "Projektstart: Das MWG Sammelkarten-Spiel ist live",
+      "id": "placeholder",
+      "file": "placeholder.md",
+      "title": "Platzhalter-Blogpost: Das MWG Sammelkarten-Spiel kommt bald!",
       "date": "2026-05-05",
-      "excerpt": "Die ersten Karten, das Turnier und die Bestellseite sind online."
-    },
-    {
-      "id": "tournament-prizes",
-      "file": "tournament-prizes.md",
-      "title": "Turnierpreise und Brackets sind jetzt sichtbar",
-      "date": "2026-05-05",
-      "excerpt": "Die Turnierseite zeigt jetzt Preise, Brackets und Matchdetails im neuen Layout."
+      "excerpt": "Platzhalter-Text: Das MWG Sammelkarten-Spiel ist in Entwicklung und wird bald veröffentlicht."
     }
   ]
 }

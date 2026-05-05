@@ -395,6 +395,36 @@
       color: #ffd98f;
     }
     .news-article-body pre code { color: inherit; }
+
+    .news-article-body .katex {
+      color: var(--gold-pale);
+      font-size: 1em;
+    }
+
+    .news-article-body .katex-display {
+      margin: 1rem 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: .35rem 0;
+    }
+
+    .news-article-body .katex-display > .katex {
+      display: inline-block;
+      min-width: 100%;
+    }
+
+    .news-article-body .katex .mord,
+    .news-article-body .katex .mbin,
+    .news-article-body .katex .mrel,
+    .news-article-body .katex .mopen,
+    .news-article-body .katex .mclose,
+    .news-article-body .katex .mpunct,
+    .news-article-body .katex .minner,
+    .news-article-body .katex .frac-line,
+    .news-article-body .katex .mspace {
+      color: inherit;
+      border-color: currentColor;
+    }
     .news-empty {
       text-align: center;
       padding: 3rem 1rem;
@@ -638,14 +668,18 @@
     /* enforce uniform width for matches in stage lists as well */
     .tournament-match, .bracket-match { box-sizing: border-box; width: 100%; max-width: var(--tournament-box-width); }
 
-    .tournament-graphic svg {
+    .tournament-graph-viewport {
+      overflow: auto;
+    }
+
+    .tournament-graph {
       display: block;
       min-width: 920px;
       width: 100%;
       height: auto;
     }
 
-    .tournament-graphic-stage-label {
+    .tournament-graph-stage-label {
       font-family: 'Cinzel', serif;
       font-size: 11px;
       letter-spacing: .2em;
@@ -653,51 +687,165 @@
       fill: rgba(245,230,196,.75);
     }
 
-    .tournament-graphic-node {
+    .tournament-graph-node rect {
       fill: rgba(13,11,8,.95);
       stroke: rgba(201,147,58,.35);
       stroke-width: 1.5;
     }
 
-    .tournament-graphic-node--final {
+    .tournament-graph-node--done rect {
+      fill: rgba(26,61,43,.42);
+      stroke: rgba(122, 207, 145, .9);
+      filter: drop-shadow(0 0 10px rgba(122, 207, 145, .18));
+    }
+
+    .tournament-graph-node--upcoming rect {
+      fill: rgba(201,147,58,.08);
+      stroke: rgba(255,201,94,.42);
+    }
+
+    .tournament-graph-node--next rect {
+      fill: rgba(59,130,246,.14);
+      stroke: rgba(96,165,250,.68);
+    }
+
+    .tournament-graph-node {
+      color: var(--gold-pale);
+    }
+
+    .tournament-graph-node--final rect {
       fill: rgba(122,26,46,.22);
       stroke: rgba(255,201,94,.55);
     }
 
-    .tournament-graphic-node-title {
+    .tournament-graph-node-title {
       font-family: 'Cinzel Decorative', serif;
       font-size: 13px;
       fill: var(--gold-light);
     }
 
-    .tournament-graphic-node-subtitle {
+    .tournament-graph-node-subtitle {
       font-family: 'EB Garamond', serif;
       font-size: 11px;
       fill: rgba(245,230,196,.72);
     }
 
-    .tournament-graphic-link {
+    .tournament-graph-node-status,
+    .tournament-graph-node-footer {
+      font-family: 'Cinzel', serif;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-size: 9px;
+      fill: rgba(245,230,196,.58);
+    }
+
+    .tournament-graph-node--upcoming .tournament-graph-node-status {
+      fill: var(--gold-light);
+    }
+
+    .tournament-graph-node--next .tournament-graph-node-status {
+      fill: #93c5fd;
+    }
+
+    .tournament-graph-node-footer {
+      fill: #fff2cc;
+      font-weight: 700;
+    }
+
+    .tournament-graph-link {
       stroke: rgba(255,201,94,.65);
       stroke-width: 2.5;
       fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
-    .tournament-graphic-glow {
+    .tournament-graph-link--glow {
       stroke: rgba(255,160,42,.28);
       stroke-width: 8;
       fill: none;
       filter: blur(1px);
-    }
-
-    .tournament-graphic-track {
-      stroke: rgba(255,255,255,.06);
-      stroke-width: 1;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .tournament-board {
       display: grid;
       gap: 1rem;
       padding-bottom: .4rem;
+    }
+
+    .tournament-match-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: .75rem;
+    }
+
+    .tournament-match-status {
+      font-family: 'Cinzel', serif;
+      font-size: .62rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(245,230,196,.56);
+      padding: .18rem .45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(201,147,58,.22);
+      background: rgba(255,255,255,.03);
+      white-space: nowrap;
+    }
+
+    .tournament-match--done .tournament-match-status {
+      color: #d2ffe0;
+      border-color: rgba(122,207,145,.7);
+      background: rgba(26,61,43,.4);
+      box-shadow: 0 0 0 1px rgba(122,207,145,.1), 0 0 18px rgba(122,207,145,.1);
+    }
+
+    .tournament-match--upcoming .tournament-match-status,
+    .tournament-match--next .tournament-match-status {
+      border-color: rgba(255,201,94,.38);
+      background: rgba(201,147,58,.12);
+    }
+
+    .tournament-match--upcoming .tournament-match-status {
+      color: var(--gold-light);
+      background: rgba(201,147,58,.08);
+      opacity: .85;
+    }
+
+    .tournament-match--next .tournament-match-status {
+      color: #bfdbfe;
+      border-color: rgba(96,165,250,.42);
+      background: rgba(59,130,246,.14);
+    }
+
+    .tournament-match-winner {
+      margin-top: .6rem;
+      padding-top: .55rem;
+      border-top: 1px solid rgba(201,147,58,.12);
+      color: #fff2cc;
+      font-size: .98rem;
+      line-height: 1.45;
+      font-weight: 700;
+      background: linear-gradient(90deg, rgba(201,147,58,.12), transparent 72%);
+      border-radius: 10px;
+      padding-left: .65rem;
+      padding-right: .65rem;
+    }
+
+    .tournament-match--done .tournament-match-winner {
+      color: #ddffe7;
+      background: linear-gradient(90deg, rgba(26,61,43,.34), transparent 72%);
+    }
+
+    .tournament-match--upcoming .tournament-match-winner,
+    .tournament-match--next .tournament-match-winner {
+      color: inherit;
+    }
+
+    .tournament-match--next .tournament-match-winner {
+      color: #bfdbfe;
     }
 
     .tournament-board::-webkit-scrollbar { height: 10px; }
@@ -1504,6 +1652,52 @@
       .cards-gallery { padding: 0 1rem 4rem; gap: 1.5rem; }
       .card-collection-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: .85rem; }
       .card-item-label { transform: translateY(0); padding-top: .9rem; }
+
+      .news-page { padding: 3rem 1rem 4rem; }
+      .news-page-intro {
+        max-width: 100%;
+        font-size: 1rem;
+        line-height: 1.65;
+        margin-bottom: 1.2rem;
+      }
+      .news-grid { gap: 1rem; }
+      .news-article {
+        padding: 1rem;
+        border-radius: 14px;
+        gap: .75rem;
+      }
+      .news-article-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .4rem;
+      }
+      .news-article-title { font-size: clamp(1.15rem, 5.5vw, 1.55rem); }
+      .news-article-meta {
+        font-size: .62rem;
+        letter-spacing: .14em;
+      }
+      .news-post-excerpt,
+      .news-article-body {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+      .news-article-body h1 { font-size: 1.45rem; }
+      .news-article-body h2 { font-size: 1.25rem; }
+      .news-article-body h3 { font-size: 1.1rem; }
+      .news-article-body blockquote,
+      .news-article-body pre {
+        margin: .9rem 0;
+        padding: .8rem;
+      }
+      .news-article-body ul,
+      .news-article-body ol {
+        margin: .7rem 0 .7rem 1.15rem;
+      }
+      .news-article-body a,
+      .news-article-body code {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
 
       .tournament-page, .order-page { padding: 3rem 1rem 4rem; }
       .tournament-prize-ladder { padding: .85rem; }
