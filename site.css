@@ -1,46 +1,44 @@
-﻿/* ÔöÇÔöÇ CSS Variables ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* CSS Variables */
     :root {
-      --gold:        #c9933a;
-      --gold-light:  #e8bf72;
-      --gold-pale:   #f5e6c4;
-      --ink:         #0d0b08;
-      --parchment:   #f7f0e3;
-      --parchment-2: #ede3cc;
-      --crimson:     #7a1a2e;
-      --forest:      #1a3d2b;
-      --slate:       #2c2a26;
-      --shadow:      rgba(13,11,8,.55);
-      --radius:      6px;
-      --tournament-box-width: clamp(230px, 26vw, 340px);
+      --gold:        #c9933a; /* Gold color */
+      --gold-light:  #e8bf72; /* Light gold color */
+      --gold-pale:   #f5e6c4; /* Pale gold color */
+      --ink:         #0d0b08; /* Ink color */
+      --parchment:   #f7f0e3; /* Parchment color */
+      --parchment-2: #ede3cc; /* Second parchment color */
+      --crimson:     #7a1a2e; /* Crimson color */
+      --forest:      #1a3d2b; /* Forest color */
+      --slate:       #2c2a26; /* Slate color */
+      --shadow:      rgba(13,11,8,.55); /* Shadow color */
+      --radius:      6px; /* Border radius */
+      --tournament-box-width: clamp(230px, 26vw, 340px); /* Tournament box width */
     }
 
-    /* ÔöÇÔöÇ Reset ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+    /* Reset */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'EB Garamond', Georgia, serif;
-      background: var(--ink);
-      color: var(--parchment);
-      overflow-x: hidden;
-      min-height: 100vh;
+      font-family: 'EB Garamond', Georgia, serif; /* Body font */
+      background: var(--ink); /* Background color */
+      color: var(--parchment); /* Text color */
+      overflow-x: hidden; /* Hide horizontal overflow */
+      min-height: 100vh; /* Minimum height */
     }
-
-    /* ÔöÇÔöÇ Noise texture overlay ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+    /* Noise texture overlay */
     body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
-      pointer-events: none;
+      content: ''; /* Empty content */
+      position: fixed; inset: 0; z-index: 0; /* Fixed position */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E"); /* Background image */
+      pointer-events: none; /* Disable pointer events */
     }
-
-    /* ÔöÇÔöÇ Nav ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+    /* Nav */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem 3rem;
-      background: linear-gradient(to bottom, rgba(13,11,8,.96), rgba(13,11,8,.7));
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(201,147,58,.25);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100; /* Fixed navigation */
+      display: flex; align-items: center; justify-content: space-between; /* Flexbox layout */
+      padding: 1rem 3rem; /* Padding */
+      background: linear-gradient(to bottom, rgba(13,11,8,.96), rgba(13,11,8,.7)); /* Background gradient */
+      backdrop-filter: blur(8px); /* Blur effect */
+      border-bottom: 1px solid rgba(201,147,58,.25); /* Bottom border */
     }
     .nav-logo {
       font-family: 'Cinzel', serif;
@@ -62,22 +60,19 @@
       cursor: pointer;
     }
     .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--gold-light); }
-
-    /* ÔöÇÔöÇ Pages ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+    /* Pages */
     .page { display: none; min-height: 100vh; padding-top: 80px; position: relative; z-index: 1; }
-    .page.visible { display: block; }
-
-    /* ÔòÉÔòÉ HOME PAGE ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ */
-
+    .page.visible { display: block; } /* Visible page */
+    /* Home page */
     /* Hero */
     .hero {
-      position: relative;
-      min-height: 92vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 4rem 2rem 6rem;
-      overflow: hidden;
+      position: relative; /* Relative positioning */
+      min-height: 92vh; /* Minimum height */
+      display: flex; flex-direction: column; /* Flexbox layout */
+      align-items: center; justify-content: center; /* Center alignment */
+      text-align: center; /* Center text */
+      padding: 4rem 2rem 6rem; /* Padding */
+      overflow: hidden; /* Hide overflow */
     }
     .hero-bg {
       position: absolute; inset: 0;
@@ -474,8 +469,7 @@
       font-family: 'Cinzel', serif; font-size: .6rem;
       color: var(--gold-light);
     }
-
-    /* ÔòÉÔòÉ CARDS PAGE ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ */
+    /* Cards page */
     .cards-header {
       text-align: center; padding: 4rem 2rem 2rem;
     }
@@ -538,7 +532,7 @@
       gap: 1.4rem;
     }
 
-    /* ÔòÉÔòÉ TOURNAMENT PAGE ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ */
+    /* ������ TOURNAMENT PAGE ������������������������������������������������������������������������������������������������ */
     .tournament-page {
       max-width: 1200px;
       margin: 0 auto;
@@ -1223,7 +1217,7 @@
     }
     .lightbox-close:hover { color: var(--gold); }
 
-    /* ÔòÉÔòÉ ORDER PAGE ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ */
+    /* ������ ORDER PAGE ������������������������������������������������������������������������������������������������������������������ */
     .order-page {
       max-width: 1080px; margin: 0 auto;
       padding: 4rem 2rem 6rem;

@@ -1,24 +1,24 @@
-﻿/* ÔöÇÔöÇ Page navigation ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
-  function showPage(name) {
-    const pageUrls = {
-      home: 'index.html',
-      news: 'news.html',
-      cards: 'cards.html',
-      tournament: 'tournament.html',
-      order: 'order.html'
-    };
-    window.location.href = pageUrls[name] || 'index.html';
-  }
+﻿/* Page navigation */
+function showPage(name) {
+  const pageUrls = {
+    home: 'index.html',
+    news: 'news.html',
+    cards: 'cards.html',
+    tournament: 'tournament.html',
+    order: 'order.html'
+  };
+  window.location.href = pageUrls[name] || 'index.html';
+}
 
-  const DEFAULT_SITE_DATA = {
-    contactEmail: 'abi2027.mwg@outlook.de',
-    rarities: {
-      Common: { borderColor: '#64748b', glowColor: 'rgba(100, 116, 139, 0.22)' },
-      Uncommon: { borderColor: '#22c55e', glowColor: 'rgba(34, 197, 94, 0.22)' },
-      Rare: { borderColor: '#3b82f6', glowColor: 'rgba(59, 130, 246, 0.24)' },
-      Epic: { borderColor: '#a855f7', glowColor: 'rgba(168, 85, 247, 0.26)' },
-      Legendary: { borderColor: '#f59e0b', glowColor: 'rgba(245, 158, 11, 0.28)' }
-    },
+const DEFAULT_SITE_DATA = {
+  contactEmail: 'abi2027.mwg@outlook.de',
+  rarities: {
+    Common: { borderColor: '#64748b', glowColor: 'rgba(100, 116, 139, 0.22)' },
+    Uncommon: { borderColor: '#22c55e', glowColor: 'rgba(34, 197, 94, 0.22)' },
+    Rare: { borderColor: '#3b82f6', glowColor: 'rgba(59, 130, 246, 0.24)' },
+    Epic: { borderColor: '#a855f7', glowColor: 'rgba(168, 85, 247, 0.26)' },
+    Legendary: { borderColor: '#f59e0b', glowColor: 'rgba(245, 158, 11, 0.28)' }
+  },
     sets: [
       {
         name: 'Set 1: The beginnings',
@@ -50,7 +50,7 @@
         { places: '8-5', reward: '2x Sammelheft', image: '' },
         { places: '4', reward: 'Kostenloses Bundle', image: '' },
         { places: '3', reward: '5 Booster + 1 Bundle', image: '' },
-        { places: '2', reward: 'Kopfh├Ârer', image: '' },
+        { places: '2', reward: 'Kopfhörer', image: '' },
         { places: '1', reward: 'iPad', image: '' }
       ],
       stages: [
@@ -88,7 +88,7 @@
       {
         id: 'booster-packs',
         name: 'Booster-Packs',
-        description: 'Zuf├ñllige Kartenpakete mit einer gemischten Auswahl aus dem Set.',
+        description: 'Zufällige Kartenpakete mit einer gemischten Auswahl aus dem Set.',
         unitLabel: 'Booster-Pack(s)',
         price: 4.50,
         minQuantity: 1,
@@ -380,7 +380,7 @@
       grid.innerHTML = `
         <div class="news-article">
           <div class="news-article-header">
-            <div class="news-post-kicker">L├ñdt ÔÇª</div>
+              <div class="news-post-kicker">Lädt ...</div>
             <div class="news-article-meta">Bitte warten</div>
           </div>
           <div class="news-post-excerpt">Die News werden gerade aus dem Ordner <code>blogs/</code> geladen.</div>
@@ -413,9 +413,9 @@
       if (teaser) {
         if (posts.length > 0) {
           const latest = posts[0];
-          teaser.innerHTML = `<strong>${escapeHtml(latest.title)}</strong>${latest.dateLabel ? ` ┬À ${escapeHtml(latest.dateLabel)}` : ''}<br>${escapeHtml(latest.excerpt || 'Neue Meldung im Blog-Stil.')} `;
+          teaser.innerHTML = `<strong>${escapeHtml(latest.title)}</strong>${latest.dateLabel ? ` ${escapeHtml(latest.dateLabel)}` : ''}<br>${escapeHtml(latest.excerpt || 'Neue Meldung im Blog-Stil.')} `;
         } else {
-          teaser.textContent = 'Noch keine News-Beitr├ñge vorhanden.';
+          teaser.textContent = 'Noch keine News-Beiträge vorhanden.';
         }
       }
 
@@ -449,9 +449,9 @@
       if (empty) {
         empty.style.display = 'block';
         empty.innerHTML = `
-          <div class="big-icon">­ƒô░</div>
+          <div class="big-icon">?</div>
           <p>News konnten nicht geladen werden</p>
-          <small>Pr├╝fe <code>blogs/index.json</code> und die dort gelisteten Markdown-Dateien.</small>`;
+          <small>Pr++fe <code>blogs/index.json</code> und die dort gelisteten Markdown-Dateien.</small>`;
       }
       if (teaser) {
         teaser.textContent = 'News konnten nicht geladen werden.';
@@ -613,7 +613,7 @@
           id: String(product.id || `product-${index + 1}`),
           name: String(product.name || `Produkt ${index + 1}`),
           description: String(product.description || 'Ein bestellbares Produkt aus dem MWG-Sortiment.'),
-          unitLabel: String(product.unitLabel || 'St├╝ck'),
+          unitLabel: String(product.unitLabel || 'St++ck'),
           price: Number.isFinite(Number(product.price)) ? Math.max(0, Number(product.price)) : 0,
           minQuantity,
           maxQuantity,
@@ -684,15 +684,16 @@
             </div>
             <div class="product-card-badge">${product.unitLabel}</div>
           </div>
-          <div class="product-card-meta">Maximal ${product.maxQuantity} ┬À Erste Auswahl setzt direkt auf ${product.defaultQuantity}</div>
+          <div class="product-card-meta">Maximal ${product.maxQuantity} - Erste Auswahl setzt direkt auf ${product.defaultQuantity}.</div>
+                    <div class="product-card-meta">
           <div class="product-card-price">Preis: ${formatMoney(unitPrice)} pro ${product.unitLabel}</div>
           <div class="product-card-footer">
-            <div class="quantity-pill" aria-label="Menge f├╝r ${product.name}">
-              <button type="button" aria-label="${product.name} reduzieren" onclick="updateProductQuantity('${product.id}', -1)">ÔêÆ</button>
+            <div class="quantity-pill" aria-label="Menge f++r ${product.name}">
+              <button type="button" aria-label="${product.name} reduzieren" onclick="updateProductQuantity('${product.id}', -1)">-</button>
               <span id="quantity-${product.id}">${quantity}</span>
-              <button type="button" aria-label="${product.name} erh├Âhen" onclick="updateProductQuantity('${product.id}', 1)">+</button>
+              <button type="button" aria-label="${product.name} erhöhen" onclick="updateProductQuantity('${product.id}', 1)">+</button>
             </div>
-            <div class="order-note-inline">${quantity > 0 ? `${quantity} ausgew├ñhlt` : 'Noch nicht ausgew├ñhlt'}</div>
+            <div class="order-note-inline">${quantity > 0 ? `${quantity} ausgewählt` : 'Noch nicht ausgewählt'}</div>
           </div>
         </article>
       `;
@@ -715,7 +716,7 @@
     const orderTotal = selectedItems.reduce((sum, item) => sum + getProductCost(item.product.id), 0);
 
     if (count) {
-      count.textContent = `${selectedItems.length} Produkt${selectedItems.length === 1 ? '' : 'e'} ausgew├ñhlt`;
+      count.textContent = `${selectedItems.length} Produkt${selectedItems.length === 1 ? '' : 'e'} ausgewählt`;
     }
 
     if (totalQuantity) {
@@ -729,14 +730,14 @@
     if (hint) {
       hint.textContent = selectedItems.length > 0
         ? `${selectedItems.length} Produkt${selectedItems.length === 1 ? '' : 'e'} in der Auswahl`
-        : 'Noch keine Produkte ausgew├ñhlt.';
+        : 'Noch keine Produkte ausgewählt.';
     }
 
     if (!summary) return;
 
     if (selectedItems.length === 0) {
       summary.className = 'selected-items empty';
-      summary.textContent = 'W├ñhle oben mindestens ein Produkt aus, dann erscheint hier deine Bestellung.';
+      summary.textContent = 'Wähle oben mindestens ein Produkt aus, dann erscheint hier deine Bestellung.';
       return;
     }
 
@@ -751,8 +752,7 @@
       </div>
     `).join('');
   }
-
-  /* ÔöÇÔöÇ Card gallery ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+  /* Card gallery */
   /*
     HOW TO ADD CARDS:
     Group cards into sets in data.json under `sets`.
@@ -849,7 +849,7 @@
   function prettyName(path) {
     const base = path.split('/').pop();            // filename.ext
     const name = base.replace(/\.[^.]+$/, '');     // strip extension
-    return name.replace(/[_-]/g, ' ')              // underscores ÔåÆ spaces
+    return name.replace(/[_-]/g, ' ')              // underscores -> spaces
                .replace(/\b\w/g, c => c.toUpperCase()); // Title Case
   }
 
@@ -864,7 +864,7 @@
     if (normalizedSets.length === 0) {
       placeholder.style.display = 'block';
       placeholder.innerHTML = `
-        <div class="big-icon">­ƒÄ┤</div>
+        <div class="big-icon">??</div>
         <p>Noch keine Karten vorhanden</p>
         <small>Lege Sets und Karten in <code>data.json</code> unter <code>sets</code> an.</small>`;
       return;
@@ -923,9 +923,9 @@
     if (!grid.children.length) {
       placeholder.style.display = 'block';
       placeholder.innerHTML = `
-        <div class="big-icon">­ƒöì</div>
+        <div class="big-icon">??</div>
         <p>Keine Karten gefunden</p>
-        <small>W├ñhle ein anderes Set oder versuch einen anderen Suchbegriff.</small>`;
+        <small>Wähle ein anderes Set oder versuch einen anderen Suchbegriff.</small>`;
     }
   }
 
@@ -972,7 +972,7 @@
     if (!tournament.stages.length) {
       board.innerHTML = `
         <div class="tournament-empty">
-          <div class="big-icon">­ƒÅå</div>
+          <div class="big-icon">??</div>
           <p>Noch keine Turnierdaten</p>
           <small>Lege Stufen und Paarungen in <code>data.json</code> unter <code>tournament</code> an.</small>
         </div>${prizeHtml}`;
@@ -1018,8 +1018,7 @@
   function filterCards() {
     renderCards(siteData.sets);
   }
-
-  /* ÔöÇÔöÇ Lightbox ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+  /* Lightbox */
   function openLightbox(src, alt) {
     document.getElementById('lightboxImg').src = src;
     document.getElementById('lightboxImg').alt = alt;
@@ -1036,12 +1035,11 @@
     return `https://formsubmit.co/ajax/${encodeURIComponent(siteData.contactEmail)}`;
   }
 
-  /* ÔöÇÔöÇ Order form ÔåÆ direct email submission ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+  /* Order form - direct email submission */
   async function submitOrder(e) {
     e.preventDefault();
     const name    = document.getElementById('orderName').value.trim();
-    const cls     = document.getElementById('orderClass').value.trim();
-    const email   = document.getElementById('orderEmail').value.trim();
+    const cls     = document.getElementById('orderClass').value.trim(); 
     const note    = document.getElementById('orderNote').value.trim();
     const items   = getSelectedOrderItems();
     const total   = items.reduce((sum, item) => sum + item.quantity, 0);
@@ -1049,32 +1047,31 @@
     const status  = document.getElementById('formStatus');
     const btn     = document.getElementById('submitBtn');
 
-    if (!name || !cls || !email) {
+    if (!name || !cls) {
       status.className = 'form-status error';
-      status.textContent = 'Bitte f├╝lle alle Pflichtfelder aus.';
+      status.textContent = 'Bitte fülle alle Pflichtfelder aus.';
       return;
     }
 
     if (items.length === 0) {
       status.className = 'form-status error';
-      status.textContent = 'Bitte w├ñhle mindestens ein Produkt mit Menge gr├Â├ƒer 0 aus.';
+      status.textContent = 'Bitte wähle mindestens ein Produkt mit Menge größer 0 aus.';
       return;
     }
 
     btn.disabled = true;
-    btn.textContent = 'ÔÅ│ Sende Reservierung ÔÇª';
+    btn.textContent = 'Sende Reservierung';
     status.className = 'form-status';
     status.style.display = 'block';
     status.style.background = 'rgba(201,147,58,.15)';
     status.style.border = '1px solid rgba(201,147,58,.3)';
     status.style.color = 'var(--gold-pale)';
-    status.textContent = 'Deine Reservierung wird direkt verschickt ÔÇª';
+    status.textContent = 'Deine Reservierung wird direkt verschickt.';
 
     try {
       const payload = new FormData();
       payload.append('Name', name);
-      payload.append('Klasse', cls);
-      payload.append('E-Mail', email);
+      payload.append('Klasse', cls); 
       payload.append('Gesamtmenge', String(total));
       payload.append('Gesamtkosten', formatMoney(totalCost));
       payload.append('Artikelanzahl', String(items.length));
@@ -1105,8 +1102,8 @@
 
       status.className = 'form-status success';
       status.innerHTML = `
-        <strong>Gesendet!</strong> Deine Auswahl wurde direkt verschickt. <br>Vielen Dank f├╝r deine Bestellung! </br>
-        Deine Artikel kannst du dann einfach in der Schule beim n├ñchsten Verkauf abholen.
+        <strong>Gesendet!</strong> Deine Auswahl wurde direkt verschickt. <br>Vielen Dank für deine Bestellung! </br>
+        Deine Artikel kannst du dann einfach in der Schule beim nächsten Verkauf abholen.
       `;
 
       e.target.reset();
@@ -1118,7 +1115,7 @@
       status.textContent = error.message || 'Beim Senden ist ein Fehler aufgetreten.';
     } finally {
       btn.disabled = false;
-      btn.textContent = '­ƒÄ┤ Auswahl absenden';
+      btn.textContent = 'Auswahl absenden';
     }
   }
 
