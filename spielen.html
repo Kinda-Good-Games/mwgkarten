@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spielen | Das MWG Sammelkarten-Spiel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body data-page="spielen">
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')">MWG <span>Karten</span></a>
+  <div class="nav-links">
+    <a onclick="showPage('home')" id="nav-home">Startseite</a>
+    <a onclick="showPage('news')" id="nav-news">News</a>
+    <a onclick="showPage('cards')" id="nav-cards">Alle Karten</a>
+    <a onclick="showPage('tournament')" id="nav-tournament">Turnier</a>
+    <a onclick="showPage('spielen')" id="nav-spielen" class="active">Spielen</a>
+    <a onclick="showPage('order')" id="nav-order">Produkte bestellen</a>
+  </div>
+</nav>
+
+<div class="page visible" id="page-spielen">
+  <div class="spielen-page">
+    <p class="section-label">Spielhilfe</p>
+    <h2 class="section-title">Spielen</h2>
+    <div class="section-rule"></div>
+    <p class="spielen-intro">
+      Diese Seite ist ein Helfer für das echte Spiel vor Ort. Hier kannst du Geldstände nachhalten, den aktuellen Zug markieren und die Spezialfähigkeit der fünf Lehrkräfte mit einem Klick als benutzt oder frei markieren.
+    </p>
+
+    <div class="spielen-overview">
+      <div class="spielen-turn-panel">
+        <div class="spielen-turn-kicker">Aktueller Zug</div>
+        <div class="spielen-turn-current" id="spielenCurrentTurn">Zug 1</div>
+        <div class="spielen-turn-name" id="spielenTurnName">Spieler 1</div>
+        <div class="spielen-turn-hint" id="spielenTurnHint">Als Nächstes: Spieler 2</div>
+        <div class="spielen-turn-badge" id="spielenTurnBadge">Spieler 1 am Zug</div>
+      </div>
+      <div class="spielen-turn-actions">
+        <button type="button" class="btn btn-primary" onclick="switchSpielenTurn()">Zug wechseln</button>
+        <button type="button" class="btn btn-outline" onclick="resetSpielenState()">Zurücksetzen</button>
+        <button type="button" class="btn btn-outline" id="spielenSummaryButton" onclick="toggleSpielenSummary()">Spielzusammenfassung anzeigen</button>
+      </div>
+    </div> 
+    <div class="spielen-divider"></div>
+
+    <section class="spielen-summary-panel" id="spielenSummaryPanel" hidden aria-hidden="true">
+      <div class="spielen-summary-dialog" role="dialog" aria-modal="true" aria-labelledby="spielenSummaryTitle">
+        <div class="spielen-summary-panel-head">
+          <div>
+            <div class="spielen-summary-panel-kicker">Game summary</div>
+            <h3 id="spielenSummaryTitle">Alle Veränderungen pro Zug</h3>
+          </div>
+          <button type="button" class="spielen-summary-close" id="spielenSummaryClose" aria-label="Zusammenfassung schließen">×</button>
+        </div>
+        <div class="spielen-summary-total-strip" id="spielenSummaryTotals"></div>
+        <div class="spielen-summary-panel-note">Jeder Eintrag zeigt die Nettobewegung pro Spieler in diesem Zug sowie den jeweiligen Kontostand danach.</div>
+        <div class="spielen-summary-list" id="spielenSummaryList"></div>
+      </div>
+    </section>
+
+    <section class="spielen-section">
+      <div class="spielen-section-head">
+        <div>
+          <h3>Spieler</h3>
+          <p>Beide Spieler bekommen einen eigenen Kontostand, eine Namenseingabe, eine Eingabe für den Geldbetrag und zwei schnelle Aktionen zum Erhöhen oder Verringern.</p>
+        </div>
+      </div>
+      <div class="spielen-player-grid" id="spielenPlayerGrid"></div>
+    </section>
+  </div>
+</div>
+
+<footer>
+  <p>© 2027 <span>MWG Abiturjahrgang 2027</span> · Kein kommerzielles Angebot · Ausgabe nur an der Schule</p>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

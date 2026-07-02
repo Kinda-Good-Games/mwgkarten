@@ -5,19 +5,32 @@ function showPage(name) {
     news: 'news.html',
     cards: 'cards.html',
     tournament: 'tournament.html',
+    spielen: 'spielen.html',
+    trade: 'spielen.html',
     order: 'order.html'
   };
   window.location.href = pageUrls[name] || 'index.html';
 }
 
+function syncActiveNav() {
+  const pageName = document.body?.dataset?.page;
+  if (!pageName) return;
+
+  document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+  const activeLink = document.getElementById(`nav-${pageName}`);
+  if (activeLink) {
+    activeLink.classList.add('active');
+  }
+}
+
 const DEFAULT_SITE_DATA = {
   contactEmail: 'abi2027.mwg@outlook.de',
   rarities: {
-    Common: { borderColor: '#64748b', glowColor: 'rgba(100, 116, 139, 0.22)' },
-    Uncommon: { borderColor: '#22c55e', glowColor: 'rgba(34, 197, 94, 0.22)' },
-    Rare: { borderColor: '#3b82f6', glowColor: 'rgba(59, 130, 246, 0.24)' },
-    Epic: { borderColor: '#a855f7', glowColor: 'rgba(168, 85, 247, 0.26)' },
-    Legendary: { borderColor: '#f59e0b', glowColor: 'rgba(245, 158, 11, 0.28)' }
+      Normal: { borderColor: '#64748b', glowColor: 'rgba(100, 116, 139, 0.22)' },
+      Glitter: { borderColor: '#22c55e', glowColor: 'rgba(34, 197, 94, 0.22)' },
+      Holo: { borderColor: '#3b82f6', glowColor: 'rgba(59, 130, 246, 0.24)' },
+      Gold: { borderColor: '#f59e0b', glowColor: 'rgba(245, 158, 11, 0.28)' },
+      'Full Art': { borderColor: '#ffffff', glowColor: 'rgba(255, 255, 255, 0.28)' }
   },
     sets: [
       {
@@ -26,7 +39,7 @@ const DEFAULT_SITE_DATA = {
           {
             path: 'cards/Beispiel.jpeg',
             name: 'Beispielkarte',
-            rarity: 'Common'
+            rarity: 'Normal'
           }
         ]
       },
@@ -36,7 +49,7 @@ const DEFAULT_SITE_DATA = {
           {
             path: 'cards/Beispiel.jpeg',
             name: 'Electric Test',
-            rarity: 'Rare'
+            rarity: 'Holo'
           }
         ]
       }
@@ -108,6 +121,287 @@ const DEFAULT_SITE_DATA = {
   };
 
   const BLOG_INDEX_PATH = 'blogs/index.json';
+
+  const PLAY_STATE_STORAGE_KEY = 'mwgkarten.spielen-state';
+  const PLAY_SCALE_MAX_EUR = 10000;
+
+  function createDefaultTeacherState() {
+    return Array.from({ length: 5 }, (_, index) => ({
+      name: `Lehrer ${index + 1}`,
+      used: false
+    }));
+  }
+
+  function createDefaultTurnHistory(turnNumber) {
+    return [{
+      turnNumber: Number.isFinite(Number(turnNumber)) ? Math.max(1, Math.round(Number(turnNumber))) : 1,
+      playerDeltas: [0, 0]
+    }];
+  }
+
+  function createDefaultPlayState() {
+    const players = [
+      { name: 'Spieler 1', money: 0, amount: 1, teachers: createDefaultTeacherState() },
+      { name: 'Spieler 2', money: 0, amount: 1, teachers: createDefaultTeacherState() }
+    ];
+
+    return {
+      turnIndex: 0,
+      turnNumber: 1,
+      turnHistory: createDefaultTurnHistory(1),
+      players
+    };
+  }
+
+  function normalizeTeacherState(teachers) {
+    const source = Array.isArray(teachers) ? teachers : [];
+    return createDefaultTeacherState().map((defaultTeacher, index) => {
+      const teacher = source[index] && typeof source[index] === 'object' ? source[index] : {};
+      return {
+        name: String(teacher.name || defaultTeacher.name),
+        used: Boolean(teacher.used)
+      };
+    });
+  }
+
+  function normalizePlayState(state) {
+    const fallback = createDefaultPlayState();
+    const source = state && typeof state === 'object' ? state : {};
+    const players = Array.isArray(source.players) ? source.players : [];
+    const sharedTeachers = Array.isArray(source.teachers) ? source.teachers : [];
+    const turnHistorySource = Array.isArray(source.turnHistory) ? source.turnHistory : [];
+
+    const normalizedPlayers = fallback.players.map((defaultPlayer, index) => {
+      const player = players[index] && typeof players[index] === 'object' ? players[index] : {};
+      const moneyValue = Number(player.money);
+      const amountValue = Number(player.amount ?? player.step);
+      const playerTeachers = Array.isArray(player.teachers) ? player.teachers : sharedTeachers;
+
+      return {
+        name: String(player.name || defaultPlayer.name),
+        money: Number.isFinite(moneyValue) ? Math.max(0, Math.round(moneyValue * 100) / 100) : defaultPlayer.money,
+        amount: Number.isFinite(amountValue) ? Math.max(1, Math.round(amountValue)) : defaultPlayer.amount,
+        teachers: normalizeTeacherState(playerTeachers)
+      };
+    });
+
+    const normalizedTurnHistory = turnHistorySource.length > 0
+      ? turnHistorySource.map((entry, index) => {
+          const turnNumber = Number(entry?.turnNumber);
+          const deltas = Array.isArray(entry?.playerDeltas) ? entry.playerDeltas : [];
+          return {
+            turnNumber: Number.isFinite(turnNumber) ? Math.max(1, Math.round(turnNumber)) : index + 1,
+            playerDeltas: [0, 1].map(playerIndex => {
+              const deltaValue = Number(deltas[playerIndex]);
+              return Number.isFinite(deltaValue) ? Math.round(deltaValue * 100) / 100 : 0;
+            })
+          };
+        })
+      : createDefaultTurnHistory(Number.isFinite(Number(source.turnNumber)) ? Number(source.turnNumber) : 1);
+
+    return {
+      turnIndex: Number.isFinite(Number(source.turnIndex)) ? Math.abs(Number(source.turnIndex)) % fallback.players.length : fallback.turnIndex,
+      turnNumber: Number.isFinite(Number(source.turnNumber))
+        ? Math.max(1, Math.round(Number(source.turnNumber)))
+        : (normalizedTurnHistory[normalizedTurnHistory.length - 1]?.turnNumber || 1),
+      turnHistory: normalizedTurnHistory,
+      players: normalizedPlayers
+    };
+  }
+
+  function loadSpielenState() {
+    try {
+      const rawState = window.localStorage.getItem(PLAY_STATE_STORAGE_KEY);
+      return normalizePlayState(rawState ? JSON.parse(rawState) : null);
+    } catch (_) {
+      return createDefaultPlayState();
+    }
+  }
+
+  function saveSpielenState() {
+    try {
+      window.localStorage.setItem(PLAY_STATE_STORAGE_KEY, JSON.stringify(playState));
+    } catch (_) {
+      // Ignore storage failures and keep the helper usable.
+    }
+  }
+
+  function getSpielenScale() {
+    return PLAY_SCALE_MAX_EUR;
+  }
+
+  function getCurrentSpielenTurnEntry() {
+    if (!Array.isArray(playState.turnHistory) || playState.turnHistory.length === 0) {
+      playState.turnHistory = createDefaultTurnHistory(playState.turnNumber || 1);
+    }
+
+    const currentEntry = playState.turnHistory[playState.turnHistory.length - 1];
+    if (!currentEntry || currentEntry.turnNumber !== playState.turnNumber) {
+      playState.turnHistory.push({
+        turnNumber: playState.turnNumber || 1,
+        playerDeltas: [0, 0]
+      });
+    }
+
+    return playState.turnHistory[playState.turnHistory.length - 1];
+  }
+
+  function formatSignedMoney(value) {
+    const amount = Math.round((Number(value) || 0) * 100) / 100;
+    const absoluteAmount = formatMoney(Math.abs(amount));
+    if (amount > 0) return `+${absoluteAmount}`;
+    if (amount < 0) return `-${absoluteAmount}`;
+    return formatMoney(0);
+  }
+
+  function recordSpielenTurnDelta(playerIndex, deltaAmount) {
+    const currentEntry = getCurrentSpielenTurnEntry();
+    const nextValue = (Number(currentEntry.playerDeltas[playerIndex]) || 0) + deltaAmount;
+    currentEntry.playerDeltas[playerIndex] = Math.round(nextValue * 100) / 100;
+  }
+
+  function advanceSpielenTurn() {
+    playState.turnIndex = (playState.turnIndex + 1) % playState.players.length;
+    playState.turnNumber = (Number(playState.turnNumber) || 1) + 1;
+    playState.turnHistory.push({
+      turnNumber: playState.turnNumber,
+      playerDeltas: [0, 0]
+    });
+  }
+
+  function renderSpielenSummary() {
+    const panel = document.getElementById('spielenSummaryPanel');
+    const list = document.getElementById('spielenSummaryList');
+    const totals = document.getElementById('spielenSummaryTotals');
+    if (!panel || !list) return;
+
+    const currentTurnNumber = Number(playState.turnNumber) || 1;
+    const playerNames = playState.players.map((player, index) => player.name || `Spieler ${index + 1}`);
+    const history = Array.isArray(playState.turnHistory) ? playState.turnHistory : [];
+    const currentBalances = playState.players.map(player => Math.round((Number(player.money) || 0) * 100) / 100);
+    const currentTotalBalance = currentBalances.reduce((sum, value) => sum + value, 0);
+
+    if (totals) {
+      totals.innerHTML = `
+        <div class="spielen-summary-total-card">
+          <span class="spielen-summary-total-label">Aktueller Gesamtstand</span>
+          <strong>${formatMoney(currentTotalBalance)}</strong>
+        </div>
+        ${playerNames.map((name, index) => `
+          <div class="spielen-summary-total-card">
+            <span class="spielen-summary-total-label">${escapeHtml(name)}</span>
+            <strong>${formatMoney(currentBalances[index] || 0)}</strong>
+          </div>
+        `).join('')}
+      `;
+    }
+
+    const balancesAfterHistory = [0, 0];
+
+    list.innerHTML = history.map(entry => {
+      const isCurrent = entry.turnNumber === currentTurnNumber;
+      const deltas = Array.isArray(entry.playerDeltas) ? entry.playerDeltas : [0, 0];
+      balancesAfterHistory[0] += Number(deltas[0]) || 0;
+      balancesAfterHistory[1] += Number(deltas[1]) || 0;
+      const balanceSnapshot = balancesAfterHistory.map(value => Math.max(0, Math.round(value * 100) / 100));
+      return `
+        <article class="spielen-summary-turn${isCurrent ? ' is-current' : ''}">
+          <div class="spielen-summary-turn-head">
+            <div>
+              <div class="spielen-summary-turn-kicker">Zug ${entry.turnNumber}</div>
+              <div class="spielen-summary-turn-title">${isCurrent ? 'Aktueller Zug' : 'Abgeschlossener Zug'}</div>
+            </div>
+          </div>
+          <div class="spielen-summary-turn-grid">
+            ${playerNames.map((name, playerIndex) => {
+              const delta = Number(deltas[playerIndex]) || 0;
+              const deltaClass = delta > 0 ? 'positive' : delta < 0 ? 'negative' : 'neutral';
+              return `
+                <div class="spielen-summary-turn-item">
+                  <div class="spielen-summary-turn-item-main">
+                    <span class="spielen-summary-turn-name">${escapeHtml(name)}</span>
+                    <span class="spielen-summary-turn-balance">Stand: ${formatMoney(balanceSnapshot[playerIndex] || 0)}</span>
+                  </div>
+                  <span class="spielen-summary-turn-delta ${deltaClass}">${formatSignedMoney(delta)}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    panel.dataset.rendered = 'true';
+  }
+
+  function openSpielenSummary() {
+    const panel = document.getElementById('spielenSummaryPanel');
+    const button = document.getElementById('spielenSummaryButton');
+    if (!panel) return;
+
+    panel.hidden = false;
+    panel.style.display = 'grid';
+    panel.setAttribute('aria-hidden', 'false');
+    renderSpielenSummary();
+
+    if (button) {
+      button.textContent = 'Spielzusammenfassung verbergen';
+    }
+  }
+
+  function closeSpielenSummary() {
+    const panel = document.getElementById('spielenSummaryPanel');
+    const button = document.getElementById('spielenSummaryButton');
+    if (!panel) return;
+
+    panel.hidden = true;
+    panel.style.display = 'none';
+    panel.setAttribute('aria-hidden', 'true');
+
+    if (button) {
+      button.textContent = 'Spielzusammenfassung anzeigen';
+    }
+  }
+
+  function toggleSpielenSummary() {
+    const panel = document.getElementById('spielenSummaryPanel');
+    if (!panel) return;
+
+    if (panel.hidden) {
+      openSpielenSummary();
+    } else {
+      closeSpielenSummary();
+    }
+  }
+
+  let spielenSummaryModalBound = false;
+
+  function setupSpielenSummaryModal() {
+    if (spielenSummaryModalBound) return;
+
+    const panel = document.getElementById('spielenSummaryPanel');
+    const dialog = panel?.querySelector('.spielen-summary-dialog');
+    const closeButton = document.getElementById('spielenSummaryClose');
+
+    if (!panel || !dialog || !closeButton) return;
+
+    closeButton.addEventListener('click', closeSpielenSummary);
+    panel.addEventListener('click', event => {
+      if (event.target === panel) {
+        closeSpielenSummary();
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !panel.hidden) {
+        closeSpielenSummary();
+      }
+    });
+
+    spielenSummaryModalBound = true;
+  }
+
+  let playState = loadSpielenState();
 
   function normalizeRarities(rarities) {
     const defaults = DEFAULT_SITE_DATA.rarities;
@@ -643,10 +937,12 @@ const DEFAULT_SITE_DATA = {
 
   function formatMoney(value) {
     return new Intl.NumberFormat('de-DE', {
-      style: 'currency',
-      currency: 'EUR'
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
     }).format(value);
-  }
+ }
 
   function getProductCost(productId) {
     const product = siteData.products.find(item => item.id === productId);
@@ -770,7 +1066,7 @@ const DEFAULT_SITE_DATA = {
     if (typeof entry === 'string') {
       return {
         path: entry,
-        rarity: 'Common',
+        rarity: 'Normal',
         name: prettyName(entry),
         order: index
       };
@@ -780,7 +1076,7 @@ const DEFAULT_SITE_DATA = {
       const path = String(entry.path || entry.file || entry.src || '');
       return {
         path,
-        rarity: String(entry.rarity || 'Common'),
+        rarity: String(entry.rarity || 'Normal'),
         name: String(entry.name || prettyName(path)),
         order: index
       };
@@ -842,8 +1138,8 @@ const DEFAULT_SITE_DATA = {
   }
 
   function getRarityConfig(rarityName) {
-    const key = String(rarityName || 'Common');
-    return siteData.rarities?.[key] || siteData.rarities?.Common || DEFAULT_SITE_DATA.rarities.Common;
+    const key = String(rarityName || 'Normal');
+    return siteData.rarities?.[key] || siteData.rarities?.Normal || DEFAULT_SITE_DATA.rarities.Normal;
   }
 
   function prettyName(path) {
@@ -902,14 +1198,14 @@ const DEFAULT_SITE_DATA = {
         item.className = 'card-item';
         item.dataset.name = card.name.toLowerCase();
         item.dataset.collection = set.name;
-        item.dataset.rarity = card.rarity || 'Common';
+        item.dataset.rarity = card.rarity || 'Normal';
         item.style.setProperty('--rarity-color', rarityConfig.borderColor);
         item.style.setProperty('--rarity-glow', rarityConfig.glowColor);
         item.innerHTML = `
           <img src="${card.path}" alt="${card.name}" loading="lazy" onerror="this.parentElement.style.display='none'"/>
           <div class="card-item-label">
             <span class="card-item-name">${card.name}</span>
-            <span class="card-item-rarity">${card.rarity || 'Common'}</span>
+            <span class="card-item-rarity">${card.rarity || 'Normal'}</span>
           </div>`;
         item.addEventListener('click', () => openLightbox(card.path, card.name));
         collectionGrid.appendChild(item);
@@ -1013,6 +1309,243 @@ const DEFAULT_SITE_DATA = {
         </div>
       </article>
     `).join('');
+  }
+
+  function renderSpielenPage() {
+    const playerGrid = document.getElementById('spielenPlayerGrid');
+    closeSpielenSummary();
+    setupSpielenSummaryModal();
+
+    if (playerGrid && playerGrid.dataset.rendered !== 'true') {
+      playerGrid.innerHTML = playState.players.map((player, index) => `
+        <article class="spielen-player-card${playState.turnIndex === index ? ' is-active' : ''}" id="spielen-player-card-${index}">
+          <div class="spielen-player-head">
+            <div>
+              <div class="spielen-player-kicker">Spieler ${index + 1}</div>
+              <label class="spielen-player-name-field" for="spielen-player-name-${index}">
+                <span>Name</span>
+                <input
+                  id="spielen-player-name-${index}"
+                  type="text"
+                  value="${escapeHtml(player.name)}"
+                  placeholder="Spieler ${index + 1}"
+                  onchange="setSpielenPlayerName(${index}, this.value)"
+                />
+              </label>
+            </div>
+            <div class="spielen-player-turn" id="spielen-player-turn-${index}">${playState.turnIndex === index ? 'Am Zug' : 'Warten'}</div>
+          </div>
+          <div class="spielen-money-row">
+            <div class="spielen-money-value" id="spielen-money-${index}">${formatMoney(player.money)}</div>
+            <div class="spielen-money-caption">Kontostand</div>
+          </div>
+          <div class="spielen-progress-wrap">
+            <div class="spielen-progress">
+              <div class="spielen-progress-fill" id="spielen-progress-${index}"></div>
+            </div>
+            <div class="spielen-progress-caption" id="spielen-progress-caption-${index}"></div>
+          </div>
+          <div class="spielen-controls">
+            <label class="spielen-control">
+              <span>Betrag</span>
+              <input
+                id="spielen-amount-${index}"
+                type="number"
+                min="0"
+                step="100"
+                value="${escapeHtml(String(player.amount || 0))}"
+                onchange="setSpielenAmount(${index}, this.value)"
+              />
+            </label>
+            <div class="spielen-action-row">
+              <button type="button" class="btn btn-primary spielen-action-button" onclick="adjustSpielenMoney(${index}, 1)"><font size=30>+</font></button>
+              <button type="button" class="btn btn-outline spielen-action-button" onclick="adjustSpielenMoney(${index}, -1)"><font size=30>-</font></button>
+            </div>
+          </div>
+          <div class="spielen-player-divider"></div>
+          <div class="spielen-player-teachers">
+            <div class="spielen-player-teachers-head">
+              <div class="spielen-player-teachers-kicker">Lehrerstatus</div>
+            </div>
+            <div class="spielen-teachers-grid" id="spielen-teachers-${index}">
+              ${renderSpielenTeacherCards(index)}
+            </div>
+          </div>
+        </article>
+      `).join('');
+      playerGrid.dataset.rendered = 'true';
+    }
+
+    syncSpielenPage();
+  }
+
+  function renderSpielenTeacherCards(playerIndex) {
+    const playerTeachers = playState.players[playerIndex]?.teachers || createDefaultTeacherState();
+    return playerTeachers.map((teacher, teacherIndex) => `
+      <button
+        type="button"
+        class="spielen-teacher-card${teacher.used ? ' is-used' : ''}"
+        id="spielen-teacher-card-${playerIndex}-${teacherIndex}"
+        onclick="toggleTeacherAbility(${playerIndex}, ${teacherIndex})"
+        aria-pressed="${teacher.used ? 'true' : 'false'}"
+      >
+        <span class="spielen-teacher-kicker">Lehrer ${teacherIndex + 1}</span>
+        <span class="spielen-teacher-name">${escapeHtml(teacher.name)}</span>
+        <span class="spielen-teacher-status" id="spielen-teacher-status-${playerIndex}-${teacherIndex}">${teacher.used ? 'Fähigkeit verfügbar' : 'Keine Fähigkeit verfügbar'}</span>
+        <span class="spielen-teacher-toggle" id="spielen-teacher-toggle-${playerIndex}-${teacherIndex}">${teacher.used ? 'On' : 'Off'}</span>
+      </button>
+    `).join('');
+  }
+
+  function syncSpielenPage() {
+    const turnName = document.getElementById('spielenTurnName');
+    const turnHint = document.getElementById('spielenTurnHint');
+    const turnBadge = document.getElementById('spielenTurnBadge');
+    const totalEarned = document.getElementById('spielenTotalEarned');
+    const progressScale = getSpielenScale();
+    const totalMoney = playState.players.reduce((sum, player) => sum + (Number(player.money) || 0), 0);
+    const activePlayerName = playState.players[playState.turnIndex]?.name || `Spieler ${playState.turnIndex + 1}`;
+
+    if (turnName) {
+      turnName.textContent = activePlayerName;
+    }
+
+    if (turnHint) {
+      const nextIndex = (playState.turnIndex + 1) % playState.players.length;
+      const nextPlayerName = playState.players[nextIndex]?.name || `Spieler ${nextIndex + 1}`;
+      turnHint.textContent = `Als Nächstes: ${nextPlayerName}`;
+    }
+
+    if (turnBadge) {
+      turnBadge.textContent = `Spieler ${playState.turnIndex + 1} am Zug`;
+    }
+
+    const currentTurnLabel = document.getElementById('spielenCurrentTurn');
+    if (currentTurnLabel) {
+      currentTurnLabel.textContent = `Zug ${playState.turnNumber || 1}`;
+    }
+
+    if (totalEarned) {
+      totalEarned.textContent = formatMoney(totalMoney);
+    }
+
+    playState.players.forEach((player, index) => {
+      const isActive = index === playState.turnIndex;
+      const card = document.getElementById(`spielen-player-card-${index}`);
+      const turnMarker = document.getElementById(`spielen-player-turn-${index}`);
+      const moneyValue = document.getElementById(`spielen-money-${index}`);
+      const progressFill = document.getElementById(`spielen-progress-${index}`);
+      const progressCaption = document.getElementById(`spielen-progress-caption-${index}`);
+      const amountInput = document.getElementById(`spielen-amount-${index}`);
+      const percent = progressScale > 0 ? Math.min(100, Math.max(0, (Number(player.money) || 0) / progressScale * 100)) : 0;
+
+      if (card) {
+        card.classList.toggle('is-active', isActive);
+      }
+
+      if (turnMarker) {
+        turnMarker.textContent = isActive ? 'Am Zug' : 'Warten';
+      }
+
+      if (moneyValue) {
+        moneyValue.textContent = formatMoney(player.money);
+      }
+
+      if (progressFill) {
+        progressFill.style.width = `${percent}%`;
+      }
+
+      if (progressCaption) {
+        progressCaption.textContent = `Ziel: ${formatMoney(progressScale)}`;
+      }
+
+      if (amountInput && document.activeElement !== amountInput) {
+        amountInput.value = String(player.amount || 1);
+      }
+
+      const nameInput = document.getElementById(`spielen-player-name-${index}`);
+      if (nameInput && document.activeElement !== nameInput) {
+        nameInput.value = player.name;
+      }
+    });
+
+    playState.players.forEach((player, playerIndex) => {
+      const playerTeachers = Array.isArray(player.teachers) ? player.teachers : [];
+
+      playerTeachers.forEach((teacher, teacherIndex) => {
+        const card = document.getElementById(`spielen-teacher-card-${playerIndex}-${teacherIndex}`);
+        const status = document.getElementById(`spielen-teacher-status-${playerIndex}-${teacherIndex}`);
+        const toggle = document.getElementById(`spielen-teacher-toggle-${playerIndex}-${teacherIndex}`);
+
+        if (card) {
+          card.classList.toggle('is-used', teacher.used);
+          card.setAttribute('aria-pressed', teacher.used ? 'true' : 'false');
+        }
+
+        if (status) {
+          status.textContent = teacher.used ? 'Fähigkeit verfügbar' : 'Keine Fähigkeit verfügbar';
+        }
+
+        if (toggle) {
+          toggle.textContent = teacher.used ? 'On' : 'Off';
+        }
+      });
+    });
+
+    const summaryPanel = document.getElementById('spielenSummaryPanel');
+    if (summaryPanel && !summaryPanel.hidden) {
+      renderSpielenSummary();
+    }
+  }
+
+  function getSpielenAdjustAmount(index) {
+    const input = document.getElementById(`spielen-amount-${index}`);
+    const fallbackAmount = playState.players[index]?.amount || 1;
+    const amount = Number(input?.value ?? fallbackAmount);
+    return Number.isFinite(amount) && amount > 0 ? Math.max(1, Math.round(amount)) : fallbackAmount;
+  }
+
+  function setSpielenPlayerName(index, value) {
+    playState.players[index].name = String(value || '').trim() || `Spieler ${index + 1}`;
+    saveSpielenState();
+    syncSpielenPage();
+  }
+
+  function setSpielenAmount(index, value) {
+    const amount = Number(value);
+    playState.players[index].amount = Number.isFinite(amount) && amount > 0 ? Math.max(1, Math.round(amount)) : 1;
+    saveSpielenState();
+    syncSpielenPage();
+  }
+
+  function adjustSpielenMoney(index, direction) {
+    const amount = getSpielenAdjustAmount(index);
+    const delta = direction * amount;
+    playState.players[index].money = Math.max(0, Math.round(((Number(playState.players[index].money) || 0) + delta) * 100) / 100);
+    recordSpielenTurnDelta(index, delta);
+    saveSpielenState();
+    syncSpielenPage();
+  }
+
+  function switchSpielenTurn() {
+    advanceSpielenTurn();
+    saveSpielenState();
+    syncSpielenPage();
+  }
+
+  function toggleTeacherAbility(playerIndex, teacherIndex) {
+    playState.players[playerIndex].teachers[teacherIndex].used = !playState.players[playerIndex].teachers[teacherIndex].used;
+    saveSpielenState();
+    syncSpielenPage();
+  }
+
+  function resetSpielenState() {
+    const confirmed = window.confirm('Willst du wirklich den aktuellen Spielstand zurücksetzen?');
+    if (!confirmed) return;
+
+    playState = createDefaultPlayState();
+    saveSpielenState();
+    syncSpielenPage();
   }
 
   function filterCards() {
@@ -1119,6 +1652,8 @@ const DEFAULT_SITE_DATA = {
     }
   }
 
+  syncActiveNav();
+
   siteDataReady.then(() => {
     loadNews();
     const pageCardsEl = document.getElementById('page-cards');
@@ -1133,5 +1668,9 @@ const DEFAULT_SITE_DATA = {
     if (pageOrderEl && pageOrderEl.classList.contains('visible')) {
       renderOrderShelf();
       updateOrderSummary();
+    }
+    const pageSpielenEl = document.getElementById('page-spielen');
+    if (pageSpielenEl && pageSpielenEl.classList.contains('visible')) {
+      renderSpielenPage();
     }
   });

@@ -1,25 +1,25 @@
 {
   "contactEmail": "kev_gong@hotmail.com",
   "rarities": {
-    "Common": {
+    "Normal": {
       "borderColor": "#64748b",
       "glowColor": "rgba(100, 116, 139, 0.22)"
     },
-    "Uncommon": {
+    "Glitzer": {
       "borderColor": "#22c55e",
-      "glowColor": "rgba(34, 197, 94, 0.22)"
-    },
-    "Rare": {
-      "borderColor": "#3b82f6",
       "glowColor": "rgba(59, 130, 246, 0.24)"
     },
-    "Epic": {
-      "borderColor": "#a855f7",
-      "glowColor": "rgba(168, 85, 247, 0.26)"
+    "Holo": {
+      "borderColor": "#800080",
+      "glowColor": "rgba(160,32,240, 0.28)"
     },
-    "Legendary": {
+    "Gold": {
       "borderColor": "#f59e0b",
       "glowColor": "rgba(245, 158, 11, 0.28)"
+    },
+    "Full Art": {
+      "borderColor": "#ffffff",
+      "glowColor": "rgba(255, 255, 255, 0.28)"
     }
   },
   "sets": [
@@ -29,28 +29,28 @@
       "cards": [
         {
           "path": "cards/Beispiel.jpeg",
-          "name": "Beispielkarte_Common",
-          "rarity": "Common"
-        }, 
-        {
-          "path": "cards/Beispiel.jpeg",
-          "name": "Beispielkarte_Uncommon",
-          "rarity": "Uncommon"
+          "name": "Beispielkarte_Normal",
+          "rarity": "Normal"
         },
         {
           "path": "cards/Beispiel.jpeg",
-          "name": "Beispielkarte_Rare",
-          "rarity": "Rare"
+          "name": "Beispielkarte_Glitter",
+          "rarity": "Glitter"
         },
         {
           "path": "cards/Beispiel.jpeg",
-          "name": "Beispielkarte_Epic",
-          "rarity": "Epic"
+          "name": "Beispielkarte_Holo",
+          "rarity": "Holo"
         },
         {
           "path": "cards/Beispiel.jpeg",
-          "name": "Beispielkarte_Legendary",
-          "rarity": "Legendary"
+          "name": "Beispielkarte_Gold",
+          "rarity": "Gold"
+        },
+        {
+          "path": "cards/Beispiel.jpeg",
+          "name": "Beispielkarte_Full_Art",
+          "rarity": "Full Art"
         }
       ]
     },
@@ -61,7 +61,7 @@
         {
           "path": "cards/Beispiel.jpeg",
           "name": "Electric Test",
-          "rarity": "Rare"
+          "rarity": "Holo"
         }
       ]
     }
@@ -184,11 +184,22 @@
       "defaultQuantity": 1
     },
     {
+      "id": "kartenhuelle",
+      "name": "Kartenhülle (MWG Design)",
+      "description": "Eine einzelne Kartenhülle. Perfekt, um deine seltesten Karten zu schützen mit der Kartenhülle, exklusiv für unsere Schule.",
+      "unitLabel": "Kartenhülle(n)",
+      "price": 0.25,
+      "minQuantity": 1,
+      "maxQuantity": 1000,
+      "defaultQuantity": 1
+    }
+    ,
+    {
       "id": "bundles",
-      "name": "Bundles",
-      "description": "Zusammenstellungen aus mehreren Produkten oder Sonderpaketen.",
+      "name": "Kartenhüllen Bundle",
+      "description": "100 Kartenhüllen unserer eigenen Kartenhüllen. Indem du die Kartenhüllen über das Bundle kaufst, sparst du ganze 30 Prozent!",
       "unitLabel": "Bundle(s)",
-      "price": 12.00,
+      "price": 17.50,
       "minQuantity": 1,
       "maxQuantity": 10,
       "defaultQuantity": 1

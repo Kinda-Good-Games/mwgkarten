@@ -16,6 +16,7 @@
     <a onclick="showPage('news')" id="nav-news">News</a>
     <a onclick="showPage('cards')" id="nav-cards">Alle Karten</a>
     <a onclick="showPage('tournament')" id="nav-tournament">Turnier</a>
+    <a onclick="showPage('spielen')" id="nav-spielen">Spielen</a>
     <a onclick="showPage('order')" id="nav-order">Produkte bestellen</a>
   </div>
 </nav>
@@ -31,7 +32,7 @@
       <h1 class="hero-title">Das <em>MWG</em><br>Sammelkarten‑Spiel</h1>
       <div class="hero-divider"></div>
       <p class="hero-sub">
-        Sammel, tausch und spiele mit Karten rund um das MWG — deine Schule, deine Mitschüler, deine Legenden.
+        Sammele, tausche und spiele mit Karten rund um das MWG.
       </p>
       <div class="hero-cta-row">
         <button class="btn btn-primary" onclick="showPage('order')">🎴 Produkte bestellen</button>
@@ -45,7 +46,7 @@
     <div class="news-teaser-card" id="homeNewsTeaser">
       <div class="news-teaser-kicker">Neuigkeiten</div>
       <div class="news-teaser-head">
-        <h2 class="news-teaser-title">Aktuelle Meldungen aus dem Projekt</h2>
+        <h2 class="news-teaser-title">Aktuelle Neuigkeiten zum Kartenspiel</h2>
         <button class="btn btn-outline" onclick="showPage('news')">Zur News-Seite →</button>
       </div>
       <div class="news-teaser-summary" id="homeNewsTeaserSummary">Lade die neuesten News ...</div>
@@ -54,39 +55,39 @@
 
   <!-- Features -->
   <div class="section">
-    <p class="section-label">Das Projekt</p>
+    <p class="section-label">Das Spiel</p>
     <h2 class="section-title">Was steckt dahinter?</h2>
     <div class="section-rule"></div>
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon">🏫</div>
         <h3>Ein Schulprojekt</h3>
-        <p>Das MWG Sammelkarten-Spiel ist ein Projekt des Abiturjahrgangs 2027 — eine liebevoll gestaltete Hommage an unsere Schule und ihre Besonderheiten.</p>
+        <p>Das MWG Sammelkarten-Spiel ist ein Projekt des Abiturjahrgangs 2027 - eine liebevoll gestaltete Hommage an unsere Schule.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤝</div>
+        <h3>Für unsere Lehrer*innen, von unseren Lehrer*innen</h3>
+        <p>Im Spiel stehen unsere Lehrkräfte im Mittelpunkt. Dabei entstanden die Karten in Absprache mit den Lehrkräften und wir haben die Karten anschließend entworfen.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🎴</div>
         <h3>Einzigartige Karten</h3>
-        <p>Jede Karte ist individuell gestaltet und zeigt Lehrer, Schüler, Memes, Orte und legendäre Momente rund ums MWG. Rarities inklusive.</p>
+        <p>Jede Karte ist individuell gestaltet und zeigt alles mögliche rund um das MWG.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">📦</div>
-        <h3>Booster-Packs</h3>
-        <p>Karten werden in Booster-Packs ausgegeben — jedes Pack enthält eine zufällige Auswahl an Karten. Wer hat das vollständige Set?</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🤝</div>
-        <h3>Tauschen & Spielen</h3>
-        <p>Doppelte Karten? Kein Problem — tausch mit Mitschülern und vervollständige deine Sammlung. Das Spiel lebt vom Gemeinschaftsgefühl.</p>
+        <div class="feature-icon">💵</div>
+        <h3>Für einen guten Zweck!</h3>
+        <p>Wir verkaufen die Karten und alles herum, um unser Abi zu finanzieren. Außerdem unterstützen wir den Schüler-Eltern Fond, mit dem hilfsbedürftige Schüler*innen auch an Ausflügen/Klassenfahrten teilnehmen können.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🏆</div>
         <h3>Raritäten jagen</h3>
-        <p>Von Common bis Legendary — manche Karten sind extrem selten. Hast du das Glück, die begehrtesten Karten zu ziehen?</p>
+        <p>Von gewöhnlichen Karten bis zu der exklusiven Full-Art Karte, manche Karten sind extrem selten. Hast du das Glück, die begehrtesten Karten zu ziehen?</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🎓</div>
-        <h3>Abi 2027</h3>
-        <p>Ein bleibendes Andenken an die Schulzeit. Lang nachdem das Abi vorbei ist, werden diese Karten an die schönste Zeit erinnern.</p>
+        <h3>Erinnerungsstück</h3>
+        <p>Ein bleibendes Andenken an die Schulzeit. Lang nachdem man mit der Schule fertig ist, werden diese Karten an die schönste Zeit erinnern.</p>
       </div>
     </div>
   </div>
@@ -107,7 +108,7 @@
         <strong><a id="contactEmailLink" href="mailto:abi2027.mwg@outlook.de" style="color:var(--gold-light);text-decoration:none;">abi2027.mwg@outlook.de</a></strong>.
       </p>
       <!-- Booster card preview -->
-      <div class="booster-preview" style="margin-top:3rem;">
+      <!-- <div class="booster-preview" style="margin-top:3rem;">
         <div class="booster-card-preview">
           <div class="card-shine"></div>
           <div class="card-corner">★</div>
@@ -126,7 +127,7 @@
           <div class="card-symbol">☕</div>
           <div class="card-label">Mensa-König</div>
         </div>
-      </div>
+      </div> -->
       <div style="margin-top:2.5rem;">
         <button class="btn btn-primary" onclick="showPage('order')">Jetzt Produkte reservieren →</button>
       </div>

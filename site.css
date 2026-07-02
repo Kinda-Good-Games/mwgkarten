@@ -1129,6 +1129,49 @@
       opacity: 1;
     }
 
+    .card-item[data-rarity="Full Art"] {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)) padding-box,
+        linear-gradient(135deg,
+          #ff3d81 0%,
+          #ff8a00 16%,
+          #ffe600 32%,
+          #35e06f 48%,
+          #23b7ff 64%,
+          #8b5cf6 80%,
+          #ff3d81 100%) border-box;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.08),
+        0 0 28px rgba(255,255,255,.18),
+        0 0 42px rgba(255,102,196,.18),
+        0 0 60px rgba(35,183,255,.16),
+        inset 0 0 18px rgba(255,255,255,.06);
+      animation: rainbowGlow 4.8s linear infinite;
+    }
+
+    .card-item[data-rarity="Full Art"]::after {
+      background:
+        linear-gradient(135deg,
+          #ff3d81 0%,
+          #ff8a00 14%,
+          #ffe600 28%,
+          #35e06f 42%,
+          #23b7ff 56%,
+          #8b5cf6 70%,
+          #ff3d81 100%) border-box;
+      animation: rainbowBorder 4.8s linear infinite;
+      opacity: .98;
+    }
+
+    .card-item[data-rarity="Full Art"] .card-item-rarity {
+      color: #fefefe;
+      border-color: rgba(255,255,255,.25);
+      box-shadow:
+        0 0 12px rgba(255,255,255,.12),
+        0 0 22px rgba(255,102,196,.12),
+        inset 0 0 10px rgba(255,255,255,.04);
+    }
+
     @keyframes flameFlicker {
       0%, 100% { transform: translateY(-8%) scale(1.02); opacity: .76; }
       20% { transform: translateY(-10%) scale(1.04) skewX(-1deg); opacity: .88; }
@@ -1139,6 +1182,62 @@
     @keyframes flameBorder {
       0% { filter: hue-rotate(0deg) saturate(1.2); }
       100% { filter: hue-rotate(12deg) saturate(1.35); }
+    }
+
+    @keyframes rainbowBorder {
+      0% { filter: hue-rotate(0deg) saturate(1.35); }
+      100% { filter: hue-rotate(360deg) saturate(1.35); }
+    }
+
+    @keyframes rainbowGlow {
+      0% {
+        box-shadow:
+          0 0 0 1px rgba(255,255,255,.08),
+          0 0 28px rgba(255, 61, 129, .22),
+          0 0 42px rgba(255, 138, 0, .18),
+          0 0 60px rgba(255, 230, 0, .14),
+          inset 0 0 18px rgba(255,255,255,.06);
+      }
+      20% {
+        box-shadow:
+          0 0 0 1px rgba(255,255,255,.08),
+          0 0 28px rgba(255, 138, 0, .22),
+          0 0 42px rgba(255, 230, 0, .18),
+          0 0 60px rgba(53, 224, 111, .14),
+          inset 0 0 18px rgba(255,255,255,.06);
+      }
+      40% {
+        box-shadow:
+          0 0 0 1px rgba(255,255,255,.08),
+          0 0 28px rgba(255, 230, 0, .22),
+          0 0 42px rgba(53, 224, 111, .18),
+          0 0 60px rgba(35, 183, 255, .14),
+          inset 0 0 18px rgba(255,255,255,.06);
+      }
+      60% {
+        box-shadow:
+          0 0 0 1px rgba(255,255,255,.08),
+          0 0 28px rgba(53, 224, 111, .22),
+          0 0 42px rgba(35, 183, 255, .18),
+          0 0 60px rgba(139, 92, 246, .14),
+          inset 0 0 18px rgba(255,255,255,.06);
+      }
+      80% {
+        box-shadow:
+          0 0 0 1px rgba(255,255,255,.08),
+          0 0 28px rgba(35, 183, 255, .22),
+          0 0 42px rgba(139, 92, 246, .18),
+          0 0 60px rgba(255, 61, 129, .14),
+          inset 0 0 18px rgba(255,255,255,.06);
+      }
+      100% {
+        box-shadow:
+          0 0 0 1px rgba(255,255,255,.08),
+          0 0 28px rgba(255, 61, 129, .22),
+          0 0 42px rgba(255, 138, 0, .18),
+          0 0 60px rgba(255, 230, 0, .14),
+          inset 0 0 18px rgba(255,255,255,.06);
+      }
     }
     .card-item img {
       width: 100%; height: 100%; object-fit: cover; display: block;
@@ -1591,6 +1690,633 @@
       color: #e8a0a0;
     }
 
+    /* Playing helper page */
+    .spielen-page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+      display: grid;
+      gap: 1.35rem;
+    }
+
+    .spielen-intro {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 1.08rem;
+      line-height: 1.75;
+      color: rgba(245,230,196,.74);
+    }
+
+    .spielen-overview {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) auto;
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .spielen-turn-panel,
+    .spielen-summary-card,
+    .spielen-section {
+      background: linear-gradient(155deg, rgba(13,11,8,.98), rgba(26,21,16,.94));
+      border: 1px solid rgba(201,147,58,.2);
+      border-radius: 18px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.32);
+    }
+
+    .spielen-turn-panel {
+      padding: 1.1rem 1.15rem;
+      display: grid;
+      gap: .55rem;
+    }
+
+    .spielen-turn-kicker,
+    .spielen-section-head h3,
+    .spielen-teacher-kicker,
+    .spielen-player-kicker {
+      font-family: 'Cinzel', serif;
+      font-size: .68rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .spielen-turn-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      color: var(--gold-light);
+      line-height: 1.15;
+    }
+
+    .spielen-turn-current {
+      width: fit-content;
+      padding: .26rem .58rem;
+      border-radius: 999px;
+      border: 1px solid rgba(201,147,58,.24);
+      background: rgba(201,147,58,.1);
+      color: var(--gold-pale);
+      font-family: 'Cinzel', serif;
+      font-size: .66rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .spielen-turn-hint {
+      color: rgba(245,230,196,.62);
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .spielen-turn-badge {
+      width: fit-content;
+      padding: .34rem .7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(201,147,58,.24);
+      background: rgba(255,255,255,.04);
+      color: var(--gold-pale);
+      font-family: 'Cinzel', serif;
+      font-size: .64rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .spielen-turn-actions {
+      display: grid;
+      gap: .75rem;
+      align-content: center;
+      justify-items: stretch;
+      min-width: 240px;
+    }
+
+    .spielen-turn-actions .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .spielen-summary-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 250;
+      display: none;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(13,11,8,.82);
+      backdrop-filter: blur(8px);
+    }
+
+    .spielen-summary-panel[hidden] {
+      display: none !important;
+    }
+
+    .spielen-summary-panel:not([hidden]) {
+      display: grid;
+    }
+
+    .spielen-summary-dialog {
+      width: min(100%, 1120px);
+      max-height: min(88vh, 980px);
+      overflow: auto;
+      background: linear-gradient(155deg, rgba(13,11,8,.99), rgba(26,21,16,.97));
+      border: 1px solid rgba(201,147,58,.24);
+      border-radius: 20px;
+      padding: 1.1rem;
+      box-shadow: 0 24px 80px rgba(0,0,0,.6);
+      display: grid;
+      gap: 1rem;
+    }
+
+    .spielen-summary-panel-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .spielen-summary-close {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,147,58,.25);
+      background: rgba(255,255,255,.05);
+      color: var(--gold-light);
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .spielen-summary-close:hover {
+      border-color: rgba(201,147,58,.45);
+      background: rgba(201,147,58,.12);
+    }
+
+    .spielen-summary-total-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .75rem;
+    }
+
+    .spielen-summary-total-card {
+      padding: .9rem 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(201,147,58,.16);
+      background: rgba(255,255,255,.03);
+      display: grid;
+      gap: .3rem;
+    }
+
+    .spielen-summary-total-label {
+      font-family: 'Cinzel', serif;
+      font-size: .64rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .spielen-summary-total-card strong {
+      font-family: 'Cinzel Decorative', serif;
+      color: var(--gold-light);
+      font-size: clamp(1.2rem, 2vw, 1.7rem);
+    }
+
+    .spielen-summary-panel-kicker {
+      font-family: 'Cinzel', serif;
+      font-size: .66rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .3rem;
+    }
+
+    .spielen-summary-panel h3 {
+      font-family: 'Cinzel Decorative', serif;
+      color: var(--gold-light);
+      font-size: clamp(1.2rem, 2vw, 1.7rem);
+    }
+
+    .spielen-summary-panel-note {
+      color: rgba(245,230,196,.58);
+      line-height: 1.5;
+      font-size: .98rem;
+      max-width: 520px;
+    }
+
+    .spielen-summary-list {
+      display: grid;
+      gap: .85rem;
+    }
+
+    .spielen-summary-turn {
+      border: 1px solid rgba(201,147,58,.16);
+      border-radius: 14px;
+      padding: .9rem;
+      background: rgba(255,255,255,.03);
+      display: grid;
+      gap: .8rem;
+    }
+
+    .spielen-summary-turn.is-current {
+      border-color: rgba(201,147,58,.45);
+      box-shadow: 0 0 0 1px rgba(201,147,58,.1), 0 0 18px rgba(201,147,58,.1);
+    }
+
+    .spielen-summary-turn-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+
+    .spielen-summary-turn-kicker {
+      font-family: 'Cinzel', serif;
+      font-size: .68rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .spielen-summary-turn-title {
+      color: rgba(245,230,196,.6);
+      font-size: .96rem;
+      margin-top: .25rem;
+    }
+
+    .spielen-summary-turn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .75rem;
+    }
+
+    .spielen-summary-turn-item-main {
+      display: grid;
+      gap: .2rem;
+    }
+
+    .spielen-summary-turn-item {
+      display: flex;
+      justify-content: space-between;
+      gap: .75rem;
+      align-items: baseline;
+      padding: .65rem .75rem;
+      border-radius: 10px;
+      background: rgba(0,0,0,.16);
+      border: 1px solid rgba(201,147,58,.08);
+    }
+
+    .spielen-summary-turn-name {
+      color: var(--gold-pale);
+      font-size: 1rem;
+    }
+
+    .spielen-summary-turn-balance {
+      color: rgba(245,230,196,.58);
+      font-size: .92rem;
+    }
+
+    .spielen-summary-turn-delta {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.05rem;
+      white-space: nowrap;
+    }
+
+    .spielen-summary-turn-delta.positive { color: #a8d8b0; }
+    .spielen-summary-turn-delta.negative { color: #f4a3a3; }
+    .spielen-summary-turn-delta.neutral { color: var(--gold-light); }
+
+    .spielen-summary-strip {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .spielen-divider,
+    .spielen-player-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,147,58,.35), transparent);
+    }
+
+    .spielen-summary-card {
+      padding: 1rem 1.1rem;
+      display: grid;
+      gap: .45rem;
+      color: var(--gold-pale);
+    }
+
+    .spielen-summary-card strong {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.45rem;
+      color: var(--gold-light);
+    }
+
+    .spielen-summary-card span {
+      color: rgba(245,230,196,.68);
+      line-height: 1.55;
+      font-size: 1rem;
+    }
+
+    .spielen-section {
+      padding: 1.2rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .spielen-section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .spielen-section-head h3 {
+      margin-top: .2rem;
+      color: var(--gold-light);
+    }
+
+    .spielen-section-head p {
+      margin-top: .35rem;
+      color: rgba(245,230,196,.55);
+      line-height: 1.55;
+      max-width: 720px;
+    }
+
+    .spielen-player-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .spielen-player-card {
+      background: linear-gradient(155deg, rgba(13,11,8,.96), rgba(26,21,16,.95));
+      border: 1px solid rgba(201,147,58,.18);
+      border-radius: 16px;
+      padding: 1.1rem;
+      display: grid;
+      gap: .95rem;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+      transition: border-color .25s, box-shadow .25s, transform .25s;
+    }
+
+    .spielen-player-card.is-active {
+      border-color: rgba(201,147,58,.72);
+      box-shadow: 0 0 0 1px rgba(201,147,58,.18), 0 0 0 2px rgba(201,147,58,.08), 0 20px 44px rgba(0,0,0,.38);
+      transform: translateY(-3px);
+      background: linear-gradient(155deg, rgba(26,21,16,.99), rgba(13,11,8,.96));
+    }
+
+    .spielen-player-head {
+      display: flex;
+      justify-content: space-between;
+      gap: .75rem;
+      align-items: flex-start;
+    }
+
+    .spielen-player-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.25rem, 2vw, 1.75rem);
+      color: var(--gold-light);
+      line-height: 1.1;
+      margin-top: .25rem;
+    }
+
+    .spielen-player-name-field {
+      display: grid;
+      gap: .35rem;
+      margin-top: .35rem;
+    }
+
+    .spielen-player-name-field span {
+      font-family: 'Cinzel', serif;
+      font-size: .62rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .spielen-player-name-field input {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(201,147,58,.25);
+      border-radius: var(--radius);
+      color: var(--parchment);
+      font-family: 'EB Garamond', serif;
+      font-size: 1.05rem;
+      padding: .75rem .95rem;
+      outline: none;
+      transition: border-color .2s, background .2s;
+      width: 100%;
+    }
+
+    .spielen-player-name-field input:focus {
+      border-color: var(--gold);
+      background: rgba(255,255,255,.08);
+    }
+
+    .spielen-player-turn {
+      padding: .34rem .66rem;
+      border-radius: 999px;
+      border: 1px solid rgba(201,147,58,.22);
+      background: rgba(255,255,255,.04);
+      color: var(--gold-pale);
+      font-family: 'Cinzel', serif;
+      font-size: .62rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .spielen-player-card.is-active .spielen-player-turn {
+      border-color: rgba(255,201,94,.5);
+      color: #fff2cc;
+      background: rgba(201,147,58,.16);
+      box-shadow: 0 0 0 1px rgba(201,147,58,.1), 0 0 18px rgba(201,147,58,.12);
+    }
+
+    .spielen-player-teachers {
+      display: grid;
+      gap: .85rem;
+    }
+
+    .spielen-player-teachers-head {
+      display: flex;
+      justify-content: space-between;
+      gap: .75rem;
+      flex-wrap: wrap;
+      align-items: baseline;
+    }
+
+    .spielen-player-teachers-kicker {
+      font-family: 'Cinzel', serif;
+      font-size: .62rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .spielen-player-teachers-note {
+      color: rgba(245,230,196,.5);
+      font-size: .92rem;
+      line-height: 1.45;
+    }
+
+    .spielen-money-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+
+    .spielen-money-value {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--gold-light);
+      line-height: 1;
+    }
+
+    .spielen-money-caption {
+      color: rgba(245,230,196,.5);
+      font-size: .96rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .spielen-progress-wrap {
+      display: grid;
+      gap: .4rem;
+    }
+
+    .spielen-progress {
+      height: 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(201,147,58,.16);
+      background: rgba(255,255,255,.04);
+      overflow: hidden;
+    }
+
+    .spielen-progress-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, rgba(201,147,58,.65), rgba(245,182,92,.95));
+      box-shadow: 0 0 18px rgba(201,147,58,.24);
+      transition: width .25s ease;
+    }
+
+    .spielen-progress-caption {
+      color: rgba(245,230,196,.5);
+      font-size: .92rem;
+    }
+
+    .spielen-controls {
+      display: grid;
+      gap: .8rem;
+    }
+
+    .spielen-control {
+      display: grid;
+      gap: .38rem;
+    }
+
+    .spielen-control span {
+      font-family: 'Cinzel', serif;
+      font-size: .68rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .spielen-control input {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(201,147,58,.25);
+      border-radius: var(--radius);
+      color: var(--parchment);
+      font-family: 'EB Garamond', serif;
+      font-size: 1.05rem;
+      padding: .82rem 1rem;
+      outline: none;
+      transition: border-color .2s, background .2s;
+      width: 100%;
+    }
+
+    .spielen-control input:focus {
+      border-color: var(--gold);
+      background: rgba(255,255,255,.08);
+    }
+
+    .spielen-action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+    }
+
+    .spielen-action-button {
+      flex: 1 1 160px;
+      justify-content: center;
+    }
+
+    .spielen-teachers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: .85rem;
+    }
+
+    .spielen-teachers-grid.plays-in-player {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .spielen-teacher-card {
+      appearance: none;
+      border: 1px solid rgba(201,147,58,.18);
+      border-radius: 14px;
+      padding: 1rem;
+      background: linear-gradient(155deg, rgba(13,11,8,.96), rgba(26,21,16,.96));
+      color: inherit;
+      display: grid;
+      gap: .45rem;
+      text-align: left;
+      cursor: pointer;
+      transition: transform .25s, border-color .25s, box-shadow .25s, background .25s;
+    }
+
+    .spielen-teacher-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(201,147,58,.35);
+    }
+
+    .spielen-teacher-card.is-used {
+      border-color: rgba(100,200,120,.55);
+      background: linear-gradient(155deg, rgba(26,61,43,.42), rgba(13,11,8,.96));
+      box-shadow: 0 0 0 1px rgba(122,207,145,.08), 0 16px 34px rgba(0,0,0,.25);
+    }
+
+    .spielen-teacher-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.05rem;
+      color: var(--gold-light);
+      line-height: 1.2;
+    }
+
+    .spielen-teacher-status {
+      color: rgba(245,230,196,.64);
+      font-size: .95rem;
+      line-height: 1.45;
+    }
+
+    .spielen-teacher-toggle {
+      width: fit-content;
+      padding: .22rem .55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(201,147,58,.22);
+      background: rgba(255,255,255,.04);
+      color: var(--gold-pale);
+      font-family: 'Cinzel', serif;
+      font-size: .62rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
     /* Footer */
     footer {
       position: relative; z-index: 1;
@@ -1706,6 +2432,15 @@
       .tournament-stage-grid { grid-template-columns: 1fr; }
       .tournament-participants { gap: .35rem; }
       .tournament-participant { padding: .25rem .6rem; font-size: .88rem; }
+      .spielen-page { padding: 3rem 1rem 4rem; }
+      .spielen-overview, .spielen-summary-strip { grid-template-columns: 1fr; }
+      .spielen-summary-panel { padding: .7rem; }
+      .spielen-summary-dialog { max-height: 92vh; padding: .9rem; }
+      .spielen-summary-total-strip { grid-template-columns: 1fr; }
+      .spielen-summary-turn-grid { grid-template-columns: 1fr; }
+      .spielen-player-grid, .spielen-teachers-grid { grid-template-columns: 1fr; }
+      .spielen-turn-actions { justify-content: flex-start; }
+      .spielen-action-button { width: 100%; }
       .product-shelf { grid-auto-flow: row; grid-auto-columns: 1fr; }
       .product-card { width: 100%; }
       .product-card-top, .product-card-footer { flex-direction: column; align-items: stretch; }

@@ -1548,6 +1548,7 @@
     <a onclick="showPage('news')" id="nav-news">News</a>
     <a onclick="showPage('cards')" id="nav-cards">Alle Karten</a>
     <a onclick="showPage('tournament')" id="nav-tournament">Turnier</a>
+    <a onclick="showPage('spielen')" id="nav-spielen">Spielen</a>
     <a onclick="showPage('order')" id="nav-order">Produkte bestellen</a>
   </div>
 </nav>
@@ -1836,6 +1837,11 @@
 <script>
   /* ── Page navigation ─────────────────────────────── */
   function showPage(name) {
+    if (name === 'spielen') {
+      window.location.href = 'spielen.html';
+      return;
+    }
+
     document.querySelectorAll('.page').forEach(p => p.classList.remove('visible'));
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
     document.getElementById('page-' + name).classList.add('visible');

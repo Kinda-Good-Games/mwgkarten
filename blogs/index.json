@@ -1,6 +1,13 @@
 {
   "posts": [
     {
+      "id": "regeln",
+      "file": "Spielregeln.md",
+      "title": "Die Spielregeln des MWG Sammelkarten-Spiels",
+      "date": "2026-05-10",
+      "excerpt": "Die aktuellen Spielregeln des Spiels."
+    },
+    {
       "id": "placeholder",
       "file": "placeholder.md",
       "title": "Platzhalter-Blogpost: Das MWG Sammelkarten-Spiel kommt bald!",
