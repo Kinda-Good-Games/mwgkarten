@@ -1,5 +1,61 @@
 {
   "contactEmail": "kev_gong@hotmail.com",
+  "homepageCountdown": {
+    "enabled": true,
+    "eventName": "Verkaufsstart",
+    "eventDate": "2026-11-04T12:00:00+01:00",
+    "description": "Der erste Verkauf an der Isa und Rosa! Sei dabei und sichere dir deine Karten!"
+    },
+  "statusEffects": [
+    {
+      "id": "beschäftigt",
+      "name": "beschäftigt"
+    },
+    {
+      "id": "eingeschüchtert",
+      "name": "eingeschüchtert"
+    },
+    {
+      "id": "müde",
+      "name": "müde"
+    },
+    {
+      "id": "gestresst",
+      "name": "gestresst"
+    },
+    {
+      "id": "verwirrt",
+      "name": "verwirrt"
+    },
+    {
+      "id": "motiviert",
+      "name": "motiviert"
+    },
+    {
+      "id": "motiviert",
+      "name": "motiviert"
+    },
+    {
+      "id": "inspiriert",
+      "name": "inspiriert"
+    },
+    {
+      "id": "im Mittelpunkt",
+      "name": "im Mittelpunkt"
+    },
+    {
+      "id": "Distanzunterricht",
+      "name": "Distanzunterricht"
+    },
+    {
+      "id": "geschützt",
+      "name": "geschützt"
+    },
+    {
+      "id": "forgebildet",
+      "name": "fortgebildet"
+    }
+  ],
   "rarities": {
     "Normal": {
       "borderColor": "#64748b",
@@ -24,33 +80,38 @@
   },
   "sets": [
     {
-      "name": "Set 1: The beginnings",
+      "name": "Set 1: Basis Set",
       "description": "Der erste Karten-Drop mit den klassischen Motiven.",
       "cards": [
         {
-          "path": "cards/Beispiel.jpeg",
-          "name": "Beispielkarte_Normal",
-          "rarity": "Normal"
+          "path": "cards/TeacherCard_Fabian Offermann.png",
+          "name": "Fabian Offerman",
+          "rarity": "Normal",
+          "type": "Lehrkraft"
         },
         {
-          "path": "cards/Beispiel.jpeg",
-          "name": "Beispielkarte_Glitter",
-          "rarity": "Glitter"
-        },
+          "path": "cards/TeacherCard_Susanne Rottenecker.png",
+          "name": "Martina Hülsken",
+          "rarity": "Glitter",
+          "type": "Lehrkraft"
+        }, 
         {
-          "path": "cards/Beispiel.jpeg",
-          "name": "Beispielkarte_Holo",
-          "rarity": "Holo"
-        },
+          "path": "cards/TeacherCard_Jessica Donis.png",
+          "name": "Martina Hülsken",
+          "rarity": "Holo",
+          "type": "Lehrkraft"
+        }, 
         {
-          "path": "cards/Beispiel.jpeg",
-          "name": "Beispielkarte_Gold",
-          "rarity": "Gold"
-        },
+          "path": "cards/TeacherCard_Martina Hülsken.png",
+          "name": "Martina Hülsken",
+          "rarity": "Gold",
+          "type": "Lehrkraft"
+        }, 
         {
-          "path": "cards/Beispiel.jpeg",
-          "name": "Beispielkarte_Full_Art",
-          "rarity": "Full Art"
+          "path": "cards/TeacherCard_Ben Raith.png",
+          "name": "Ben Raith",
+          "rarity": "Full Art",
+          "type": "Lehrkraft"
         }
       ]
     },
@@ -61,15 +122,17 @@
         {
           "path": "cards/Beispiel.jpeg",
           "name": "Electric Test",
-          "rarity": "Holo"
+          "rarity": "Holo",
+          "type": "Event"
         }
       ]
     }
   ],
   "tournament": {
+    "view": false,
     "upcoming": false,
-    "title": "Turnier-Brackets",
-    "description": "Beispielansicht eines 16-Spieler-Turniers mit Vorrunde, Viertelfinale, Halbfinale und Finale.",
+    "title": "Die I. Schulmeisterschaft",
+    "description": "Bleibt gespannt!",
     "prizes": [
       { "places": "16-9", "reward": "1 freies Booster-Pack", "image": "assets/prizes/booster.svg" },
       { "places": "8-5",  "reward": "2x Sammelheft",       "image": "assets/prizes/sammelheft.svg" },

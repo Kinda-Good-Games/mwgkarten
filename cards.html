@@ -28,11 +28,49 @@
     <div class="section-rule"></div>
   </div>
 
-  <div class="cards-search-row">
-    <select class="cards-filter-select" id="cardCollectionFilter" onchange="filterCards()">
-      <option value="all">Alle Sets</option>
-    </select>
-    <input class="cards-search-input" type="text" id="cardSearch" placeholder="Karte suchen …" oninput="filterCards()" />
+  <div class="cards-filter-shell">
+    <button
+      class="cards-filter-menu-button"
+      id="cardFilterToggle"
+      type="button"
+      aria-controls="cardFilterMenu"
+      aria-expanded="false"
+      onclick="toggleCardFilterMenu()"
+    >
+      Filter anzeigen
+    </button>
+
+    <div class="cards-filter-menu" id="cardFilterMenu" hidden>
+      <div class="cards-filter-grid">
+        <label class="cards-filter-control">
+          <span>Set</span>
+          <select class="cards-filter-select" id="cardCollectionFilter" onchange="filterCards()">
+            <option value="all">Alle Sets</option>
+          </select>
+        </label>
+
+        <label class="cards-filter-control">
+          <span>Typ</span>
+          <select class="cards-filter-select" id="cardTypeFilter" onchange="filterCards()">
+            <option value="all">Alle Typen</option>
+          </select>
+        </label> 
+        <label class="cards-filter-control cards-filter-control-check">
+          <span>Nur erhaltene</span>
+          <input type="checkbox" id="cardOwnedOnlyFilter" onchange="filterCards()" />
+        </label>
+
+        <label class="cards-filter-control cards-filter-control-check">
+          <span>Nur Favoriten</span>
+          <input type="checkbox" id="cardFavoriteOnlyFilter" onchange="filterCards()" />
+        </label>
+        
+        <label class="cards-filter-control cards-filter-control-text">
+          <span>Suche</span>
+          <input class="cards-search-input" type="text" id="cardSearch" placeholder="Karte suchen …" oninput="filterCards()" />
+        </label>
+      </div>
+    </div>
   </div>
 
   <div class="cards-gallery" id="cardsGrid">
@@ -43,6 +81,32 @@
     <div class="big-icon">🔍</div>
     <p>Keine Karten gefunden</p>
     <small>Versuch einen anderen Suchbegriff.</small>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" type="button" aria-label="Schliessen" onclick="closeLightbox()">✕</button>
+  <div class="lightbox-card-detail">
+    <img class="lightbox-img" id="lightboxImg" src="" alt="Karte" />
+    <div class="lightbox-info" id="lightboxInfo">
+      <p class="lightbox-kicker">Kartendetails</p>
+      <h3 class="lightbox-title" id="lightboxTitle">Karte</h3>
+      <div class="lightbox-rarity" id="lightboxRarity">Normal</div>
+      <dl class="lightbox-meta-list">
+        <div class="lightbox-meta-row">
+          <dt>Set</dt>
+          <dd id="lightboxSet">Unbekannt</dd>
+        </div>
+        <div class="lightbox-meta-row">
+          <dt>Typ</dt>
+          <dd id="lightboxType">Event</dd>
+        </div>
+        <div class="lightbox-meta-row">
+          <dt>Index</dt>
+          <dd id="lightboxIndex">-</dd>
+        </div>
+      </dl>
+    </div>
   </div>
 </div>
 

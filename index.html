@@ -26,6 +26,7 @@
   <!-- Hero -->
   <section class="hero">
     <div class="hero-bg"></div>
+    <div class="home-card-whirl" id="homeCardWhirl" aria-hidden="true"></div>
     <div class="hero-ornament"></div>
     <div class="hero-content">
       <p class="hero-eyebrow">✦ Abitur 2027 – MWG ✦</p>
@@ -34,6 +35,16 @@
       <p class="hero-sub">
         Sammele, tausche und spiele mit Karten rund um das MWG.
       </p>
+      <div class="homepage-countdown" id="homepageCountdown" hidden>
+        <p class="homepage-countdown-kicker" id="homepageCountdownName"></p>
+        <p class="homepage-countdown-description" id="homepageCountdownDescription"></p>
+        <div class="homepage-countdown-values" aria-label="Countdown">
+          <div><strong id="homepageCountdownDays">00</strong><span>Tage</span></div>
+          <div><strong id="homepageCountdownHours">00</strong><span>Stunden</span></div>
+          <div><strong id="homepageCountdownMinutes">00</strong><span>Minuten</span></div>
+          <div><strong id="homepageCountdownSeconds">00</strong><span>Sekunden</span></div>
+        </div>
+      </div>
       <div class="hero-cta-row">
         <button class="btn btn-primary" onclick="showPage('order')">🎴 Produkte bestellen</button>
         <button class="btn btn-outline" onclick="showPage('cards')">Alle Karten ansehen →</button>

@@ -76,9 +76,34 @@ Im Kartenalbum werden die Karten nach Set gruppiert und oben kannst du zwischen 
 Die Kartenränder werden je Rarität aus `rarities` eingefärbt. Dort kannst du `borderColor` und optional `glowColor` anpassen.
 ---
 
+## Countdown auf der Startseite
+
+In `data.json` kannst du auf der Startseite einen Countdown für ein Ereignis einblenden:
+
+```json
+"homepageCountdown": {
+  "enabled": true,
+  "eventName": "Verkaufsstart",
+  "eventDate": "2026-12-01T12:00:00+01:00",
+  "description": "Ab diesem Zeitpunkt sind die neuen Karten erhältlich."
+}
+```
+
+Setze `enabled` auf `false`, um den Countdown auszublenden. `eventDate` verwendet das ISO-Format mit Datum, Uhrzeit und Zeitzone. Angezeigt werden die verbleibenden Tage, Stunden, Minuten und Sekunden.
+
 ## Turnierseite
 
 Die Website hat zusätzlich eine Seite für das Schulturnier. Dort werden die Brackets als Stufen angezeigt, damit man direkt sieht, wer in welcher Phase ist.
+
+Über `tournament.view` in `data.json` kannst du per Boolean zwischen der Turnieransicht und einem Platzhalter wechseln:
+
+```json
+"tournament": {
+  "view": false
+}
+```
+
+Verwende `true` für die Brackets oder `false` für die Anzeige `Coming soon...`.
 
 In `data.json` steuerst du das über `tournament`:
 

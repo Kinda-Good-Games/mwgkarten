@@ -25,6 +25,16 @@ function syncActiveNav() {
 
 const DEFAULT_SITE_DATA = {
   contactEmail: 'abi2027.mwg@outlook.de',
+  homepageCountdown: {
+    enabled: false,
+    eventName: 'Nächstes Karten-Event',
+    eventDate: '2027-01-01T12:00:00+01:00',
+    description: 'Die Zeit läuft.'
+  },
+  statusEffects: [
+    { id: 'inspiration', name: 'Inspiration' },
+    { id: 'erschopfung', name: 'Erschöpfung' }
+  ],
   rarities: {
       Normal: { borderColor: '#64748b', glowColor: 'rgba(100, 116, 139, 0.22)' },
       Glitter: { borderColor: '#22c55e', glowColor: 'rgba(34, 197, 94, 0.22)' },
@@ -39,7 +49,8 @@ const DEFAULT_SITE_DATA = {
           {
             path: 'cards/Beispiel.jpeg',
             name: 'Beispielkarte',
-            rarity: 'Normal'
+            rarity: 'Normal',
+            type: 'Event'
           }
         ]
       },
@@ -49,12 +60,14 @@ const DEFAULT_SITE_DATA = {
           {
             path: 'cards/Beispiel.jpeg',
             name: 'Electric Test',
-            rarity: 'Holo'
+            rarity: 'Holo',
+            type: 'Item'
           }
         ]
       }
     ],
     tournament: {
+      view: false,
       upcoming: true,
       title: 'Turnier-Brackets',
       description: 'Hier siehst du die aktuellen Brackets, Stufen und Paarungen des Schulturniers.',
@@ -115,6 +128,10 @@ const DEFAULT_SITE_DATA = {
   let siteDataLoaded = false;
   let orderQuantities = createEmptyQuantities(DEFAULT_SITE_DATA.products);
   const siteDataReady = loadSiteData();
+  let homeCarouselCards = [];
+  let homeCarouselIndex = 0;
+  let homeCarouselTimer;
+  let homepageCountdownTimer;
   const blogState = {
     loaded: false,
     posts: []
@@ -126,9 +143,29 @@ const DEFAULT_SITE_DATA = {
   const PLAY_SCALE_MAX_EUR = 10000;
 
   function createDefaultTeacherState() {
+    const effects = {};
+    getStatusEffectDefinitions().forEach(effect => {
+      effects[effect.id] = false;
+    });
+
     return Array.from({ length: 5 }, (_, index) => ({
       name: `Lehrer ${index + 1}`,
-      used: false
+      used: false,
+      effects: { ...effects }
+    }));
+  }
+
+  function getStatusEffectDefinitions() {
+    const effects = Array.isArray(siteData?.statusEffects) ? siteData.statusEffects : DEFAULT_SITE_DATA.statusEffects;
+    const seenIds = new Set();
+    return effects.filter(effect => {
+      const id = String(effect?.id || '');
+      if (!effect || typeof effect !== 'object' || !id || seenIds.has(id)) return false;
+      seenIds.add(id);
+      return true;
+    }).map(effect => ({
+      id: String(effect.id),
+      name: String(effect.name || effect.id)
     }));
   }
 
@@ -159,7 +196,11 @@ const DEFAULT_SITE_DATA = {
       const teacher = source[index] && typeof source[index] === 'object' ? source[index] : {};
       return {
         name: String(teacher.name || defaultTeacher.name),
-        used: Boolean(teacher.used)
+        used: Boolean(teacher.used),
+        effects: getStatusEffectDefinitions().reduce((effects, effect) => {
+          effects[effect.id] = Boolean(teacher.effects?.[effect.id]);
+          return effects;
+        }, { ...defaultTeacher.effects })
       };
     });
   }
@@ -446,6 +487,9 @@ const DEFAULT_SITE_DATA = {
     }
 
     return {
+      view: typeof (source.view ?? defaultTournament.view) === 'string'
+        ? (source.view ?? defaultTournament.view).toLowerCase() === 'true'
+        : Boolean(source.view ?? defaultTournament.view),
       upcoming: Boolean(source.upcoming ?? defaultTournament.upcoming),
       title: String(source.title || defaultTournament.title),
       description: String(source.description || defaultTournament.description),
@@ -495,6 +539,7 @@ const DEFAULT_SITE_DATA = {
         ...DEFAULT_SITE_DATA,
         ...data,
         rarities: normalizeRarities(data.rarities),
+        statusEffects: normalizeStatusEffects(data.statusEffects),
         tournament: normalizeTournament(data.tournament),
         sets: normalizeSets(data.sets ?? data.cardFiles),
         products: normalizeProducts(data.products)
@@ -504,6 +549,7 @@ const DEFAULT_SITE_DATA = {
       siteData = {
         ...DEFAULT_SITE_DATA,
         rarities: normalizeRarities(DEFAULT_SITE_DATA.rarities),
+        statusEffects: normalizeStatusEffects(DEFAULT_SITE_DATA.statusEffects),
         tournament: normalizeTournament(DEFAULT_SITE_DATA.tournament),
         sets: normalizeSets(DEFAULT_SITE_DATA.sets),
         products: normalizeProducts(DEFAULT_SITE_DATA.products)
@@ -527,6 +573,153 @@ const DEFAULT_SITE_DATA = {
     }
     renderOrderShelf();
     updateOrderSummary();
+    renderHomeCarousel();
+    renderHomeCardWhirl();
+    renderHomepageCountdown();
+  }
+
+  function renderHomepageCountdown() {
+    const countdown = document.getElementById('homepageCountdown');
+    if (!countdown) return;
+
+    clearInterval(homepageCountdownTimer);
+    const settings = siteData.homepageCountdown;
+    const eventDate = new Date(settings?.eventDate);
+    if (!settings?.enabled || !settings.eventName || Number.isNaN(eventDate.getTime())) {
+      countdown.hidden = true;
+      return;
+    }
+
+    countdown.hidden = false;
+    document.getElementById('homepageCountdownName').textContent = settings.eventName;
+    document.getElementById('homepageCountdownDescription').textContent = settings.description || '';
+
+    const updateCountdown = () => {
+      const remainingSeconds = Math.max(0, Math.floor((eventDate.getTime() - Date.now()) / 1000));
+      const days = Math.floor(remainingSeconds / 86400);
+      const hours = Math.floor((remainingSeconds % 86400) / 3600);
+      const minutes = Math.floor((remainingSeconds % 3600) / 60);
+      const seconds = remainingSeconds % 60;
+      document.getElementById('homepageCountdownDays').textContent = String(days).padStart(2, '0');
+      document.getElementById('homepageCountdownHours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('homepageCountdownMinutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('homepageCountdownSeconds').textContent = String(seconds).padStart(2, '0');
+    };
+
+    updateCountdown();
+    homepageCountdownTimer = setInterval(updateCountdown, 1000);
+  }
+
+  function renderHomeCardWhirl() {
+    const whirl = document.getElementById('homeCardWhirl');
+    if (!whirl) return;
+
+    const cards = siteData.sets.flatMap(set => set.cards).filter(card => card.path);
+    whirl.innerHTML = '';
+    if (cards.length === 0) return;
+
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const rowCount = viewportWidth <= 680 ? 2 : viewportWidth >= 1000 || viewportHeight >= 760 ? 4 : 3;
+    const rowStep = 100 / rowCount;
+    const speedBase = Math.max(42, Math.min(78, 44 + viewportWidth / 48 + viewportHeight / 45));
+    const rowGap = Math.max(4, Math.min(10, viewportWidth / 180));
+    whirl.style.setProperty('--row-count', rowCount);
+
+    for (let rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
+      const row = document.createElement('div');
+      row.className = 'home-whirl-row';
+      row.style.top = `${rowIndex * rowStep - 3}%`;
+      row.style.gap = `${rowGap}px`;
+      row.style.setProperty('--row-speed', `${Math.round(speedBase + rowIndex * 7)}s`);
+      row.style.setProperty('--row-delay', `${rowIndex * -11}s`);
+
+      const rowCards = Array.from({ length: 24 }, (_, index) => cards[(index + rowIndex * 2) % cards.length]);
+      rowCards.forEach(card => {
+        const cardElement = document.createElement('div');
+        cardElement.className = 'home-whirl-card';
+        cardElement.style.setProperty('--random-x', `${Math.round(Math.random() * 18 - 9)}px`);
+        cardElement.style.setProperty('--random-y', `${Math.round(Math.random() * 34 - 17)}px`);
+        cardElement.style.setProperty('--random-rotation', `${Math.round(Math.random() * 18 - 9)}deg`);
+        cardElement.innerHTML = `<img src="${escapeHtml(card.path)}" alt="" loading="lazy" />`;
+        row.appendChild(cardElement);
+      });
+
+      Array.from(row.children).forEach(cardElement => {
+        row.appendChild(cardElement.cloneNode(true));
+      });
+
+      whirl.appendChild(row);
+    }
+  }
+
+  function renderHomeCarousel() {
+    const track = document.getElementById('homeCarouselTrack');
+    const dots = document.getElementById('homeCarouselDots');
+    if (!track || !dots) return;
+
+    homeCarouselCards = siteData.sets.flatMap(set => set.cards.map(card => ({ ...card, setName: set.name })));
+    track.innerHTML = '';
+    dots.innerHTML = '';
+
+    if (homeCarouselCards.length === 0) {
+      track.innerHTML = '<p class="home-carousel-empty">Noch keine Karten vorhanden.</p>';
+      return;
+    }
+
+    homeCarouselIndex = Math.min(homeCarouselIndex, homeCarouselCards.length - 1);
+    homeCarouselCards.forEach((card, index) => {
+      const slide = document.createElement('article');
+      slide.className = 'home-carousel-slide';
+      slide.setAttribute('aria-label', `${index + 1} von ${homeCarouselCards.length}: ${card.name}`);
+      slide.innerHTML = `
+        <div class="home-carousel-image-wrap">
+          <img src="${escapeHtml(card.path)}" alt="${escapeHtml(card.name)}" loading="${index === homeCarouselIndex ? 'eager' : 'lazy'}" />
+        </div>
+        <div class="home-carousel-card-info">
+          <p class="home-carousel-card-set">${escapeHtml(card.setName)}</p>
+          <h3>${escapeHtml(card.name)}</h3>
+          <p><span>${escapeHtml(card.type || 'Karte')}</span><span>${escapeHtml(card.rarity || 'Normal')}</span></p>
+        </div>`;
+      track.appendChild(slide);
+
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'home-carousel-dot';
+      dot.setAttribute('aria-label', `${card.name} anzeigen`);
+      dot.addEventListener('click', () => setHomeCarousel(index));
+      dots.appendChild(dot);
+    });
+
+    updateHomeCarousel();
+    clearInterval(homeCarouselTimer);
+    if (homeCarouselCards.length > 1) {
+      homeCarouselTimer = setInterval(() => moveHomeCarousel(1), 5000);
+    }
+  }
+
+  function updateHomeCarousel() {
+    const track = document.getElementById('homeCarouselTrack');
+    const dots = document.querySelectorAll('.home-carousel-dot');
+    if (!track || homeCarouselCards.length === 0) return;
+    const visibleCards = window.matchMedia('(max-width: 680px)').matches ? 2 : 3;
+    const maxIndex = Math.max(0, homeCarouselCards.length - visibleCards);
+    homeCarouselIndex = Math.min(homeCarouselIndex, maxIndex);
+    track.style.transform = `translateX(-${homeCarouselIndex * (100 / visibleCards)}%)`;
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === homeCarouselIndex);
+      dot.setAttribute('aria-current', index === homeCarouselIndex ? 'true' : 'false');
+    });
+  }
+
+  function setHomeCarousel(index) {
+    if (homeCarouselCards.length === 0) return;
+    homeCarouselIndex = (index + homeCarouselCards.length) % homeCarouselCards.length;
+    updateHomeCarousel();
+  }
+
+  function moveHomeCarousel(direction) {
+    setHomeCarousel(homeCarouselIndex + direction);
   }
 
   function escapeHtml(value) {
@@ -536,6 +729,17 @@ const DEFAULT_SITE_DATA = {
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
+  }
+
+  function normalizeStatusEffects(statusEffects) {
+    const source = Array.isArray(statusEffects) ? statusEffects : DEFAULT_SITE_DATA.statusEffects;
+    return source
+      .filter(effect => effect && typeof effect === 'object' && effect.id)
+      .map(effect => ({
+        id: String(effect.id).trim(),
+        name: String(effect.name || effect.id).trim()
+      }))
+      .filter(effect => effect.id && effect.name);
   }
 
   function formatBlogDate(value) {
@@ -1053,7 +1257,7 @@ const DEFAULT_SITE_DATA = {
     HOW TO ADD CARDS:
     Group cards into sets in data.json under `sets`.
     Each set needs a `name` and a `cards` array.
-    Each card can define `path`, `name`, and `rarity`.
+    Each card can define `path`, `name`, `rarity`, and `type`.
 
     Products can be configured in data.json under products.
     Each product should include id, name, description, unitLabel, minQuantity, maxQuantity, and defaultQuantity.
@@ -1061,12 +1265,94 @@ const DEFAULT_SITE_DATA = {
     The filename (without extension) is used as a fallback card name.
   */
   let cardsLoaded = false;
+  const CARD_COLLECTION_STORAGE_KEY = 'mwgkarten.card-collection-state';
+  const CARD_TYPE_OPTIONS = ['Lehrkraft', 'Item', 'Sabotage', 'Raum', 'Event'];
+  let cardCollectionState = loadCardCollectionState();
+
+  function loadCardCollectionState() {
+    try {
+      const rawState = window.localStorage.getItem(CARD_COLLECTION_STORAGE_KEY);
+      const parsed = rawState ? JSON.parse(rawState) : {};
+      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
+
+      const normalized = {};
+      Object.entries(parsed).forEach(([key, value]) => {
+        if (!value || typeof value !== 'object') return;
+        normalized[key] = {
+          owned: Boolean(value.owned),
+          favorite: Boolean(value.favorite)
+        };
+      });
+      return normalized;
+    } catch (_) {
+      return {};
+    }
+  }
+
+  function saveCardCollectionState() {
+    try {
+      window.localStorage.setItem(CARD_COLLECTION_STORAGE_KEY, JSON.stringify(cardCollectionState));
+    } catch (_) {
+      // Ignore storage failures to keep gallery interactions available.
+    }
+  }
+
+  function getCardCollectionKey(card, setName) {
+    const safeSet = String(setName || 'set').trim().toLowerCase();
+    const safePath = String(card?.path || '').trim().toLowerCase();
+    const safeName = String(card?.name || '').trim().toLowerCase();
+    return `${safeSet}::${safePath}::${safeName}`;
+  }
+
+  function getCardCollectionStatus(card, setName) {
+    const key = getCardCollectionKey(card, setName);
+    const current = cardCollectionState[key] || {};
+    return {
+      key,
+      owned: current.owned === true,
+      favorite: current.favorite === true
+    };
+  }
+
+  function toggleCardOwned(cardKey) {
+    const current = cardCollectionState[cardKey] || { owned: false, favorite: false };
+    const nextOwned = !current.owned;
+    cardCollectionState[cardKey] = {
+      owned: nextOwned,
+      favorite: Boolean(current.favorite)
+    };
+    saveCardCollectionState();
+    renderCards(siteData.sets);
+  }
+
+  function toggleCardFavorite(cardKey) {
+    const current = cardCollectionState[cardKey] || { owned: false, favorite: false };
+    cardCollectionState[cardKey] = {
+      owned: Boolean(current.owned),
+      favorite: !current.favorite
+    };
+    saveCardCollectionState();
+    renderCards(siteData.sets);
+  }
+
+  function normalizeCardType(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return 'Event';
+
+    const directMatch = CARD_TYPE_OPTIONS.find(type => type === raw);
+    if (directMatch) return directMatch;
+
+    const lower = raw.toLowerCase();
+    const fuzzyMatch = CARD_TYPE_OPTIONS.find(type => type.toLowerCase() === lower);
+    return fuzzyMatch || 'Event';
+  }
 
   function normalizeCardEntry(entry, index) {
     if (typeof entry === 'string') {
       return {
         path: entry,
         rarity: 'Normal',
+        type: 'Event',
         name: prettyName(entry),
         order: index
       };
@@ -1077,6 +1363,7 @@ const DEFAULT_SITE_DATA = {
       return {
         path,
         rarity: String(entry.rarity || 'Normal'),
+        type: normalizeCardType(entry.type || entry.cardType || entry.tag),
         name: String(entry.name || prettyName(path)),
         order: index
       };
@@ -1130,10 +1417,36 @@ const DEFAULT_SITE_DATA = {
     }
   }
 
+  function populateTypeFilter(sets) {
+    const select = document.getElementById('cardTypeFilter');
+    if (!select) return;
+
+    const currentValue = select.value || 'all';
+    const availableTypes = new Set();
+    (sets || []).forEach(set => {
+      (set.cards || []).forEach(card => {
+        availableTypes.add(normalizeCardType(card.type));
+      });
+    });
+
+    const orderedTypes = CARD_TYPE_OPTIONS.filter(type => availableTypes.has(type));
+    const extraTypes = [...availableTypes].filter(type => !CARD_TYPE_OPTIONS.includes(type)).sort((left, right) => left.localeCompare(right));
+    const allTypes = [...orderedTypes, ...extraTypes];
+
+    select.innerHTML = '<option value="all">Alle Typen</option>' + allTypes.map(type => `<option value="${type}">${type}</option>`).join('');
+
+    if ([...select.options].some(option => option.value === currentValue)) {
+      select.value = currentValue;
+    } else {
+      select.value = 'all';
+    }
+  }
+
   function loadCards() {
     if (cardsLoaded) return;
     cardsLoaded = true;
     populateSetFilter(siteData.sets);
+    populateTypeFilter(siteData.sets);
     renderCards(siteData.sets);
   }
 
@@ -1154,7 +1467,12 @@ const DEFAULT_SITE_DATA = {
     const placeholder = document.getElementById('cardsPlaceholder');
     const search = (document.getElementById('cardSearch')?.value || '').toLowerCase();
     const collectionFilter = document.getElementById('cardCollectionFilter')?.value || 'all';
+    const typeFilter = document.getElementById('cardTypeFilter')?.value || 'all';
+    const ownedOnly = Boolean(document.getElementById('cardOwnedOnlyFilter')?.checked);
+    const favoriteOnly = Boolean(document.getElementById('cardFavoriteOnlyFilter')?.checked);
     const normalizedSets = normalizeSets(sets);
+    populateSetFilter(normalizedSets);
+    populateTypeFilter(normalizedSets);
     grid.innerHTML = '';
 
     if (normalizedSets.length === 0) {
@@ -1171,8 +1489,14 @@ const DEFAULT_SITE_DATA = {
 
     visibleSets.forEach(set => {
       const matchingCards = set.cards.filter(card => {
+        const cardStatus = getCardCollectionStatus(card, set.name);
         const rarity = (card.rarity || '').toLowerCase();
-        return card.name.toLowerCase().includes(search) || rarity.includes(search);
+        const type = normalizeCardType(card.type);
+        const matchesSearch = card.name.toLowerCase().includes(search) || rarity.includes(search) || type.toLowerCase().includes(search);
+        const matchesType = typeFilter === 'all' || type === typeFilter;
+        const matchesOwned = !ownedOnly || cardStatus.owned;
+        const matchesFavorite = !favoriteOnly || cardStatus.favorite;
+        return matchesSearch && matchesType && matchesOwned && matchesFavorite;
       });
       if (matchingCards.length === 0) return;
 
@@ -1192,22 +1516,60 @@ const DEFAULT_SITE_DATA = {
       const collectionGrid = document.createElement('div');
       collectionGrid.className = 'card-collection-grid';
 
-      matchingCards.forEach(card => {
+      matchingCards.forEach((card, cardIndex) => {
         const rarityConfig = getRarityConfig(card.rarity);
+        const cardStatus = getCardCollectionStatus(card, set.name);
         const item = document.createElement('div');
         item.className = 'card-item';
         item.dataset.name = card.name.toLowerCase();
         item.dataset.collection = set.name;
         item.dataset.rarity = card.rarity || 'Normal';
+        item.dataset.type = card.type || 'Event';
+        item.dataset.owned = cardStatus.owned ? 'true' : 'false';
+        item.dataset.favorite = cardStatus.favorite ? 'true' : 'false';
         item.style.setProperty('--rarity-color', rarityConfig.borderColor);
         item.style.setProperty('--rarity-glow', rarityConfig.glowColor);
         item.innerHTML = `
           <img src="${card.path}" alt="${card.name}" loading="lazy" onerror="this.parentElement.style.display='none'"/>
+          <div class="card-item-top-row">
+            <span class="card-item-type-badge">${escapeHtml(card.type || 'Event')}</span>
+            <div class="card-item-top-actions">
+              <button type="button" class="card-item-owned-marker" data-action="owned" aria-pressed="${cardStatus.owned ? 'true' : 'false'}" title="Als erhalten markieren">${cardStatus.owned ? '✓' : '○'}</button>
+              <button type="button" class="card-item-favorite-marker" data-action="favorite" aria-pressed="${cardStatus.favorite ? 'true' : 'false'}" title="Favorit markieren">${cardStatus.favorite ? '★' : '☆'}</button>
+            </div>
+          </div>
           <div class="card-item-label">
             <span class="card-item-name">${card.name}</span>
             <span class="card-item-rarity">${card.rarity || 'Normal'}</span>
           </div>`;
-        item.addEventListener('click', () => openLightbox(card.path, card.name));
+
+        const ownedToggle = item.querySelector('[data-action="owned"]');
+        const favoriteToggle = item.querySelector('[data-action="favorite"]');
+
+        if (ownedToggle) {
+          ownedToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            toggleCardOwned(cardStatus.key);
+          });
+        }
+
+        if (favoriteToggle) {
+          favoriteToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            toggleCardFavorite(cardStatus.key);
+          });
+        }
+
+        item.addEventListener('click', () => {
+          openLightbox({
+            src: card.path,
+            name: card.name,
+            rarity: card.rarity || 'Normal',
+            type: card.type || 'Event',
+            setName: set.name || 'Unbekanntes Set',
+            indexLabel: `${cardIndex + 1} / ${matchingCards.length}`
+          });
+        });
         collectionGrid.appendChild(item);
       });
 
@@ -1246,6 +1608,16 @@ const DEFAULT_SITE_DATA = {
     }
 
     if (!board) return;
+
+    if (!tournament.view) {
+      board.innerHTML = `
+        <div class="tournament-placeholder">
+          <div class="tournament-placeholder-mark">✦</div>
+          <h3>Coming soon...</h3>
+          <p>Das Turnier wird bald hier angekündigt.</p>
+        </div>`;
+      return;
+    }
 
     // Render prize ladder (if present)
     const prizeHtml = (Array.isArray(tournament.prizes) && tournament.prizes.length > 0)
@@ -1382,18 +1754,36 @@ const DEFAULT_SITE_DATA = {
   function renderSpielenTeacherCards(playerIndex) {
     const playerTeachers = playState.players[playerIndex]?.teachers || createDefaultTeacherState();
     return playerTeachers.map((teacher, teacherIndex) => `
-      <button
-        type="button"
+      <article
         class="spielen-teacher-card${teacher.used ? ' is-used' : ''}"
         id="spielen-teacher-card-${playerIndex}-${teacherIndex}"
-        onclick="toggleTeacherAbility(${playerIndex}, ${teacherIndex})"
-        aria-pressed="${teacher.used ? 'true' : 'false'}"
       >
         <span class="spielen-teacher-kicker">Lehrer ${teacherIndex + 1}</span>
         <span class="spielen-teacher-name">${escapeHtml(teacher.name)}</span>
         <span class="spielen-teacher-status" id="spielen-teacher-status-${playerIndex}-${teacherIndex}">${teacher.used ? 'Fähigkeit verfügbar' : 'Keine Fähigkeit verfügbar'}</span>
-        <span class="spielen-teacher-toggle" id="spielen-teacher-toggle-${playerIndex}-${teacherIndex}">${teacher.used ? 'On' : 'Off'}</span>
-      </button>
+        <button type="button" class="spielen-teacher-ability-toggle" onclick="toggleTeacherAbility(${playerIndex}, ${teacherIndex})" aria-pressed="${teacher.used ? 'true' : 'false'}">
+          Fähigkeit: <span class="spielen-teacher-toggle" id="spielen-teacher-toggle-${playerIndex}-${teacherIndex}">${teacher.used ? 'Aktiv' : 'Inaktiv'}</span>
+        </button>
+        <div class="spielen-status-effect-manager">
+          <label class="spielen-status-effect-add">
+            <span>Status-Effekt hinzufügen</span>
+            <select onchange="addTeacherStatusEffect(${playerIndex}, ${teacherIndex}, this.value); this.value = ''">
+              <option value="">Effekt auswählen</option>
+              ${getStatusEffectDefinitions().filter(effect => !teacher.effects?.[effect.id]).map(effect => `
+                <option value="${escapeHtml(effect.id)}">${escapeHtml(effect.name)}</option>
+              `).join('')}
+            </select>
+          </label>
+          <div class="spielen-status-effects" aria-label="Aktive Status-Effekte">
+            ${getStatusEffectDefinitions().filter(effect => teacher.effects?.[effect.id]).map(effect => `
+              <span class="spielen-status-effect">
+                <strong>${escapeHtml(effect.name)}</strong>
+                <button type="button" class="spielen-status-effect-remove" aria-label="${escapeHtml(effect.name)} entfernen" onclick="removeTeacherStatusEffect(${playerIndex}, ${teacherIndex}, '${escapeHtml(effect.id)}')">×</button>
+              </span>
+            `).join('') || '<span class="spielen-status-effects-empty">Keine aktiven Effekte</span>'}
+          </div>
+        </div>
+      </article>
     `).join('');
   }
 
@@ -1479,7 +1869,6 @@ const DEFAULT_SITE_DATA = {
 
         if (card) {
           card.classList.toggle('is-used', teacher.used);
-          card.setAttribute('aria-pressed', teacher.used ? 'true' : 'false');
         }
 
         if (status) {
@@ -1487,8 +1876,9 @@ const DEFAULT_SITE_DATA = {
         }
 
         if (toggle) {
-          toggle.textContent = teacher.used ? 'On' : 'Off';
+          toggle.textContent = teacher.used ? 'Aktiv' : 'Inaktiv';
         }
+
       });
     });
 
@@ -1539,6 +1929,32 @@ const DEFAULT_SITE_DATA = {
     syncSpielenPage();
   }
 
+  function refreshSpielenTeacherCards(playerIndex) {
+    const grid = document.getElementById(`spielen-teachers-${playerIndex}`);
+    if (!grid) return;
+    grid.innerHTML = renderSpielenTeacherCards(playerIndex);
+  }
+
+  function addTeacherStatusEffect(playerIndex, teacherIndex, effectId) {
+    const teacher = playState.players[playerIndex]?.teachers?.[teacherIndex];
+    if (!teacher || !effectId) return;
+    teacher.effects = teacher.effects || {};
+    teacher.effects[String(effectId)] = true;
+    saveSpielenState();
+    refreshSpielenTeacherCards(playerIndex);
+    syncSpielenPage();
+  }
+
+  function removeTeacherStatusEffect(playerIndex, teacherIndex, effectId) {
+    const teacher = playState.players[playerIndex]?.teachers?.[teacherIndex];
+    if (!teacher || !effectId) return;
+    teacher.effects = teacher.effects || {};
+    teacher.effects[String(effectId)] = false;
+    saveSpielenState();
+    refreshSpielenTeacherCards(playerIndex);
+    syncSpielenPage();
+  }
+
   function resetSpielenState() {
     const confirmed = window.confirm('Willst du wirklich den aktuellen Spielstand zurücksetzen?');
     if (!confirmed) return;
@@ -1548,18 +1964,72 @@ const DEFAULT_SITE_DATA = {
     syncSpielenPage();
   }
 
+  function setCardFilterMenuOpen(isOpen) {
+    const menu = document.getElementById('cardFilterMenu');
+    const toggle = document.getElementById('cardFilterToggle');
+    if (!menu || !toggle) return;
+
+    menu.hidden = !isOpen;
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    toggle.textContent = isOpen ? 'Filter ausblenden' : 'Filter anzeigen';
+  }
+
+  function toggleCardFilterMenu() {
+    const menu = document.getElementById('cardFilterMenu');
+    if (!menu) return;
+    setCardFilterMenuOpen(menu.hidden);
+  }
+
   function filterCards() {
     renderCards(siteData.sets);
   }
   /* Lightbox */
-  function openLightbox(src, alt) {
-    document.getElementById('lightboxImg').src = src;
-    document.getElementById('lightboxImg').alt = alt;
-    document.getElementById('lightbox').classList.add('open');
+  function openLightbox(cardData) {
+    const lightbox = document.getElementById('lightbox');
+    const image = document.getElementById('lightboxImg');
+    if (!lightbox || !image || !cardData || typeof cardData !== 'object') return;
+
+    const cardName = String(cardData.name || 'Unbekannte Karte');
+    const rarity = String(cardData.rarity || 'Normal');
+    const type = normalizeCardType(cardData.type);
+    const setName = String(cardData.setName || 'Unbekanntes Set');
+    const indexLabel = String(cardData.indexLabel || '-');
+    const src = String(cardData.src || '');
+
+    image.src = src;
+    image.alt = cardName;
+
+    const title = document.getElementById('lightboxTitle');
+    const rarityBadge = document.getElementById('lightboxRarity');
+    const setField = document.getElementById('lightboxSet');
+    const typeField = document.getElementById('lightboxType');
+    const indexField = document.getElementById('lightboxIndex');
+    const rarityConfig = getRarityConfig(rarity);
+
+    if (title) title.textContent = cardName;
+    if (rarityBadge) {
+      rarityBadge.textContent = rarity;
+      rarityBadge.style.setProperty('--rarity-color', rarityConfig.borderColor);
+      rarityBadge.style.setProperty('--rarity-glow', rarityConfig.glowColor);
+    }
+    if (setField) setField.textContent = setName;
+    if (typeField) typeField.textContent = type;
+    if (indexField) indexField.textContent = indexLabel;
+
+    lightbox.classList.add('open');
   }
+
   function closeLightbox(e) {
-    if (!e || e.target !== document.getElementById('lightboxImg')) {
-      document.getElementById('lightbox').classList.remove('open');
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox) return;
+
+    if (!e) {
+      lightbox.classList.remove('open');
+      return;
+    }
+
+    if (e.target === lightbox) {
+      lightbox.classList.remove('open');
     }
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
