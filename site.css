@@ -625,6 +625,8 @@
     .card-collection {
       display: grid;
       gap: 1rem;
+      content-visibility: auto;
+      contain-intrinsic-size: 0 720px;
     }
 
     .card-collection-header {
@@ -2674,6 +2676,79 @@
     .spielen-action-button {
       flex: 1 1 160px;
       justify-content: center;
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .spielen-presets {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .5rem;
+    }
+
+    .spielen-preset-group {
+      display: grid;
+      grid-template-columns: auto repeat(3, minmax(0, 1fr));
+      gap: .4rem;
+      align-items: center;
+      padding: .35rem;
+      border: 1px solid rgba(201,147,58,.2);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.025);
+    }
+
+    .spielen-preset-group-label {
+      width: 1.35rem;
+      text-align: center;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .spielen-preset-group--positive .spielen-preset-group-label {
+      color: #c8f2cf;
+    }
+
+    .spielen-preset-group--negative .spielen-preset-group-label {
+      color: #ffd0d0;
+    }
+
+    .spielen-preset-button {
+      min-width: 0;
+      padding: .62rem .35rem;
+      border: 1px solid rgba(201,147,58,.3);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.04);
+      color: var(--gold-pale);
+      font-family: 'Cinzel', serif;
+      font-size: .78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, transform .2s;
+    }
+
+    .spielen-preset-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .spielen-preset-group--positive .spielen-preset-button {
+      border-color: rgba(122,207,145,.42);
+      color: #c8f2cf;
+    }
+
+    .spielen-preset-group--positive .spielen-preset-button:hover {
+      background: rgba(72,151,91,.24);
+      border-color: rgba(122,207,145,.75);
+    }
+
+    .spielen-preset-group--negative .spielen-preset-button {
+      border-color: rgba(244,163,163,.42);
+      color: #ffd0d0;
+    }
+
+    .spielen-preset-group--negative .spielen-preset-button:hover {
+      background: rgba(151,72,72,.24);
+      border-color: rgba(244,163,163,.75);
     }
 
     .spielen-teachers-grid {
@@ -2703,12 +2778,6 @@
       border-color: rgba(201,147,58,.35);
     }
 
-    .spielen-teacher-card.is-used {
-      border-color: rgba(100,200,120,.55);
-      background: linear-gradient(155deg, rgba(26,61,43,.42), rgba(13,11,8,.96));
-      box-shadow: 0 0 0 1px rgba(122,207,145,.08), 0 16px 34px rgba(0,0,0,.25);
-    }
-
     .spielen-teacher-name {
       font-family: 'Cinzel Decorative', serif;
       font-size: 1.05rem;
@@ -2716,39 +2785,13 @@
       line-height: 1.2;
     }
 
-    .spielen-teacher-status {
-      color: rgba(245,230,196,.64);
-      font-size: .95rem;
-      line-height: 1.45;
-    }
-
-    .spielen-teacher-ability-toggle {
-      appearance: none;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: .6rem;
-      padding: .45rem .6rem;
-      border: 1px solid rgba(201,147,58,.22);
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.04);
-      color: var(--gold-pale);
-      font: inherit;
-      cursor: pointer;
-      text-align: left;
-    }
-
-    .spielen-teacher-ability-toggle:hover {
-      border-color: rgba(201,147,58,.48);
-      background: rgba(201,147,58,.1);
-    }
-
     .spielen-status-effect-manager {
       display: grid;
       gap: .55rem;
-      border-top: 1px solid rgba(201,147,58,.12);
-      padding-top: .55rem;
+      border: 1px solid rgba(201,147,58,.28);
+      border-radius: 10px;
+      padding: .7rem;
+      background: rgba(201,147,58,.06);
     }
 
     .spielen-status-effect-add {
@@ -2783,7 +2826,7 @@
     .spielen-status-effects {
       display: flex;
       flex-wrap: wrap;
-      gap: .35rem;
+      gap: .5rem;
       max-height: 7rem;
       overflow-y: auto;
       scrollbar-color: rgba(201,147,58,.55) rgba(255,255,255,.05);
@@ -2794,11 +2837,12 @@
       align-items: flex-start;
       gap: .5rem;
       min-width: 0;
-      padding: .28rem .35rem;
-      border: 1px solid rgba(201,147,58,.1);
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.025);
-      color: rgba(245,230,196,.78);
+      padding: .48rem .62rem;
+      border: 1px solid rgba(255,201,94,.65);
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(201,147,58,.28), rgba(122,78,24,.22));
+      color: #fff2cc;
+      box-shadow: 0 0 0 1px rgba(255,201,94,.08), 0 0 14px rgba(201,147,58,.16);
       cursor: pointer;
       line-height: 1.25;
     }
@@ -2810,9 +2854,9 @@
 
     .spielen-status-effect strong {
       font-family: 'Cinzel', serif;
-      font-size: .68rem;
+      font-size: .76rem;
       letter-spacing: .08em;
-      color: var(--gold-light);
+      color: #fff2cc;
       overflow-wrap: anywhere;
     }
 
@@ -2831,22 +2875,9 @@
     }
 
     .spielen-status-effects-empty {
-      color: rgba(245,230,196,.5);
-      font-size: .8rem;
+      color: rgba(245,230,196,.65);
+      font-size: .88rem;
       line-height: 1.35;
-    }
-
-    .spielen-teacher-toggle {
-      width: fit-content;
-      padding: .22rem .55rem;
-      border-radius: 999px;
-      border: 1px solid rgba(201,147,58,.22);
-      background: rgba(255,255,255,.04);
-      color: var(--gold-pale);
-      font-family: 'Cinzel', serif;
-      font-size: .62rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
     }
 
     /* Footer */
@@ -2990,6 +3021,8 @@
       .spielen-summary-turn-grid { grid-template-columns: 1fr; }
       .spielen-player-grid, .spielen-teachers-grid { grid-template-columns: 1fr; }
       .spielen-status-effects { max-height: 9rem; }
+      .spielen-presets { grid-template-columns: 1fr; }
+      .spielen-preset-group { grid-template-columns: auto repeat(3, minmax(0, 1fr)); }
       .spielen-turn-actions { justify-content: flex-start; }
       .spielen-action-button { width: 100%; }
       .product-shelf { grid-auto-flow: row; grid-auto-columns: 1fr; }

@@ -150,7 +150,6 @@ const DEFAULT_SITE_DATA = {
 
     return Array.from({ length: 5 }, (_, index) => ({
       name: `Lehrer ${index + 1}`,
-      used: false,
       effects: { ...effects }
     }));
   }
@@ -196,7 +195,6 @@ const DEFAULT_SITE_DATA = {
       const teacher = source[index] && typeof source[index] === 'object' ? source[index] : {};
       return {
         name: String(teacher.name || defaultTeacher.name),
-        used: Boolean(teacher.used),
         effects: getStatusEffectDefinitions().reduce((effects, effect) => {
           effects[effect.id] = Boolean(teacher.effects?.[effect.id]);
           return effects;
@@ -641,7 +639,7 @@ const DEFAULT_SITE_DATA = {
         cardElement.style.setProperty('--random-x', `${Math.round(Math.random() * 18 - 9)}px`);
         cardElement.style.setProperty('--random-y', `${Math.round(Math.random() * 34 - 17)}px`);
         cardElement.style.setProperty('--random-rotation', `${Math.round(Math.random() * 18 - 9)}deg`);
-        cardElement.innerHTML = `<img src="${escapeHtml(card.path)}" alt="" loading="lazy" />`;
+        cardElement.innerHTML = `<img src="${escapeHtml(getCardPreviewPath(card.path))}" alt="" loading="lazy" decoding="async" />`;
         row.appendChild(cardElement);
       });
 
@@ -674,7 +672,7 @@ const DEFAULT_SITE_DATA = {
       slide.setAttribute('aria-label', `${index + 1} von ${homeCarouselCards.length}: ${card.name}`);
       slide.innerHTML = `
         <div class="home-carousel-image-wrap">
-          <img src="${escapeHtml(card.path)}" alt="${escapeHtml(card.name)}" loading="${index === homeCarouselIndex ? 'eager' : 'lazy'}" />
+          <img src="${escapeHtml(getCardPreviewPath(card.path))}" alt="${escapeHtml(card.name)}" loading="${index === homeCarouselIndex ? 'eager' : 'lazy'}" decoding="async" />
         </div>
         <div class="home-carousel-card-info">
           <p class="home-carousel-card-set">${escapeHtml(card.setName)}</p>
@@ -1462,6 +1460,14 @@ const DEFAULT_SITE_DATA = {
                .replace(/\b\w/g, c => c.toUpperCase()); // Title Case
   }
 
+  function getCardPreviewPath(path) {
+    const sourcePath = String(path || '');
+    if (/^cards\/baseset\/\d+\.png$/i.test(sourcePath)) {
+      return sourcePath.replace('/baseset/', '/baseset/thumbs/').replace(/\.png$/i, '.jpg');
+    }
+    return sourcePath;
+  }
+
   function renderCards(sets) {
     const grid = document.getElementById('cardsGrid');
     const placeholder = document.getElementById('cardsPlaceholder');
@@ -1530,7 +1536,7 @@ const DEFAULT_SITE_DATA = {
         item.style.setProperty('--rarity-color', rarityConfig.borderColor);
         item.style.setProperty('--rarity-glow', rarityConfig.glowColor);
         item.innerHTML = `
-          <img src="${card.path}" alt="${card.name}" loading="lazy" onerror="this.parentElement.style.display='none'"/>
+          <img src="${getCardPreviewPath(card.path)}" alt="${escapeHtml(card.name)}" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"/>
           <div class="card-item-top-row">
             <span class="card-item-type-badge">${escapeHtml(card.type || 'Event')}</span>
             <div class="card-item-top-actions">
@@ -1730,14 +1736,28 @@ const DEFAULT_SITE_DATA = {
               />
             </label>
             <div class="spielen-action-row">
-              <button type="button" class="btn btn-primary spielen-action-button" onclick="adjustSpielenMoney(${index}, 1)"><font size=30>+</font></button>
-              <button type="button" class="btn btn-outline spielen-action-button" onclick="adjustSpielenMoney(${index}, -1)"><font size=30>-</font></button>
+              <button type="button" class="btn btn-primary spielen-action-button" onclick="adjustSpielenMoney(${index}, 1)" aria-label="Betrag hinzufügen">+</button>
+              <button type="button" class="btn btn-outline spielen-action-button" onclick="adjustSpielenMoney(${index}, -1)" aria-label="Betrag abziehen">−</button>
+            </div>
+            <div class="spielen-presets" aria-label="Geldbetrag auswählen">
+              <div class="spielen-preset-group spielen-preset-group--positive">
+                <span class="spielen-preset-group-label">+</span>
+                ${[100, 500, 1000].map(amount => `
+                  <button type="button" class="spielen-preset-button" onclick="adjustSpielenMoneyByAmount(${index}, ${amount})">+${formatMoney(amount)}</button>
+                `).join('')}
+              </div>
+              <div class="spielen-preset-group spielen-preset-group--negative">
+                <span class="spielen-preset-group-label">−</span>
+                ${[100, 500, 1000].map(amount => `
+                  <button type="button" class="spielen-preset-button" onclick="adjustSpielenMoneyByAmount(${index}, -${amount})">−${formatMoney(amount)}</button>
+                `).join('')}
+              </div>
             </div>
           </div>
           <div class="spielen-player-divider"></div>
           <div class="spielen-player-teachers">
             <div class="spielen-player-teachers-head">
-              <div class="spielen-player-teachers-kicker">Lehrerstatus</div>
+              <div class="spielen-player-teachers-kicker">Status-Effekte</div>
             </div>
             <div class="spielen-teachers-grid" id="spielen-teachers-${index}">
               ${renderSpielenTeacherCards(index)}
@@ -1755,15 +1775,11 @@ const DEFAULT_SITE_DATA = {
     const playerTeachers = playState.players[playerIndex]?.teachers || createDefaultTeacherState();
     return playerTeachers.map((teacher, teacherIndex) => `
       <article
-        class="spielen-teacher-card${teacher.used ? ' is-used' : ''}"
+        class="spielen-teacher-card"
         id="spielen-teacher-card-${playerIndex}-${teacherIndex}"
       >
         <span class="spielen-teacher-kicker">Lehrer ${teacherIndex + 1}</span>
         <span class="spielen-teacher-name">${escapeHtml(teacher.name)}</span>
-        <span class="spielen-teacher-status" id="spielen-teacher-status-${playerIndex}-${teacherIndex}">${teacher.used ? 'Fähigkeit verfügbar' : 'Keine Fähigkeit verfügbar'}</span>
-        <button type="button" class="spielen-teacher-ability-toggle" onclick="toggleTeacherAbility(${playerIndex}, ${teacherIndex})" aria-pressed="${teacher.used ? 'true' : 'false'}">
-          Fähigkeit: <span class="spielen-teacher-toggle" id="spielen-teacher-toggle-${playerIndex}-${teacherIndex}">${teacher.used ? 'Aktiv' : 'Inaktiv'}</span>
-        </button>
         <div class="spielen-status-effect-manager">
           <label class="spielen-status-effect-add">
             <span>Status-Effekt hinzufügen</span>
@@ -1859,29 +1875,6 @@ const DEFAULT_SITE_DATA = {
       }
     });
 
-    playState.players.forEach((player, playerIndex) => {
-      const playerTeachers = Array.isArray(player.teachers) ? player.teachers : [];
-
-      playerTeachers.forEach((teacher, teacherIndex) => {
-        const card = document.getElementById(`spielen-teacher-card-${playerIndex}-${teacherIndex}`);
-        const status = document.getElementById(`spielen-teacher-status-${playerIndex}-${teacherIndex}`);
-        const toggle = document.getElementById(`spielen-teacher-toggle-${playerIndex}-${teacherIndex}`);
-
-        if (card) {
-          card.classList.toggle('is-used', teacher.used);
-        }
-
-        if (status) {
-          status.textContent = teacher.used ? 'Fähigkeit verfügbar' : 'Keine Fähigkeit verfügbar';
-        }
-
-        if (toggle) {
-          toggle.textContent = teacher.used ? 'Aktiv' : 'Inaktiv';
-        }
-
-      });
-    });
-
     const summaryPanel = document.getElementById('spielenSummaryPanel');
     if (summaryPanel && !summaryPanel.hidden) {
       renderSpielenSummary();
@@ -1910,21 +1903,20 @@ const DEFAULT_SITE_DATA = {
 
   function adjustSpielenMoney(index, direction) {
     const amount = getSpielenAdjustAmount(index);
-    const delta = direction * amount;
+    adjustSpielenMoneyByAmount(index, direction * amount);
+  }
+
+  function adjustSpielenMoneyByAmount(index, delta) {
+    if (!playState.players[index] || !Number.isFinite(Number(delta))) return;
+    const roundedDelta = Math.round(Number(delta) * 100) / 100;
     playState.players[index].money = Math.max(0, Math.round(((Number(playState.players[index].money) || 0) + delta) * 100) / 100);
-    recordSpielenTurnDelta(index, delta);
+    recordSpielenTurnDelta(index, roundedDelta);
     saveSpielenState();
     syncSpielenPage();
   }
 
   function switchSpielenTurn() {
     advanceSpielenTurn();
-    saveSpielenState();
-    syncSpielenPage();
-  }
-
-  function toggleTeacherAbility(playerIndex, teacherIndex) {
-    playState.players[playerIndex].teachers[teacherIndex].used = !playState.players[playerIndex].teachers[teacherIndex].used;
     saveSpielenState();
     syncSpielenPage();
   }
@@ -1959,7 +1951,12 @@ const DEFAULT_SITE_DATA = {
     const confirmed = window.confirm('Willst du wirklich den aktuellen Spielstand zurücksetzen?');
     if (!confirmed) return;
 
+    const playerNames = playState.players.map((player, index) => String(player.name || `Spieler ${index + 1}`).trim() || `Spieler ${index + 1}`);
     playState = createDefaultPlayState();
+    playState.players.forEach((player, index) => {
+      player.name = playerNames[index];
+      refreshSpielenTeacherCards(index);
+    });
     saveSpielenState();
     syncSpielenPage();
   }
