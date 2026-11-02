@@ -76,6 +76,19 @@ Im Kartenalbum werden die Karten nach Set gruppiert und oben kannst du zwischen 
 Die Kartenränder werden je Rarität aus `rarities` eingefärbt. Dort kannst du `borderColor` und optional `glowColor` anpassen.
 ---
 
+## Teaser-Modus und verborgene Karten
+
+Über `teaser` in `data.json` steuerst du die Vorschau auf der Startseite und im Kartenalbum:
+
+```json
+"teaser": {
+  "enabled": true,
+  "hideSpecialCards": true
+}
+```
+
+Wenn `enabled` auf `true` steht, werden nur Karten mit `"teaser": true` angezeigt und das Startseitenvideo wird eingeblendet. Bei `false` werden alle Karten angezeigt und das Video ausgeblendet. Mit `hideSpecialCards` kannst du die Bilder von Karten der Seltenheiten `Full Art` und `Gold` verbergen; die Karten selbst bleiben mit Namen und Details sichtbar.
+
 ## Countdown auf der Startseite
 
 In `data.json` kannst du auf der Startseite einen Countdown für ein Ereignis einblenden:

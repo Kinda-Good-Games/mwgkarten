@@ -1,5 +1,9 @@
 {
     "contactEmail":  "kev_gong@hotmail.com",
+    "teaser":  {
+                    "enabled":  true,
+                    "hideSpecialCards":  true
+                },
     "homepageCountdown":  {
                               "enabled":  true,
                               "eventName":  "Verkaufsstart",
@@ -81,628 +85,760 @@
     "sets":  [
                  {
                      "name":  "Set 1: Basis Set",
-                     "description":  "Der erste Karten-Drop mit den klassischen Motiven.",
+                     "description":  "Der erste Karten-Drop.",
                      "cards":  [
                                    {
-                                       "path":  "cards/baseset/1.png",
+                                       "path":  "cards/baseset/1_NEW.png",
                                        "name":  "Justus Albert",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  true
                                    },
                                    {
-                                       "path":  "cards/baseset/2.png",
+                                       "path":  "cards/baseset/2_NEW.png",
                                        "name":  "Sarah Barkowski",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/3.png",
+                                       "path":  "cards/baseset/3_NEW.png",
                                        "name":  "David Behne",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  true
                                    },
                                    {
-                                       "path":  "cards/baseset/4.png",
+                                       "path":  "cards/baseset/4_NEW.png",
                                        "name":  "Tim Borghoff",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/5.png",
-                                       "name":  "Charlotte Bretthauer KEINE FOTOS",
+                                       "path":  "cards/baseset/5_NEW.png",
+                                       "name":  "Charlotte Bretthauer",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  true
                                    },
                                    {
-                                       "path":  "cards/baseset/6.png",
+                                       "path":  "cards/baseset/6_NEW.png",
                                        "name":  "Anja Breuer",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  true
                                    },
                                    {
-                                       "path":  "cards/baseset/7.png",
+                                       "path":  "cards/baseset/7_NEW.png",
                                        "name":  "Maximillian Cosfeld",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/8.png",
+                                       "path":  "cards/baseset/8_NEW.png",
                                        "name":  "Jessica Donis",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  true
                                    },
                                    {
-                                       "path":  "cards/baseset/9.png",
+                                       "path":  "cards/baseset/9_NEW.png",
                                        "name":  "Dr. Ansgar Draude",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  true
                                    },
                                    {
-                                       "path":  "cards/baseset/10.png",
+                                       "path":  "cards/baseset/10_NEW.png",
                                        "name":  "Kati Fomenko",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  true
                                    },
                                    {
-                                       "path":  "cards/baseset/11.png",
+                                       "path":  "cards/baseset/11_NEW.png",
                                        "name":  "Scarlett Gatz",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/12.png",
-                                       "name":  "Frau Gebhard KEINE FOTOS",
+                                       "path":  "cards/baseset/12_NEW.png",
+                                       "name":  "Frau Gebhard",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  true
                                    },
                                    {
-                                       "path":  "cards/baseset/13.png",
-                                       "name":  "Dr. Kirsten GlÃƒÂ¤sel",
+                                       "path":  "cards/baseset/13_NEW.png",
+                                       "name":  "Dr. Kirsten Gläsel",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/14.png",
-                                       "name":  "Martina HÃƒÂ¼lsken",
-                                       "rarity":  "Glitzer",
-                                       "type":  "Lehrkraft"
+                                       "path":  "cards/baseset/14_NEW.png",
+                                       "name":  "Martina Hülsken",
+                                       "rarity":  "Normal",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/15.png",
+                                       "path":  "cards/baseset/15_NEW.png",
                                        "name":  "Thorsten Korthaus",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/16.png",
+                                       "path":  "cards/baseset/16_NEW.png",
                                        "name":  "Julia Kowalski",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  true
                                    },
                                    {
-                                       "path":  "cards/baseset/17.png",
-                                       "name":  "Britta MÃƒÂ¶llering",
+                                       "path":  "cards/baseset/17_NEW.png",
+                                       "name":  "Britta Möllering",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/18.png",
+                                       "path":  "cards/baseset/18_NEW.png",
                                        "name":  "Fabian Offermann",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  true
                                    },
                                    {
-                                       "path":  "cards/baseset/19.png",
+                                       "path":  "cards/baseset/19_NEW.png",
                                        "name":  "Simon Olmesdahl (Mr. O)",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  true
                                    },
                                    {
-                                       "path":  "cards/baseset/20.png",
-                                       "name":  "Kai Ostermeier KEINE FOTOS",
+                                       "path":  "cards/baseset/20_NEW.png",
+                                       "name":  "Kai Ostermeier",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/21.png",
+                                       "path":  "cards/baseset/21_NEW.png",
                                        "name":  "Ben Raith",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/22.png",
+                                       "path":  "cards/baseset/22_NEW.png",
                                        "name":  "Sandra Rautenberg",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/23.png",
+                                       "path":  "cards/baseset/23_NEW.png",
                                        "name":  "Susanne Rottenecker",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/24.png",
-                                       "name":  "Sandra SÃƒÂ¡nchez",
+                                       "path":  "cards/baseset/24_NEW.png",
+                                       "name":  "Sandra Sánchez",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  true
                                    },
                                    {
-                                       "path":  "cards/baseset/25.png",
+                                       "path":  "cards/baseset/25_NEW.png",
                                        "name":  "Inkeri Schumann",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/26.png",
+                                       "path":  "cards/baseset/26_NEW.png",
                                        "name":  "Frederic Schwital",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/27.png",
+                                       "path":  "cards/baseset/27_NEW.png",
                                        "name":  "Inga Simon",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/28.png",
+                                       "path":  "cards/baseset/28_NEW.png",
                                        "name":  "Paul Sinkemat",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/29.png",
-                                       "name":  "JÃƒÂ¼rgen Steynes",
+                                       "path":  "cards/baseset/29_NEW.png",
+                                       "name":  "Jürgen Steynes",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/30.png",
+                                       "path":  "cards/baseset/30_NEW.png",
                                        "name":  "Deborah Thelen",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/31.png",
+                                       "path":  "cards/baseset/31_NEW.png",
                                        "name":  "Jens Wichmann",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/32.png",
+                                       "path":  "cards/baseset/32_NEW.png",
                                        "name":  "Lara Wolter",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/33.png",
+                                       "path":  "cards/baseset/33_NEW.png",
                                        "name":  "Nico Zech",
                                        "rarity":  "Normal",
-                                       "type":  "Lehrkraft"
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/34.png",
-                                       "name":  "Justus Albert",
-                                       "rarity":  "Full Art",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/35.png",
-                                       "name":  "Sarah Barkowski",
-                                       "rarity":  "Full Art",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/36.png",
-                                       "name":  "Tim Borghoff",
-                                       "rarity":  "Full Art",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/37.png",
-                                       "name":  "Maximillian Cosfeld",
-                                       "rarity":  "Gold",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/38.png",
-                                       "name":  "Dr. Ansgar Draude",
-                                       "rarity":  "Full Art",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/39.png",
-                                       "name":  "Jessica Donis",
-                                       "rarity":  "Full Art",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/40.png",
-                                       "name":  "Britta MÃƒÂ¶llering",
-                                       "rarity":  "Full Art",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/41.png",
-                                       "name":  "Fabian Offermann",
-                                       "rarity":  "Gold",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/42.png",
-                                       "name":  "Kai Ostermeier KEINE FOTOS",
-                                       "rarity":  "Full Art",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/43.png",
-                                       "name":  "Ben Raith",
-                                       "rarity":  "Full Art",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/44.png",
-                                       "name":  "Sandra Rautenberg",
-                                       "rarity":  "Full Art",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/45.png",
-                                       "name":  "Susanne Rottenecker",
-                                       "rarity":  "Full Art",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/46.png",
-                                       "name":  "Frederic Schwital",
-                                       "rarity":  "Full Art",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/47.png",
-                                       "name":  "Lara Wolter",
-                                       "rarity":  "Full Art",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/48.png",
-                                       "name":  "JÃƒÂ¼rgen Steynes",
-                                       "rarity":  "Full Art",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/49.png",
-                                       "name":  "Paul Sinkemat",
-                                       "rarity":  "Full Art",
-                                       "type":  "Lehrkraft"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/50.png",
-                                       "name":  "Klausurenphase",
-                                       "rarity":  "Normal",
-                                       "type":  "Sabotage"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/51.png",
-                                       "name":  "ToilettenschlÃƒÂ¼ssel",
-                                       "rarity":  "Normal",
-                                       "type":  "Sabotage"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/52.png",
-                                       "name":  "Kopierraum",
-                                       "rarity":  "Normal",
-                                       "type":  "Raum"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/53.png",
-                                       "name":  "Turnhalle",
-                                       "rarity":  "Normal",
-                                       "type":  "Raum"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/54.png",
-                                       "name":  "Instrument Klavier",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/55.png",
-                                       "name":  "Stuhlpyramide",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/56.png",
-                                       "name":  "Waschbecken",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/57.png",
-                                       "name":  "Improfessionell",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/58.png",
-                                       "name":  "Improfessionell",
-                                       "rarity":  "Full Art",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/59.png",
-                                       "name":  "Narrenkappe",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/60.png",
-                                       "name":  "Narrenkappe",
-                                       "rarity":  "Full Art",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/61.png",
-                                       "name":  "Technische Probleme",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/62.png",
-                                       "name":  "FÃƒÂ¶rderung durch das Kultusministerium",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/63.png",
-                                       "name":  "Sportfest",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/64.png",
+                                       "path":  "cards/baseset/34_NEW.png",
                                        "name":  "Ellys Hilfe",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
+                                       "rarity":  "Full Art",
+                                       "type":  "Event",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/65.png",
-                                       "name":  "Entfall",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
+                                       "path":  "cards/baseset/35_NEW.png",
+                                       "name":  "Ellys Hilfe",
+                                       "rarity":  "Gold",
+                                       "type":  "Event",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/66.png",
-                                       "name":  "Instrument Gitarre",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
+                                       "path":  "cards/baseset/36_NEW.png",
+                                       "name":  "Improfessionell",
+                                       "rarity":  "Full Art",
+                                       "type":  "Event",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/67.png",
-                                       "name":  "Instrument Schlagzeug",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
+                                       "path":  "cards/baseset/37_NEW.png",
+                                       "name":  "Konzert",
+                                       "rarity":  "Gold",
+                                       "type":  "Event",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/68.png",
-                                       "name":  "Taschenrechner",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
+                                       "path":  "cards/baseset/38_NEW.png",
+                                       "name":  "Ministerium der Klassentiere",
+                                       "rarity":  "Full Art",
+                                       "type":  "Event",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/69.png",
-                                       "name":  "Funkkiste",
-                                       "rarity":  "Normal",
-                                       "type":  "Sabotage"
+                                       "path":  "cards/baseset/39_NEW.png",
+                                       "name":  "Narrenkappe",
+                                       "rarity":  "Full Art",
+                                       "type":  "Item",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/70.png",
-                                       "name":  "OHP",
-                                       "rarity":  "Normal",
-                                       "type":  "Sabotage"
+                                       "path":  "cards/baseset/40_NEW.png",
+                                       "name":  "Turnhalle",
+                                       "rarity":  "Gold",
+                                       "type":  "Raum",
+                                       "teaser":  false
                                    },
                                    {
-                                       "path":  "cards/baseset/71.png",
-                                       "name":  "Geheimer Lagerraum",
-                                       "rarity":  "Normal",
-                                       "type":  "Raum"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/72.png",
-                                       "name":  "Boombox",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/73.png",
-                                       "name":  "SÃƒÂ¤uberung",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/74.png",
-                                       "name":  "Wasserspender",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/75.png",
-                                       "name":  "VerspÃƒÂ¤tung",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/76.png",
-                                       "name":  "Mikroskop",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/77.png",
-                                       "name":  "Was auch immer das ist?!?!",
-                                       "rarity":  "Normal",
-                                       "type":  "Raum"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/78.png",
-                                       "name":  "Lehrerbibliothek",
-                                       "rarity":  "Normal",
-                                       "type":  "Raum"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/79.png",
-                                       "name":  "LaugenbrÃƒÂ¶tchen",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/80.png",
-                                       "name":  "Panini",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/81.png",
-                                       "name":  "Spickzettel",
-                                       "rarity":  "Normal",
-                                       "type":  "Sabotage"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/82.png",
-                                       "name":  "Kopiergeld",
-                                       "rarity":  "Normal",
-                                       "type":  "Sabotage"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/83.png",
-                                       "name":  "Klausurmodus",
-                                       "rarity":  "Normal",
-                                       "type":  "Sabotage"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/84.png",
-                                       "name":  "Lehrerausflug",
-                                       "rarity":  "Normal",
-                                       "type":  "Sabotage"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/85.png",
-                                       "name":  "Konfiszierung",
-                                       "rarity":  "Normal",
-                                       "type":  "Sabotage"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/86.png",
-                                       "name":  "Sponsorenlauf",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/87.png",
-                                       "name":  "Helau!",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/88.png",
-                                       "name":  "Kuchenverkauf",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/89.png",
-                                       "name":  "Sportfest",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/90.png",
-                                       "name":  "SÃƒÂ¤uberung",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/91.png",
-                                       "name":  "StÃƒÂ¤rkung besorgen",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/92.png",
-                                       "name":  "Schulheft",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/93.png",
-                                       "name":  "Suchalgorithmus",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/94.png",
-                                       "name":  "Topfpflanze",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/95.png",
-                                       "name":  "WÃƒÂ¶rterbuch",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/96.png",
-                                       "name":  "Panini mit Ketchup",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/97.png",
-                                       "name":  "Beamer",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/98.png",
-                                       "name":  "Kaputter Wasserspender",
-                                       "rarity":  "Normal",
-                                       "type":  "Event"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/99.png",
-                                       "name":  "Lehrerparkplatz",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/100.png",
-                                       "name":  "Muffin",
-                                       "rarity":  "Normal",
-                                       "type":  "Item"
-                                   },
-                                   {
-                                       "path":  "cards/baseset/101.png",
+                                       "path":  "cards/baseset/41_NEW.png",
                                        "name":  "Fisch",
                                        "rarity":  "Full Art",
-                                       "type":  "Sabotage"
-                                   }
-                               ]
-                 },
-                 {
-                     "name":  "Set 2: Chaos",
-                     "description":  "Mehr Energie, mehr Chaos, mehr Karten.",
-                     "cards":  [
+                                       "type":  "Sabotage",
+                                       "teaser":  false
+                                   },
                                    {
-                                       "path":  "cards/Beispiel.jpeg",
-                                       "name":  "Electric Test",
-                                       "rarity":  "Holo",
-                                       "type":  "Event"
+                                       "path":  "cards/baseset/42_NEW.png",
+                                       "name":  "Justus Albert",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/43_NEW.png",
+                                       "name":  "Sarah Barkowski",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/44_NEW.png",
+                                       "name":  "Tim Borghoff",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/45_NEW.png",
+                                       "name":  "Charlotte Bretthauer",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/46_NEW.png",
+                                       "name":  "Maximillian Cosfeld",
+                                       "rarity":  "Gold",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/47_NEW.png",
+                                       "name":  "Jessica Donis",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/48_NEW.png",
+                                       "name":  "Dr. Ansgar Draude",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/49_NEW.png",
+                                       "name":  "Britta Möllering",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/50_NEW.png",
+                                       "name":  "Fabian Offermann",
+                                       "rarity":  "Gold",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/51_NEW.png",
+                                       "name":  "Kai Ostermeier",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/52_NEW.png",
+                                       "name":  "Ben Raith",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/53_NEW.png",
+                                       "name":  "Sandra Rautenberg",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/54_NEW.png",
+                                       "name":  "Susanne Rottenecker",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/55_NEW.png",
+                                       "name":  "Frederic Schwital",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/56_NEW.png",
+                                       "name":  "Paul Sinkemat",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/57_NEW.png",
+                                       "name":  "Jürgen Steynes",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/58_NEW.png",
+                                       "name":  "Lara Wolter",
+                                       "rarity":  "Full Art",
+                                       "type":  "Lehrkraft",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/59_NEW.png",
+                                       "name":  "Aufr?umen",
+                                       "rarity":  "Normal",
+                                       "type":  "Event",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/60_NEW.png",
+                                       "name":  "Ellys Hilfe",
+                                       "rarity":  "Normal",
+                                       "type":  "Event",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/61_NEW.png",
+                                       "name":  "Entfall",
+                                       "rarity":  "Normal",
+                                       "type":  "Event",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/62_NEW.png",
+                                       "name":  "Improfessionell",
+                                       "rarity":  "Normal",
+                                       "type":  "Event",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/63_NEW.png",
+                                       "name":  "Kaputter Wasserspender",
+                                       "rarity":  "Normal",
+                                       "type":  "Event",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/64_NEW.png",
+                                       "name":  "Konzert",
+                                       "rarity":  "Normal",
+                                       "type":  "Event",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/65_NEW.png",
+                                       "name":  "Kuchenverkauf",
+                                       "rarity":  "Normal",
+                                       "type":  "Event",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/66_NEW.png",
+                                       "name":  "Ministerium der Klassentiere",
+                                       "rarity":  "Normal",
+                                       "type":  "Event",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/67_NEW.png",
+                                       "name":  "Sponsorenlauf",
+                                       "rarity":  "Normal",
+                                       "type":  "Event",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/68_NEW.png",
+                                       "name":  "Sportfest",
+                                       "rarity":  "Normal",
+                                       "type":  "Event",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/69_NEW.png",
+                                       "name":  "Stärkung besorgen",
+                                       "rarity":  "Normal",
+                                       "type":  "Event",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/70_NEW.png",
+                                       "name":  "Technische Probleme",
+                                       "rarity":  "Normal",
+                                       "type":  "Event",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/71_NEW.png",
+                                       "name":  "Verspätung",
+                                       "rarity":  "Normal",
+                                       "type":  "Event",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/72_NEW.png",
+                                       "name":  "Wasserspender",
+                                       "rarity":  "Normal",
+                                       "type":  "Event",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/73_NEW.png",
+                                       "name":  "Instrument Gitarre",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/74_NEW.png",
+                                       "name":  "Instrument Klavier",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/75_NEW.png",
+                                       "name":  "Instrument Schlagzeug",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/76_NEW.png",
+                                       "name":  "Beamer",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/77_NEW.png",
+                                       "name":  "Boombox",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/78_NEW.png",
+                                       "name":  "Laugenstange",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/79_NEW.png",
+                                       "name":  "Lehrerparkplatz",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/80_NEW.png",
+                                       "name":  "Mikroskop",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/81_NEW.png",
+                                       "name":  "Muffin",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/82_NEW.png",
+                                       "name":  "Narrenkappe",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/83_NEW.png",
+                                       "name":  "Panini",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/84_NEW.png",
+                                       "name":  "Panini mit Ketchup",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/85_NEW.png",
+                                       "name":  "Schulheft",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/86_NEW.png",
+                                       "name":  "Stuhlpyramide",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/87_NEW.png",
+                                       "name":  "Suchalgorithmus",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/88_NEW.png",
+                                       "name":  "Taschenrechner",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/89_NEW.png",
+                                       "name":  "Topfpflanze",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/90_NEW.png",
+                                       "name":  "Waschbecken",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/91_NEW.png",
+                                       "name":  "Wörterbuch",
+                                       "rarity":  "Normal",
+                                       "type":  "Item",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/92_NEW.png",
+                                       "name":  "Geheimer Lagerraum",
+                                       "rarity":  "Normal",
+                                       "type":  "Raum",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/93_NEW.png",
+                                       "name":  "Kopierraum",
+                                       "rarity":  "Normal",
+                                       "type":  "Raum",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/94_NEW.png",
+                                       "name":  "Lehrerbibliothek",
+                                       "rarity":  "Normal",
+                                       "type":  "Raum",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/95_NEW.png",
+                                       "name":  "Turnhalle",
+                                       "rarity":  "Normal",
+                                       "type":  "Raum",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/96_NEW.png",
+                                       "name":  "Was auch immer das ist?!?!",
+                                       "rarity":  "Normal",
+                                       "type":  "Raum",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/97_NEW.png",
+                                       "name":  "Fisch",
+                                       "rarity":  "Normal",
+                                       "type":  "Sabotage",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/98_NEW.png",
+                                       "name":  "Funkkiste",
+                                       "rarity":  "Normal",
+                                       "type":  "Sabotage",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/99_NEW.png",
+                                       "name":  "Klausurenphase",
+                                       "rarity":  "Normal",
+                                       "type":  "Sabotage",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/100_NEW.png",
+                                       "name":  "Klausurmodus",
+                                       "rarity":  "Normal",
+                                       "type":  "Sabotage",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/101_NEW.png",
+                                       "name":  "Konfiszierung",
+                                       "rarity":  "Normal",
+                                       "type":  "Sabotage",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/102_NEW.png",
+                                       "name":  "Kopiergeld",
+                                       "rarity":  "Normal",
+                                       "type":  "Sabotage",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/103_NEW.png",
+                                       "name":  "Lehrerausflug",
+                                       "rarity":  "Normal",
+                                       "type":  "Sabotage",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/104_NEW.png",
+                                       "name":  "OHP",
+                                       "rarity":  "Normal",
+                                       "type":  "Sabotage",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/105_NEW.png",
+                                       "name":  "Spickzettel",
+                                       "rarity":  "Normal",
+                                       "type":  "Sabotage",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/106_NEW.png",
+                                       "name":  "Toilettenschlüssel",
+                                       "rarity":  "Normal",
+                                       "type":  "Sabotage",
+                                       "teaser":  false
+                                   },
+                                   {
+                                       "path":  "cards/baseset/107_NEW.png",
+                                       "name":  "Umsetzen",
+                                       "rarity":  "Normal",
+                                       "type":  "Sabotage",
+                                       "teaser":  false
                                    }
-                               ]
+                     ]
                  }
+
              ],
     "tournament":  {
                        "view":  false,

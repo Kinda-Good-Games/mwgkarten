@@ -25,6 +25,10 @@ function syncActiveNav() {
 
 const DEFAULT_SITE_DATA = {
   contactEmail: 'abi2027.mwg@outlook.de',
+  teaser: {
+    enabled: false,
+    hideSpecialCards: false
+  },
   homepageCountdown: {
     enabled: false,
     eventName: 'Nächstes Karten-Event',
@@ -536,6 +540,7 @@ const DEFAULT_SITE_DATA = {
       siteData = {
         ...DEFAULT_SITE_DATA,
         ...data,
+        teaser: normalizeTeaserSettings(data.teaser),
         rarities: normalizeRarities(data.rarities),
         statusEffects: normalizeStatusEffects(data.statusEffects),
         tournament: normalizeTournament(data.tournament),
@@ -546,6 +551,7 @@ const DEFAULT_SITE_DATA = {
     } catch (_) {
       siteData = {
         ...DEFAULT_SITE_DATA,
+        teaser: normalizeTeaserSettings(DEFAULT_SITE_DATA.teaser),
         rarities: normalizeRarities(DEFAULT_SITE_DATA.rarities),
         statusEffects: normalizeStatusEffects(DEFAULT_SITE_DATA.statusEffects),
         tournament: normalizeTournament(DEFAULT_SITE_DATA.tournament),
@@ -573,7 +579,32 @@ const DEFAULT_SITE_DATA = {
     updateOrderSummary();
     renderHomeCarousel();
     renderHomeCardWhirl();
+    renderHomeVideo();
     renderHomepageCountdown();
+  }
+
+  function normalizeTeaserSettings(settings) {
+    return {
+      enabled: settings?.enabled === true,
+      hideSpecialCards: settings?.hideSpecialCards === true
+    };
+  }
+
+  function isTeaserCard(card) {
+    return siteData.teaser.enabled ? card.teaser === true : true;
+  }
+
+  function isHiddenSpecialCard(card) {
+    return siteData.teaser.hideSpecialCards && ['Full Art', 'Gold'].includes(card.rarity);
+  }
+
+  function getDisplayCards(sets) {
+    return sets.flatMap(set => set.cards.filter(card => isTeaserCard(card)));
+  }
+
+  function renderHomeVideo() {
+    const section = document.querySelector('.home-video-section');
+    if (section) section.hidden = !siteData.teaser.enabled;
   }
 
   function renderHomepageCountdown() {
@@ -612,7 +643,8 @@ const DEFAULT_SITE_DATA = {
     const whirl = document.getElementById('homeCardWhirl');
     if (!whirl) return;
 
-    const cards = siteData.sets.flatMap(set => set.cards).filter(card => card.path);
+    const cards = getDisplayCards(siteData.sets)
+      .filter(card => card.path && !isHiddenSpecialCard(card));
     whirl.innerHTML = '';
     if (cards.length === 0) return;
 
@@ -639,7 +671,9 @@ const DEFAULT_SITE_DATA = {
         cardElement.style.setProperty('--random-x', `${Math.round(Math.random() * 18 - 9)}px`);
         cardElement.style.setProperty('--random-y', `${Math.round(Math.random() * 34 - 17)}px`);
         cardElement.style.setProperty('--random-rotation', `${Math.round(Math.random() * 18 - 9)}deg`);
-        cardElement.innerHTML = `<img src="${escapeHtml(getCardPreviewPath(card.path))}" alt="" loading="lazy" decoding="async" />`;
+        cardElement.innerHTML = isHiddenSpecialCard(card)
+          ? '<div class="home-whirl-hidden" aria-label="Kartenbild verborgen">Bild verborgen</div>'
+          : `<img src="${escapeHtml(getCardPreviewPath(card.path))}" alt="" loading="lazy" decoding="async" />`;
         row.appendChild(cardElement);
       });
 
@@ -656,7 +690,10 @@ const DEFAULT_SITE_DATA = {
     const dots = document.getElementById('homeCarouselDots');
     if (!track || !dots) return;
 
-    homeCarouselCards = siteData.sets.flatMap(set => set.cards.map(card => ({ ...card, setName: set.name })));
+    homeCarouselCards = siteData.sets
+      .flatMap(set => set.cards
+        .filter(card => isTeaserCard(card) && !isHiddenSpecialCard(card))
+        .map(card => ({ ...card, setName: set.name })));
     track.innerHTML = '';
     dots.innerHTML = '';
 
@@ -672,7 +709,9 @@ const DEFAULT_SITE_DATA = {
       slide.setAttribute('aria-label', `${index + 1} von ${homeCarouselCards.length}: ${card.name}`);
       slide.innerHTML = `
         <div class="home-carousel-image-wrap">
-          <img src="${escapeHtml(getCardPreviewPath(card.path))}" alt="${escapeHtml(card.name)}" loading="${index === homeCarouselIndex ? 'eager' : 'lazy'}" decoding="async" />
+          ${isHiddenSpecialCard(card)
+            ? '<div class="home-carousel-hidden" aria-label="Kartenbild verborgen">Bild verborgen</div>'
+            : `<img src="${escapeHtml(getCardPreviewPath(card.path))}" alt="${escapeHtml(card.name)}" loading="${index === homeCarouselIndex ? 'eager' : 'lazy'}" decoding="async" />`}
         </div>
         <div class="home-carousel-card-info">
           <p class="home-carousel-card-set">${escapeHtml(card.setName)}</p>
@@ -1363,6 +1402,7 @@ const DEFAULT_SITE_DATA = {
         rarity: String(entry.rarity || 'Normal'),
         type: normalizeCardType(entry.type || entry.cardType || entry.tag),
         name: String(entry.name || prettyName(path)),
+        teaser: entry.teaser === true,
         order: index
       };
     }
@@ -1476,7 +1516,10 @@ const DEFAULT_SITE_DATA = {
     const typeFilter = document.getElementById('cardTypeFilter')?.value || 'all';
     const ownedOnly = Boolean(document.getElementById('cardOwnedOnlyFilter')?.checked);
     const favoriteOnly = Boolean(document.getElementById('cardFavoriteOnlyFilter')?.checked);
-    const normalizedSets = normalizeSets(sets);
+    const normalizedSets = normalizeSets(sets).map(set => ({
+      ...set,
+      cards: set.cards.filter(card => isTeaserCard(card))
+    }));
     populateSetFilter(normalizedSets);
     populateTypeFilter(normalizedSets);
     grid.innerHTML = '';
@@ -1536,7 +1579,9 @@ const DEFAULT_SITE_DATA = {
         item.style.setProperty('--rarity-color', rarityConfig.borderColor);
         item.style.setProperty('--rarity-glow', rarityConfig.glowColor);
         item.innerHTML = `
-          <img src="${getCardPreviewPath(card.path)}" alt="${escapeHtml(card.name)}" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"/>
+          ${isHiddenSpecialCard(card)
+            ? '<div class="card-item-hidden-image" aria-label="Kartenbild verborgen">Bild verborgen. Diese Karte ist in Booster-Packs erhältlich.</div>'
+            : `<img src="${getCardPreviewPath(card.path)}" alt="${escapeHtml(card.name)}" loading="lazy" decoding="async" onerror="this.parentElement.style.display='none'"/>`}
           <div class="card-item-top-row">
             <span class="card-item-type-badge">${escapeHtml(card.type || 'Event')}</span>
             <div class="card-item-top-actions">
@@ -1567,6 +1612,7 @@ const DEFAULT_SITE_DATA = {
         }
 
         item.addEventListener('click', () => {
+          if (isHiddenSpecialCard(card)) return;
           openLightbox({
             src: card.path,
             name: card.name,
