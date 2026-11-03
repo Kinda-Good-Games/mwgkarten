@@ -1,5 +1,9 @@
 ﻿/* Page navigation */
 function showPage(name) {
+  if (siteData.teaser.enabled && ['order', 'tournament', 'spielen'].includes(name)) {
+    return;
+  }
+
   const pageUrls = {
     home: 'index.html',
     news: 'news.html',
@@ -581,6 +585,8 @@ const DEFAULT_SITE_DATA = {
     renderHomeCardWhirl();
     renderHomeVideo();
     renderHomepageCountdown();
+    renderTeaserNavigation();
+    redirectRestrictedPreviewPage();
   }
 
   function normalizeTeaserSettings(settings) {
@@ -588,6 +594,29 @@ const DEFAULT_SITE_DATA = {
       enabled: settings?.enabled === true,
       hideSpecialCards: settings?.hideSpecialCards === true
     };
+  }
+
+  function renderTeaserNavigation() {
+    const importantInfo = document.getElementById('homeImportantInfo');
+    if (importantInfo) {
+      importantInfo.hidden = siteData.teaser.enabled;
+    }
+
+    ['order', 'tournament', 'spielen'].forEach(pageName => {
+      document.querySelectorAll(`#nav-${pageName}`).forEach(link => {
+        link.hidden = siteData.teaser.enabled;
+      });
+      document.querySelectorAll(`[onclick="showPage('${pageName}')"]`).forEach(control => {
+        control.hidden = siteData.teaser.enabled;
+      });
+    });
+  }
+
+  function redirectRestrictedPreviewPage() {
+    const pageName = document.body?.dataset?.page;
+    if (siteData.teaser.enabled && ['order', 'tournament', 'spielen'].includes(pageName)) {
+      window.location.replace('index.html');
+    }
   }
 
   function isTeaserCard(card) {

@@ -1,27 +1,27 @@
 {
-    "contactEmail":  "kev_gong@hotmail.com",
+    "contactEmail":  "abi2027.mwg@gmail.com",
     "teaser":  {
                     "enabled":  true,
                     "hideSpecialCards":  true
                 },
     "homepageCountdown":  {
-                              "enabled":  true,
+                              "enabled":  false,
                               "eventName":  "Verkaufsstart",
                               "eventDate":  "2026-11-04T12:00:00+01:00",
                               "description":  "Der erste Verkauf an der Isa und Rosa! Sei dabei und sichere dir deine Karten!"
                           },
     "statusEffects":  [
                           {
-                              "id":  "beschÃƒÂ¤ftigt",
-                              "name":  "beschÃƒÂ¤ftigt"
+                              "id":  "beschäftigt",
+                              "name":  "beschäftigt"
                           },
                           {
-                              "id":  "eingeschÃƒÂ¼chtert",
-                              "name":  "eingeschÃƒÂ¼chtert"
+                              "id":  "eingeschüchtert",
+                              "name":  "eingeschüchtert"
                           },
                           {
-                              "id":  "mÃƒÂ¼de",
-                              "name":  "mÃƒÂ¼de"
+                              "id":  "müde",
+                              "name":  "müde"
                           },
                           {
                               "id":  "gestresst",
@@ -52,8 +52,8 @@
                               "name":  "Distanzunterricht"
                           },
                           {
-                              "id":  "geschÃƒÂ¼tzt",
-                              "name":  "geschÃƒÂ¼tzt"
+                              "id":  "geschützt",
+                              "name":  "geschützt"
                           },
                           {
                               "id":  "forgebildet",
@@ -868,7 +868,7 @@
                                       },
                                       {
                                           "places":  "2",
-                                          "reward":  "KopfhÃƒÂ¶rer",
+                                          "reward":  "Kopfhörer",
                                           "image":  "assets/prizes/headphones.svg"
                                       },
                                       {
@@ -999,7 +999,7 @@
                                       {
                                           "name":  "Halbfinale",
                                           "status":  "Stage 3",
-                                          "description":  "Die vier besten Teams kÃƒÂ¤mpfen um den Einzug ins Finale.",
+                                          "description":  "Die vier besten Teams kämpfen um den Einzug ins Finale.",
                                           "participants":  [
                                                                "Sieger Match A",
                                                                "Sieger Match B",
@@ -1044,7 +1044,7 @@
                      {
                          "id":  "booster-packs",
                          "name":  "Booster-Packs",
-                         "description":  "ZufÃƒÂ¤llige Kartenpakete mit einer gemischten Auswahl aus dem Set.",
+                         "description":  "Zufällige Kartenpakete mit einer gemischten Auswahl aus dem Set.",
                          "unitLabel":  "Booster-Pack(s)",
                          "price":  4.50,
                          "minQuantity":  1,
@@ -1063,9 +1063,9 @@
                      },
                      {
                          "id":  "kartenhuelle",
-                         "name":  "KartenhÃƒÂ¼lle (MWG Design)",
-                         "description":  "Eine einzelne KartenhÃƒÂ¼lle. Perfekt, um deine seltesten Karten zu schÃƒÂ¼tzen mit der KartenhÃƒÂ¼lle, exklusiv fÃƒÂ¼r unsere Schule.",
-                         "unitLabel":  "KartenhÃƒÂ¼lle(n)",
+                         "name":  "Kartenhülle (MWG Design)",
+                         "description":  "Eine einzelne Kartenhülle. Perfekt, um deine seltesten Karten zu schützen mit der Kartenhülle, exklusiv für unsere Schule.",
+                         "unitLabel":  "Kartenhülle(n)",
                          "price":  0.25,
                          "minQuantity":  1,
                          "maxQuantity":  1000,
@@ -1073,8 +1073,8 @@
                      },
                      {
                          "id":  "bundles",
-                         "name":  "KartenhÃƒÂ¼llen Bundle",
-                         "description":  "100 KartenhÃƒÂ¼llen unserer eigenen KartenhÃƒÂ¼llen. Indem du die KartenhÃƒÂ¼llen ÃƒÂ¼ber das Bundle kaufst, sparst du ganze 30 Prozent!",
+                         "name":  "Kartenhüllen Bundle",
+                         "description":  "100 Kartenhüllen unserer eigenen Kartenhüllen. Indem du die Kartenhüllen über das Bundle kaufst, sparst du ganze 30 Prozent!",
                          "unitLabel":  "Bundle(s)",
                          "price":  17.50,
                          "minQuantity":  1,

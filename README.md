@@ -82,12 +82,13 @@ Die Kartenränder werden je Rarität aus `rarities` eingefärbt. Dort kannst du 
 
 ```json
 "teaser": {
-  "enabled": true,
-  "hideSpecialCards": true
+ "enabled": true,
+ "hideSpecialCards": true
 }
 ```
 
 Wenn `enabled` auf `true` steht, werden nur Karten mit `"teaser": true` angezeigt und das Startseitenvideo wird eingeblendet. Bei `false` werden alle Karten angezeigt und das Video ausgeblendet. Mit `hideSpecialCards` kannst du die Bilder von Karten der Seltenheiten `Full Art` und `Gold` verbergen; die Karten selbst bleiben mit Namen und Details sichtbar.
+Während der Vorschau werden die Seiten `Produkte bestellen`, `Turnier` und `Spielen` vollständig deaktiviert und sind nicht erreichbar. Die wichtige Info zur Ausgabe an der Schule auf der Startseite wird dann ebenfalls ausgeblendet.
 
 ## Countdown auf der Startseite
 
