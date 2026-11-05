@@ -606,7 +606,10 @@ const DEFAULT_SITE_DATA = {
       document.querySelectorAll(`#nav-${pageName}`).forEach(link => {
         link.hidden = siteData.teaser.enabled;
       });
-      document.querySelectorAll(`[onclick="showPage('${pageName}')"]`).forEach(control => {
+      const controls = pageName === 'order'
+        ? document.querySelectorAll('.order-product-button')
+        : document.querySelectorAll(`[onclick="showPage('${pageName}')"]`);
+      controls.forEach(control => {
         control.hidden = siteData.teaser.enabled;
       });
     });
